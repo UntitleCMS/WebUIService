@@ -1,0 +1,69 @@
+<div class="relative text-sm font-semibold">
+  <button
+    (click)="openPanel()"
+    class="flex justify-center items-center p-2 rounded-full"
+  >
+    <span class="material-symbols-rounded"> more_horiz </span>
+  </button>
+  <div
+    *ngIf="isPanelOpen"
+    class="absolute top-0 right-0 p-2 w-32 rounded-xl bg-white shadow-md flex flex-col gap-1"
+  >
+    <div class="flex items-center gap-2 justify-between ps-2">
+      <span>ตัวเลือก</span>
+      <button
+        (click)="closePanel()"
+        class="flex items-center p-1 rounded-lg hover:bg-zinc-100"
+      >
+        <span class="material-symbols-rounded"> close </span>
+      </button>
+    </div>
+    <hr />
+    <!-- <button
+      (click)="editComment()"
+      class="flex items-center gap-2 hover:bg-yellow-50 hover:text-yellow-700 rounded-lg px-2 py-1"
+    >
+      <span class="material-symbols-rounded"> edit </span>แก้ไข
+    </button> -->
+    <button
+      (click)="openDeletePanel()"
+      class="flex items-center gap-2 hover:bg-red-50 hover:text-red-700 rounded-lg px-2 py-1"
+    >
+      <span class="material-symbols-rounded"> delete </span>ลบ
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="isDeletePanelOpen">
+  <app-overlay>
+    <div class="bg-white max-w-screen-md rounded-xl relative overflow-hidden">
+      <div class="relative overflow-auto">
+        <div
+          class="flex items-center justify-between gap-4 p-4 bg-white/75 backdrop-blur sticky top-0"
+        >
+          <span class="text-xl font-semibold">ต้องการที่จะลบ ?</span>
+        </div>
+        <div class="px-4 text-sm">
+          ความคิดเห็นและการตอบกลับทั้งหมดจะถูกลบอย่างถาวร คุณและคนอื่น ๆ
+          จะไม่ได้เห็นมันอีก
+        </div>
+        <div
+          class="flex justify-end gap-4 p-4 sticky bottom-0 bg-white/75 backdrop-blur"
+        >
+          <button
+            (click)="closeDeletePanel()"
+            class="px-4 py-2 rounded-lg font-semibold"
+          >
+            ยกเลิก
+          </button>
+          <button
+            (click)="deleteComment()"
+            class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-800 text-white font-semibold"
+          >
+            ลบ
+          </button>
+        </div>
+      </div>
+    </div>
+  </app-overlay>
+</ng-container>

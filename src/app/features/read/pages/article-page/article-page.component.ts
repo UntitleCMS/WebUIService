@@ -12,6 +12,7 @@ import { TagComponent } from '../../../../shared/components/tags/tag/tag.compone
 import { ThaiDatePipe } from '../../../../shared/pipes/thai-date.pipe';
 import { ClickInsideDirective } from '../../../../shared/directives/click-inside.directive';
 import { ClickOutsideDirective } from '../../../../shared/directives/click-outside.directive';
+import { CommentSectionComponent } from '../../../../shared/components/comments/comment-section/comment-section.component';
 
 @Component({
   selector: 'app-article-page',
@@ -24,6 +25,7 @@ import { ClickOutsideDirective } from '../../../../shared/directives/click-outsi
     TagComponent,
     ClickInsideDirective,
     ClickOutsideDirective,
+    CommentSectionComponent
   ],
   templateUrl: './article-page.component.html',
   styleUrl: './article-page.component.scss',
@@ -35,6 +37,8 @@ export class ArticlePageComponent implements OnInit {
 
   isShowingFullCreateTime = false;
   isShowingFullUpdateTime = false;
+
+  isLoadComment = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,5 +78,9 @@ export class ArticlePageComponent implements OnInit {
 
   hideFullUpdateTime() {
     this.isShowingFullUpdateTime = false;
+  }
+
+  loadCommentSection() {
+    this.isLoadComment = true;
   }
 }

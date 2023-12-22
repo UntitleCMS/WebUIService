@@ -1,0 +1,40 @@
+<div class="py-4">
+  <app-user-header
+    [linkable]="true"
+    [userId]="commentAndReplies.comment.owner.userId"
+    [name]="commentAndReplies.comment.owner.displayName"
+  ></app-user-header>
+  <p class="py-3">
+    {{ commentAndReplies.comment.comment.data }}
+  </p>
+  <div class="flex items-center gap-4 text-xs">
+    <p>
+      {{ commentAndReplies.comment.comment.timestamp | relativeTime }}
+    </p>
+    <button
+      *ngIf="isLoggedIn"
+      (click)="openReply()"
+      class="font-semibold hover:text-zinc-800"
+    >
+      ตอบกลับ
+    </button>
+    <app-comment-options
+      (onDeleteComment)="deleteComment()"
+      *ngIf="myId === commentAndReplies.comment.comment.commentOwnerId"
+    ></app-comment-options>
+  </div>
+</div>
+
+<ng-container *ngFor="let reply of commentAndReplies.replies">
+  <app-reply
+    [reply]="reply"
+    (onDeleteReplySuccess)="deleteReplyFromComment($event)"
+  ></app-reply>
+</ng-container>
+
+<app-reply-input
+  [forPostId]="commentAndReplies.comment.comment.postId"
+  [forCommentId]="commentAndReplies.comment.comment._id"
+  (addReply)="addReplyToComment($event)"
+  *ngIf="isReplyOpen"
+></app-reply-input>
