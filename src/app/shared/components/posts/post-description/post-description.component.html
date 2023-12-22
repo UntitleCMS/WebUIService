@@ -1,0 +1,9 @@
+<textarea
+    name="description"
+    class="text-xl font-semibold outline-0 bg-transparent py-2 w-full resize-none placeholder-zinc-400"
+    [(ngModel)]="description"
+    (input)="adjustTextareaHeight()"
+    placeholder="คำอธิบาย..."
+    [readOnly]="!isEditable"
+    rows="1"
+  ></textarea>

@@ -1,0 +1,26 @@
+<div class="p-4 space-y-4">
+  <div *ngIf="!isLoggedIn" class="p-4 w-full">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-0 items-center">
+      <img
+        src="assets/images/logo-main.svg"
+        class="w-64 h-64 lg:w-72 lg:h-72 mx-auto"
+      />
+      <div class="grid grid-cols-1 gap-4">
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold">
+          {{ title }}
+        </h2>
+        <p>{{ description }}</p>
+        <button
+          class="bg-zinc-600 text-zinc-100 font-bold text-lg px-4 py-2 rounded-full text-center hover:bg-zinc-700"
+          [routerLink]="['/auth', 'sign-up']"
+        >
+          เริ่มต้นใช้งาน
+        </button>
+      </div>
+    </div>
+  </div>
+  <h2 class="text-2xl font-bold p-4">โพสต์ทั้งหมด</h2>
+  <div>
+    <app-lazy-post-generator [postType]="'all'"></app-lazy-post-generator>
+  </div>
+</div>

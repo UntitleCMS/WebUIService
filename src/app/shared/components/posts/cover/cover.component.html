@@ -1,0 +1,13 @@
+<img
+  *ngIf="type === 'preview'; else full"
+  [src]="src"
+  class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg object-cover object-center"
+  (error)="onCoverImageError($event)"
+/>
+<ng-template #full>
+  <img
+    class="max-h-72 mx-auto object-contain object-center rounded-lg"
+    [src]="src"
+    (error)="onCoverImageError($event)"
+  />
+</ng-template>

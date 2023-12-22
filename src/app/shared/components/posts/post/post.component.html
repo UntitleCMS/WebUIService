@@ -1,0 +1,33 @@
+<div class="space-y-4" *ngIf="postAndAuthor">
+  <div>
+    <app-post-title
+      [title]="postAndAuthor.post.title"
+      [isEditable]="isEditable"
+    ></app-post-title>
+  </div>
+  <div *ngIf="!(!postAndAuthor.post.description && !isEditable)">
+    <app-post-description
+      [description]="postAndAuthor.post.description"
+      [isEditable]="isEditable"
+    ></app-post-description>
+  </div>
+  <div>
+    <app-user-header
+      [userId]="postAndAuthor.author.userId"
+      [name]="postAndAuthor.author.displayName"
+      [linkable]="linkableAuthor"
+    ></app-user-header>
+  </div>
+  <div>
+    <app-post-cover
+      [coverImageSrc]="postAndAuthor.post.coverImage"
+      [isEditable]="isEditable"
+    ></app-post-cover>
+  </div>
+  <div>
+    <app-post-content
+      [content]="postAndAuthor.post.content"
+      [isEditable]="isEditable"
+    ></app-post-content>
+  </div>
+</div>

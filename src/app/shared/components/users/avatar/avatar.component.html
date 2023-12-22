@@ -1,0 +1,7 @@
+<img
+  [src]="avatarEndpoint + userId"
+  class="rounded-full object-cover object-center"
+  [style.width]="size * 4 + 'px'"
+  [style.height]="size * 4 + 'px'"
+  (error)="onImageNotFound($event)"
+/>

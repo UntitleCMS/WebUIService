@@ -1,0 +1,105 @@
+<div
+  class="fixed left-0 w-full transition-all"
+  [ngClass]="isScrollDown ? '-top-16' : 'top-0'"
+>
+  <div class="flex justify-between items-center p-4 bg-zinc-50">
+    <div class="flex items-center gap-4">
+      <img src="assets/images/logo.svg" class="w-8 h-8" />
+      <span class="text-2xl font-semibold">เบต้าบล็อก</span>
+    </div>
+    <div *ngIf="isLoggedIn; else LoginButton" class="relative">
+      <button
+        (click)="toggleAccountMenu()"
+        class="flex justify-center items-center"
+      >
+        <app-avatar [userId]="userId"></app-avatar>
+      </button>
+      <div
+        *ngIf="isAccountMenuOpen"
+        class="absolute top-10 right-0 w-40 bg-white shadow-md rounded-lg p-4 space-y-4"
+      >
+        <button
+          [routerLink]="['/my-posts']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
+        >
+          <span class="material-symbols-rounded">article</span>
+          <span class="text-sm">โพสต์ของฉัน</span>
+        </button>
+        <button
+          [routerLink]="['/', 'profile', 'me']"
+          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
+        >
+          <span class="material-symbols-rounded">person</span>
+          <span class="text-sm">โปรไฟล์ของฉัน</span>
+        </button>
+        <hr />
+        <button
+          (click)="logout()"
+          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
+        >
+          <span class="material-symbols-rounded">logout</span>
+          <span class="text-sm">ออกจากระบบ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="fixed left-0 w-full transition-all"
+  [ngClass]="isScrollDown ? '-bottom-16' : 'bottom-0'"
+>
+  <div
+    class="bg-zinc-50 grid divide-x"
+    [ngClass]="isLoggedIn ? 'grid-cols-4' : 'grid-cols-3'"
+  >
+    <button
+      [routerLink]="['/']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
+    >
+      <span class="material-symbols-rounded" style="font-size: 20px">home</span>
+      <span class="text-xs">หน้าหลัก</span>
+    </button>
+    <button
+      *ngIf="isLoggedIn"
+      [routerLink]="['/following']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
+    >
+      <span class="material-symbols-rounded" style="font-size: 20px"
+        >newspaper</span
+      >
+      <span class="text-xs">กำลังติดตาม</span>
+    </button>
+    <button
+      [routerLink]="['/search']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
+    >
+      <span class="material-symbols-rounded" style="font-size: 20px"
+        >search</span
+      >
+      <span class="text-xs">ค้นหา</span>
+    </button>
+    <button
+      [routerLink]="['/write']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
+    >
+      <span class="material-symbols-rounded" style="font-size: 20px">edit</span>
+      <span class="text-xs">เขียนโพสต์</span>
+    </button>
+  </div>
+</div>
+
+<ng-template #LoginButton>
+  <button [routerLink]="['/', 'auth']" class="flex justify-center items-center">
+    <span class="material-symbols-rounded">login</span>
+  </button>
+</ng-template>

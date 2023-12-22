@@ -1,0 +1,42 @@
+<div class="max-w-screen-md mx-auto p-8 space-y-8">
+  <div class="flex justify-end">
+    <button
+      (click)="openConfirmPublishPanel()"
+      class="rounded-full px-4 py-2 bg-amber-600 text-white font-semibold hover:bg-amber-800"
+    >
+      อัปเดตโพสต์
+    </button>
+  </div>
+  <div>
+    <app-post [isEditable]="true" [postAndAuthor]="post"></app-post>
+  </div>
+</div>
+
+<ng-container *ngIf="isConfirmPublishPanelOpen">
+  <app-overlay>
+    <div class="bg-white rounded-lg p-4 space-y-4">
+      <div class="flex justify-between items-center gap-4">
+        <span class="font-semibold">ยืนยันที่จะอัปเดตหรือไม่</span>
+      </div>
+      <div>
+        <span class="text-sm"
+          >ข้อมูลโพสต์ของคุณจะถูกอัปเดต ทุกคนจะเห็นการอัปเดตใหม่</span
+        >
+      </div>
+      <div class="flex justify-end items-center gap-4 text-sm font-semibold">
+        <button
+          (click)="closeConfirmPublishPanel()"
+          class="px-4 py-2 flex justify-center items-center rounded-md"
+        >
+          ยกเลิก
+        </button>
+        <button
+          (click)="publish()"
+          class="px-4 py-2 flex justify-center items-center bg-amber-600 hover:bg-amber-800 text-white rounded-md"
+        >
+          อัปเดต
+        </button>
+      </div>
+    </div>
+  </app-overlay></ng-container
+>

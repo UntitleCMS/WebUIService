@@ -1,0 +1,39 @@
+<div *ngIf="userProfile" class="flex">
+  <div class="w-[300px] shrink-0 p-8 border-e h-screen space-y-4 sticky top-0">
+    <div class="flex justify-center items-center">
+      <app-avatar [userId]="userProfile.userId" [size]="40"></app-avatar>
+    </div>
+    <span class="block text-center text-xl font-bold">{{
+      userProfile.displayName
+    }}</span>
+    <div class="space-y-1">
+      <span class="block text-xs text-zinc-400">คำอธิบายตัวฉัน</span>
+      <span class="block text-sm">{{ userProfile.shortBio }}</span>
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="flex flex-col justify-center items-center">
+        <span class="font-semibold text-lg">{{ userProfile.follower }}</span>
+        <span class="text-xs">ผู้ติดตาม</span>
+      </div>
+      <div class="flex flex-col justify-center items-center">
+        <span class="font-semibold text-lg">{{ userProfile.followee }}</span>
+        <span class="text-xs">กำลังติดตาม</span>
+      </div>
+    </div>
+    <div *ngIf="isLoggedIn && myId !== userProfile.userId">
+      <app-follow-button
+        [followStatus]="followStatus"
+        (followEmitter)="follow()"
+        (unfollowEmitter)="unfollow()"
+      ></app-follow-button>
+    </div>
+  </div>
+  <div class="w-full p-4">
+    <div>
+      <app-lazy-post-generator
+        [postType]="'author'"
+        [authorId]="userProfile.userId"
+      ></app-lazy-post-generator>
+    </div>
+  </div>
+</div>

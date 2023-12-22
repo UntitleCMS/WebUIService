@@ -1,0 +1,10 @@
+<span *ngIf="isEditable" class="text-xs text-zinc-400">{{
+  isSaving ? "กำลังบันทึก..." : "บันทึกแล้ว"
+}}</span>
+<div class="prose prose-zinc">
+  <div id="editorjs"></div>
+</div>
+
+<ng-container *ngIf="isShowCodePage && currentCode">
+  <app-code-page></app-code-page>
+</ng-container>

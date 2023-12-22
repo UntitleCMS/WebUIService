@@ -1,0 +1,18 @@
+<div
+  *ngIf="linkable; else unlinkable"
+  class="flex gap-4 items-center group hover:cursor-pointer"
+  [routerLink]="['/profile', userId]"
+>
+  <app-avatar [userId]="userId"></app-avatar>
+  <span
+    class="font-semibold text-sm group-hover:text-blue-600 group-hover:underline underline-offset-2"
+    >{{ name }}</span
+  >
+</div>
+
+<ng-template #unlinkable>
+  <div class="flex gap-4 items-center">
+    <app-avatar [userId]="userId"></app-avatar>
+    <span class="font-semibold text-sm">{{ name }}</span>
+  </div>
+</ng-template>
