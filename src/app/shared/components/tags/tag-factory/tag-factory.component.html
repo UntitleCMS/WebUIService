@@ -1,0 +1,47 @@
+<div class="flex gap-4">
+  <div
+    class="shrink-0 grow-0 relative"
+    data-toggle="false"
+    (clickInside)="openTagSearchPanel()"
+    (clickOutside)="closeTagSearchPanel()"
+  >
+    <input
+      type="text"
+      class="w-40 px-4 py-2 bg-zinc-100 outline-0"
+      [ngClass]="isTagSearchPanelOpen ? 'rounded-t-lg shadow-md' : 'rounded-lg'"
+      placeholder="ค้นหาแท็ก"
+    />
+    <div
+      *ngIf="isTagSearchPanelOpen"
+      class="absolute top-full w-40 h-72 bg-white shadow-md rounded-b-lg z-10 overflow-auto"
+    >
+      <ul>
+        <li *ngFor="let tag of availableTags">
+          <div
+            class="p-2 text-center relative group cursor-pointer"
+            (click)="addTagToUsingTags(tag)"
+          >
+            <div
+              class="absolute top-0 left-0 h-full w-1 transition-all group-hover:w-full group-hover:animate-bounce group-hover:opacity-25"
+              [style.backgroundColor]="'#' + tag.color"
+            ></div>
+            {{ tag.name }}
+          </div>
+        </li>
+      </ul>
+      <div
+        class="sticky bottom-0 px-4 py-2 bg-white text-xs shadow text-center"
+        [ngClass]="{ 'text-red-500': usingTags.length >= tagLimit }"
+      >
+        จำนวนแท็ก {{ usingTags.length }}/{{ tagLimit }}
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap grow gap-4">
+    <app-removable-tag
+      *ngFor="let tag of usingTags"
+      [tag]="tag"
+      (remove)="removeTagFromUsingTags($event)"
+    ></app-removable-tag>
+  </div>
+</div>

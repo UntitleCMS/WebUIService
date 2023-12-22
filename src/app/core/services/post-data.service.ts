@@ -9,6 +9,7 @@ export class PostDataService {
   private _coverImageSrc?: string;
   private _coverImage?: File;
   private _content = '';
+  private _tags: string[] = [];
 
   constructor() {}
 
@@ -36,6 +37,10 @@ export class PostDataService {
     return this._coverImage;
   }
 
+  set tags(newTags: string[]) {
+    this._tags = newTags;
+  }
+
   getCurrentPostData() {
     return {
       title: this._title,
@@ -43,6 +48,7 @@ export class PostDataService {
       coverImageFile: this.coverImage,
       coverImageSrc: this._coverImageSrc,
       content: this._content,
+      tags: this._tags,
     };
   }
 
@@ -52,5 +58,6 @@ export class PostDataService {
     this._coverImageSrc = undefined;
     this._coverImage = undefined;
     this.content = '';
+    this._tags = [];
   }
 }

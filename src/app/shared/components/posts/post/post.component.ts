@@ -6,6 +6,7 @@ import { PostCoverComponent } from '../post-cover/post-cover.component';
 import { PostContentComponent } from '../post-content/post-content.component';
 import { PostAndAuthor } from '../../../../core/models/post';
 import { CommonModule } from '@angular/common';
+import { PostTagComponent } from '../post-tag/post-tag.component';
 
 @Component({
   selector: 'app-post',
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common';
     PostDescriptionComponent,
     PostCoverComponent,
     PostContentComponent,
+    PostTagComponent
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

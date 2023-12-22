@@ -8,7 +8,12 @@ import { MobileNavigationComponent } from '../mobile-navigation/mobile-navigatio
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavigationBarComponent, MobileNavigationComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    NavigationBarComponent,
+    MobileNavigationComponent,
+  ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })

@@ -51,7 +51,7 @@ export class EditPostPageComponent implements OnInit {
   }
 
   publish() {
-    const { title, description, coverImageFile, content } =
+    const { title, description, coverImageFile, content, tags } =
       this.pds.getCurrentPostData();
     if (coverImageFile) {
       const formData = new FormData();
@@ -66,7 +66,7 @@ export class EditPostPageComponent implements OnInit {
               coverImage: '/api/img/v1/img/' + coveImage.img,
               content,
               isPublish: true,
-              tags: [],
+              tags,
             })
           )
         )
@@ -83,7 +83,7 @@ export class EditPostPageComponent implements OnInit {
           description,
           content,
           coverImage: this.post.post.coverImage,
-          tags: [],
+          tags: tags,
           isPublish: true,
         })
         .subscribe({

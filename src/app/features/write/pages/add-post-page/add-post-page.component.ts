@@ -65,7 +65,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
   }
 
   publish() {
-    const { title, description, coverImageFile, content } =
+    const { title, description, coverImageFile, content, tags } =
       this.pds.getCurrentPostData();
     if (coverImageFile) {
       const formData = new FormData();
@@ -80,7 +80,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
               coverImage: '/api/img/v1/img/' + coveImage.img,
               content,
               isPublish: true,
-              tags: [],
+              tags,
             })
           )
         )
@@ -96,7 +96,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
           title,
           description,
           content,
-          tags: [],
+          tags: tags,
           isPublish: true,
         })
         .subscribe({

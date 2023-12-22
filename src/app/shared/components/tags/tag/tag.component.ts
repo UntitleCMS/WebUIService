@@ -10,6 +10,7 @@ import { Tag } from '../../../../core/models/tag';
 })
 export class TagComponent {
   @Input({ required: true }) tag!: Tag;
+  @Input() linkable = true;
 
   bgColor = '';
   textColor = '';

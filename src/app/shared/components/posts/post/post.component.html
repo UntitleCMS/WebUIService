@@ -11,6 +11,9 @@
       [isEditable]="isEditable"
     ></app-post-description>
   </div>
+  <div *ngIf="isEditable">
+    <app-post-tag [tags]="this.postAndAuthor.post.tags"></app-post-tag>
+  </div>
   <div>
     <app-user-header
       [userId]="postAndAuthor.author.userId"
