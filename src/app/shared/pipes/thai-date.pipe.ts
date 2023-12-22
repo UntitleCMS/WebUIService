@@ -38,6 +38,10 @@ export class ThaiDatePipe implements PipeTransform {
     const day = value.getDay();
     const month = value.getMonth();
     const year = value.getFullYear();
-    return `วัน${ThaiDay[day]}ที่ ${date} ${ThaiMonth[month]} ${year} เวลา ${hour}:${minute}`;
+    return `วัน${ThaiDay[day]}ที่ ${date} ${
+      ThaiMonth[month]
+    } ${year} เวลา ${hour.toString().padStart(2, '0')}:${minute
+      .toString()
+      .padStart(2, '0')}`;
   }
 }
