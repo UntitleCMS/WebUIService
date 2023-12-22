@@ -23,6 +23,7 @@ import CodeBlock, { CodeBlockConfig } from '../../../../core/tools/code-block';
 import ImageBlock, {
   ImageBlockConfig,
 } from '../../../../core/tools/image-block';
+import { CodeModel } from '../../../../core/tools/code-model';
 
 @Component({
   selector: 'app-post-content',
@@ -44,8 +45,7 @@ export class PostContentComponent implements OnChanges, OnInit {
   isContentEmpty = false;
 
   isShowCodePage = false;
-  // currentCode: CodeModel | null = null;
-  currentCode: any = null;
+  currentCode: CodeModel | null = null;
 
   constructor(
     private pds: PostDataService,
@@ -66,9 +66,11 @@ export class PostContentComponent implements OnChanges, OnInit {
     });
   }
 
-  getCodeData = (code: any) => {
-    this.openCodePage();
+  getCodeData = (code: CodeModel) => {
     this.currentCode = code;
+    this.openCodePage();
+    console.log(code);
+  
   };
 
   openCodePage() {

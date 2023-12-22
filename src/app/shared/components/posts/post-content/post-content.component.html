@@ -6,5 +6,5 @@
 </div>
 
 <ng-container *ngIf="isShowCodePage && currentCode">
-  <app-code-page></app-code-page>
+  <app-code-page [code]="currentCode" (closeCommand)="closeCodePage()"></app-code-page>
 </ng-container>

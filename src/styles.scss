@@ -46,4 +46,12 @@ body {
   height: 0;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-500 rounded-full;
+}
+
 @import url("./app/core/tools/code-block.css");
