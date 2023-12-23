@@ -3,6 +3,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarComponent } from '../../shared/components/users/avatar/avatar.component';
 import { AuthorityService } from '../../core/auth/authority.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from '../../core/auth/client-auth.service';
 
 @Component({
   selector: 'app-mobile-navigation',
@@ -20,7 +22,11 @@ export class MobileNavigationComponent implements OnInit {
 
   userId: string | null = null;
 
-  constructor(private auth: AuthorityService, private router: Router) {}
+  constructor(
+    private auth: AuthorityService,
+    private router: Router,
+    private oauth: OAuthService
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.auth.isLoggedin;
@@ -44,8 +50,13 @@ export class MobileNavigationComponent implements OnInit {
     this.lastScrollTop = scrollTop;
   }
 
+  login() {
+    this.oauth.configure(authCodeFlowConfig);
+    this.oauth.loadDiscoveryDocumentAndLogin();
+  }
+
   logout() {
     this.auth.logout();
-    this.router.navigate(['/auth', 'sign-in']);
+    window.location.reload();
   }
 }

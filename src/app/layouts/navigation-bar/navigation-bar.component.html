@@ -147,7 +147,7 @@
 
 <ng-template #LoginButton>
   <button
-    [routerLink]="['/', 'auth']"
+    (click)="login()"
     class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
   >
     <span class="material-symbols-rounded">login</span>

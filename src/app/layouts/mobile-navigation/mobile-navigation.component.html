@@ -99,7 +99,7 @@
 </div>
 
 <ng-template #LoginButton>
-  <button [routerLink]="['/', 'auth']" class="flex justify-center items-center">
+  <button (click)="login()" class="flex justify-center items-center">
     <span class="material-symbols-rounded">login</span>
   </button>
 </ng-template>

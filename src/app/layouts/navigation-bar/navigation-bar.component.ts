@@ -4,6 +4,8 @@ import { AvatarComponent } from '../../shared/components/users/avatar/avatar.com
 import { CommonModule } from '@angular/common';
 import { AuthorityService } from '../../core/auth/authority.service';
 import { UserInformationService } from '../../core/services/user-information.service';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from '../../core/auth/client-auth.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -22,7 +24,7 @@ export class NavigationBarComponent implements OnInit {
   constructor(
     private auth: AuthorityService,
     private userInformationService: UserInformationService,
-    private router: Router
+    private oauth: OAuthService
   ) {}
 
   ngOnInit(): void {
@@ -39,8 +41,13 @@ export class NavigationBarComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
+  login() {
+    this.oauth.configure(authCodeFlowConfig);
+    this.oauth.loadDiscoveryDocumentAndLogin();
+  }
+
   logout() {
     this.auth.logout();
-    this.router.navigate(['/auth', 'sign-in']);
+    window.location.reload();
   }
 }

@@ -3,6 +3,8 @@ import { PasswordService } from '../../../../core/auth/password.service';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, Location } from '@angular/common';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from '../../../../core/auth/client-auth.service';
 
 @Component({
   selector: 'app-signin-page',
@@ -23,24 +25,27 @@ export class SigninPageComponent {
   constructor(
     private passwordLogin: PasswordService,
     private location: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private oauth: OAuthService
   ) {}
 
   onSubmit(): void {
-    this.passwordLogin
-      .login(this.loginForm.value.username!, this.loginForm.value.password!)
-      .subscribe({
-        next: () => {
-          this.location.back();
-        },
-        error: () => {
-          this.isShowMsg = true;
-          this.isLoginFailed = true;
-        },
-        complete: () => {
-          this.loginForm.reset();
-        },
-      });
+    this.oauth.configure(authCodeFlowConfig)
+    this.oauth.loadDiscoveryDocumentAndLogin()
+    // this.passwordLogin
+    //   .login(this.loginForm.value.username!, this.loginForm.value.password!)
+    //   .subscribe({
+    //     next: () => {
+    //       this.location.back();
+    //     },
+    //     error: () => {
+    //       this.isShowMsg = true;
+    //       this.isLoginFailed = true;
+    //     },
+    //     complete: () => {
+    //       this.loginForm.reset();
+    //     },
+    //   });
   }
 
   // github() {
