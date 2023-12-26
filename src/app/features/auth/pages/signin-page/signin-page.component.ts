@@ -30,22 +30,22 @@ export class SigninPageComponent {
   ) {}
 
   onSubmit(): void {
-    this.oauth.configure(authCodeFlowConfig)
-    this.oauth.loadDiscoveryDocumentAndLogin()
-    // this.passwordLogin
-    //   .login(this.loginForm.value.username!, this.loginForm.value.password!)
-    //   .subscribe({
-    //     next: () => {
-    //       this.location.back();
-    //     },
-    //     error: () => {
-    //       this.isShowMsg = true;
-    //       this.isLoginFailed = true;
-    //     },
-    //     complete: () => {
-    //       this.loginForm.reset();
-    //     },
-    //   });
+    // this.oauth.configure(authCodeFlowConfig)
+    // this.oauth.loadDiscoveryDocumentAndLogin()
+    this.passwordLogin
+      .login(this.loginForm.value.username!, this.loginForm.value.password!)
+      .subscribe({
+        next: () => {
+          this.location.back();
+        },
+        error: () => {
+          this.isShowMsg = true;
+          this.isLoginFailed = true;
+        },
+        complete: () => {
+          this.loginForm.reset();
+        },
+      });
   }
 
   // github() {

@@ -4,7 +4,7 @@ import {
   PostRepositoryService,
 } from '../repositories/post-repository.service';
 import { ImageRepositoryService } from '../repositories/image-repository.service';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import {
   Post,
   PostAddRequest,
@@ -14,7 +14,6 @@ import {
   PostUpdateRequest,
 } from '../models/post';
 import { UserInformationService } from './user-information.service';
-import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +23,6 @@ export class PostService {
     private postRepo: PostRepositoryService,
     private imageRepo: ImageRepositoryService,
     private userInformationService: UserInformationService,
-    private cacheService: CacheService
   ) {}
 
   getAllPosts({ size, pivot, author, tags }: GetPostsOptions) {
@@ -84,9 +82,7 @@ export class PostService {
   }
 
   updatePost(id: string, post: PostUpdateRequest) {
-    return this.postRepo
-      .updatePost(id, post)
-      .pipe(tap(() => this.cacheService.resetPostCacheOnUpdate(id)));
+    return this.postRepo.updatePost(id, post);
   }
 
   uploadImage(formData: FormData) {

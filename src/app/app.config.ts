@@ -5,7 +5,6 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './core/interceptors/token.interceptor';
 import { publicEndpointInterceptor } from './core/interceptors/public-endpoint.interceptor';
-import { cacheInterceptor } from './core/interceptors/cache.interceptor';
 import { Runner } from './socket/runner';
 import { OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { storageFactory } from './core/auth/client-auth.service';
@@ -20,12 +19,7 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideHttpClient(
-      withInterceptors([
-        loadingBarTrackInterceptor,
-        tokenInterceptor,
-        publicEndpointInterceptor,
-        cacheInterceptor,
-      ])
+      withInterceptors([tokenInterceptor, publicEndpointInterceptor])
     ),
     {
       provide: Runner,

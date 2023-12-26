@@ -1,0 +1,9 @@
+<button
+  (click)="debouncedToggleLove()"
+  class="flex justify-center items-center p-2 rounded-full transition-all"
+  [ngClass]="isLoved ? 'text-red-500 hover:bg-red-100' : 'hover:bg-zinc-100'"
+>
+  <span class="material-symbols-rounded" [ngClass]="isLoved ? 'fill' : 'nofill'"
+    >favorite</span
+  >
+</button>

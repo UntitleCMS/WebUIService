@@ -37,7 +37,7 @@ export class LazyPostGeneratorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroyed');
+    // console.log('destroyed');
   }
 
   selectMethod() {

@@ -56,8 +56,6 @@ export class CodePageComponent {
   constructor(private runner: Runner) {}
 
   ngOnInit() {
-    console.log(this.code);
-    
     this.runner.connect();
     this.listenServerStatus();
   }
