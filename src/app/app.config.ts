@@ -8,6 +8,7 @@ import { publicEndpointInterceptor } from './core/interceptors/public-endpoint.i
 import { Runner } from './socket/runner';
 import { OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { storageFactory } from './core/auth/client-auth.service';
+import { loadingBarTrackInterceptor } from './core/interceptors/loading-bar-track.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
