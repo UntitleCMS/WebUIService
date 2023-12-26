@@ -43,20 +43,20 @@
   </div>
   <div class="flex items-center justify-between gap-4">
     <div class="flex flex-col justify-center items-center">
-      <span class="font-semibold text-lg">36</span>
+      <span class="font-semibold text-lg">{{ post.post.likeCount }}</span>
       <span class="text-sm">ชอบโพสต์นี้</span>
     </div>
     <div class="flex gap-4">
-      <button
-        class="flex justify-center items-center p-2 rounded-full hover:bg-red-50 hover:text-red-500 transition-all"
-      >
-        <span class="material-symbols-rounded nofill">favorite</span>
-      </button>
-      <button
-        class="flex justify-center items-center p-2 rounded-full hover:bg-yellow-50 hover:text-yellow-500 transition-all"
-      >
-        <span class="material-symbols-rounded nofill">bookmark</span>
-      </button>
+      <app-love-button
+        [isLoved]="post.post.isLiked!"
+        [ofPostId]="post.post.id"
+        (loved)="onLove()"
+        (unloved)="onUnlove()"
+      ></app-love-button>
+      <app-bookmark-button
+        [isBookmarked]="post.post.isSaved!"
+        [ofPostId]="post.post.id"
+      ></app-bookmark-button>
     </div>
   </div>
   <div>

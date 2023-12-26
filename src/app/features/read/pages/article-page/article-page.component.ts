@@ -13,6 +13,8 @@ import { ThaiDatePipe } from '../../../../shared/pipes/thai-date.pipe';
 import { ClickInsideDirective } from '../../../../shared/directives/click-inside.directive';
 import { ClickOutsideDirective } from '../../../../shared/directives/click-outside.directive';
 import { CommentSectionComponent } from '../../../../shared/components/comments/comment-section/comment-section.component';
+import { LoveButtonComponent } from '../../../../shared/components/ui/love-button/love-button.component';
+import { BookmarkButtonComponent } from '../../../../shared/components/ui/bookmark-button/bookmark-button.component';
 
 @Component({
   selector: 'app-article-page',
@@ -25,7 +27,9 @@ import { CommentSectionComponent } from '../../../../shared/components/comments/
     TagComponent,
     ClickInsideDirective,
     ClickOutsideDirective,
-    CommentSectionComponent
+    CommentSectionComponent,
+    LoveButtonComponent,
+    BookmarkButtonComponent,
   ],
   templateUrl: './article-page.component.html',
   styleUrl: './article-page.component.scss',
@@ -82,5 +86,13 @@ export class ArticlePageComponent implements OnInit {
 
   loadCommentSection() {
     this.isLoadComment = true;
+  }
+
+  onLove() {
+    this.post.post.likeCount++;
+  }
+
+  onUnlove() {
+    this.post.post.likeCount--;
   }
 }

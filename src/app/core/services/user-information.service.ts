@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserInformationRepositoryService } from '../repositories/user-information-repository.service';
 import { ProfileUpdateDto } from '../models/user';
-import { map, tap } from 'rxjs';
-import { CacheService } from './cache.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,6 @@ import { CacheService } from './cache.service';
 export class UserInformationService {
   constructor(
     private userInformationRepo: UserInformationRepositoryService,
-    private cacheService: CacheService
   ) {}
 
   getUserProfile(userId: string) {
@@ -37,13 +35,7 @@ export class UserInformationService {
   }
 
   follow(userId: string) {
-    return this.userInformationRepo
-      .follow(userId)
-      .pipe(
-        tap({
-          next: () => this.cacheService.hadleCachingOnFollowUser(userId),
-        })
-      );
+    return this.userInformationRepo.follow(userId);
   }
 
   unfollow(userId: string) {
