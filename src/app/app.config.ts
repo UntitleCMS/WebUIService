@@ -9,6 +9,7 @@ import { cacheInterceptor } from './core/interceptors/cache.interceptor';
 import { Runner } from './socket/runner';
 import { OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 import { storageFactory } from './core/auth/client-auth.service';
+import { loadingBarTrackInterceptor } from './core/interceptors/loading-bar-track.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +21,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(
       withInterceptors([
+        loadingBarTrackInterceptor,
         tokenInterceptor,
         publicEndpointInterceptor,
         cacheInterceptor,
