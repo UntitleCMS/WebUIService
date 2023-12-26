@@ -46,16 +46,16 @@ export class Runner {
 
     Runner.io.on('connect', () => {
       this._isConnected.next(true);
-      console.log('Connection established');
+      console.debug('Connection established');
     });
     Runner.io.on('disconnect', () => {
       this._isConnected.next(false);
-      console.log('Connection down');
+      console.debug('Connection down');
     });
     Runner.io.on('connect_error', (err) => {
       this._isConnected.next(false);
       this._error.next('Connection error : ' + err.message);
-      console.log('Connection error: ' + err.message);
+      console.debug('Connection error: ' + err.message);
     });
 
     Runner.io.on('stdout', (data) =>
@@ -102,21 +102,21 @@ export class Runner {
 
   public run(code: CodeDto) {
     if (this.isConnected) {
-      console.log('Running code : ', code);
+      console.debug('Running code : ', code);
       Runner.io.emit('run', code);
     }
   }
 
   public input(data: string) {
     if (this.isConnected) {
-      console.log('Input : ', { data });
+      console.debug('Input : ', { data });
       Runner.io.emit('stdin', data);
     }
   }
 
   public kill(sigkill: number | null = null) {
     if (this.isConnected) {
-      console.log('Kill : ', { sigkill });
+      console.debug('Kill : ', { sigkill });
       Runner.io.emit('kill', sigkill);
     }
   }

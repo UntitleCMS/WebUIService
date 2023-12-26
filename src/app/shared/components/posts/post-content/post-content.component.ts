@@ -69,8 +69,6 @@ export class PostContentComponent implements OnChanges, OnInit {
   getCodeData = (code: CodeModel) => {
     this.currentCode = code;
     this.openCodePage();
-    console.log(code);
-  
   };
 
   openCodePage() {
