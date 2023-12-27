@@ -3,12 +3,13 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { PostPreviewAndAuthor } from '../../../../core/models/post';
-import { PostService } from '../../../../core/services/post.service';
 import { PostPreviewComponent } from '../post-preview/post-preview.component';
 import { CommonModule } from '@angular/common';
 import { LazyPostService } from '../../../../core/services/lazy-post.service';
@@ -20,9 +21,12 @@ import { LazyPostService } from '../../../../core/services/lazy-post.service';
   templateUrl: './lazy-post-generator.component.html',
   styleUrl: './lazy-post-generator.component.scss',
 })
-export class LazyPostGeneratorComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) postType: 'all' | 'following' | 'author' = 'all';
-  @Input() authorId?: string;
+export class LazyPostGeneratorComponent
+  implements OnChanges, OnInit, OnDestroy
+{
+  @Input({ required: true }) postType: 'all' | 'following' | 'author' | 'tag' =
+    'all';
+  @Input() keyId?: string;
 
   ppas: PostPreviewAndAuthor[] = [];
 
@@ -32,8 +36,14 @@ export class LazyPostGeneratorComponent implements OnInit, OnDestroy {
 
   constructor(private lazyPostService: LazyPostService) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['postType'] || changes['keyId']) {
+      this.selectMethod();
+    }
+  }
+
   ngOnInit(): void {
-    this.selectMethod();
+    // this.selectMethod();
   }
 
   ngOnDestroy(): void {
@@ -42,22 +52,26 @@ export class LazyPostGeneratorComponent implements OnInit, OnDestroy {
 
   selectMethod() {
     if (this.postType === 'all') {
-      this.lazyPostService
-        .getLazyMap(this.postType)
-        .posts$.subscribe((ppas) => {
-          this.ppas = ppas;
-        });
+      this.lazyPostService.getLazyMap('all', '').posts$.subscribe((ppas) => {
+        this.ppas = ppas;
+      });
       this.loadMore();
     } else if (this.postType === 'following') {
       this.ppas = [];
-    } else if (this.postType === 'author' && this.authorId) {
+    } else if (this.postType === 'author' && this.keyId) {
       this.lazyPostService
-        .getLazyMap(this.authorId)
+        .getLazyMap('author', this.keyId)
         .posts$.subscribe((ppas) => {
           this.ppas = ppas;
         });
       this.loadMore();
-    } else {
+    } else if (this.postType === 'tag' && this.keyId) {
+      this.lazyPostService
+        .getLazyMap('tag', this.keyId)
+        .posts$.subscribe((ppas) => {
+          this.ppas = ppas;
+        });
+      this.loadMore();
     }
   }
 
@@ -80,17 +94,13 @@ export class LazyPostGeneratorComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    this.lazyPostService.loadMoreTo(
-      !!this.authorId ? this.authorId : this.postType,
-      {
-        completeCallback: () => {
-          this.readyStatus = true;
-        },
-        zeroLengthHandler: () => {
-          this.endLoad = true;
-        },
-        author: this.postType === 'author' ? this.authorId : undefined,
-      }
-    );
+    this.lazyPostService.loadMoreTo(this.postType, this.keyId || '', {
+      completeCallback: () => {
+        this.readyStatus = true;
+      },
+      zeroLengthHandler: () => {
+        this.endLoad = true;
+      },
+    });
   }
 }

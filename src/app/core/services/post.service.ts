@@ -22,19 +22,21 @@ export class PostService {
   constructor(
     private postRepo: PostRepositoryService,
     private imageRepo: ImageRepositoryService,
-    private userInformationService: UserInformationService,
+    private userInformationService: UserInformationService
   ) {}
 
-  getAllPosts({ size, pivot, author, tags }: GetPostsOptions) {
-    return this.postRepo.getPosts({ size, pivot, author, tags }).pipe(
-      switchMap((response) => {
-        const postPreviews = response.data?.collections || [];
-        const authorIds = postPreviews.map(
-          (postPreview) => postPreview.authorId
-        );
-        return this.mapPostPreviewsAndAuthors(postPreviews, authorIds);
-      })
-    );
+  getAllPosts({ size, pivot, author, tags, searchText }: GetPostsOptions) {
+    return this.postRepo
+      .getPosts({ size, pivot, author, tags, searchText })
+      .pipe(
+        switchMap((response) => {
+          const postPreviews = response.data?.collections || [];
+          const authorIds = postPreviews.map(
+            (postPreview) => postPreview.authorId
+          );
+          return this.mapPostPreviewsAndAuthors(postPreviews, authorIds);
+        })
+      );
   }
 
   mapPostPreviewsAndAuthors(postPreviews: PostPreview[], authorIds: string[]) {

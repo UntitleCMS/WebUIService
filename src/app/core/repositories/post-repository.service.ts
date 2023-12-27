@@ -15,6 +15,12 @@ export type GetPostsOptions = {
   pivot: string | null;
   tags?: string[];
   author?: string;
+  searchText?: string;
+};
+
+export type GetTagsOptions = {
+  size: number;
+  include?: string;
 };
 
 @Injectable({
@@ -26,7 +32,7 @@ export class PostRepositoryService {
 
   constructor(private http: HttpClient) {}
 
-  getPosts({ size, pivot, author, tags }: GetPostsOptions) {
+  getPosts({ size, pivot, author, tags, searchText }: GetPostsOptions) {
     let endpoint = this.postEndpoint;
     endpoint += '?take=' + size;
     if (pivot) {
@@ -37,6 +43,10 @@ export class PostRepositoryService {
     }
     if (tags && tags.length > 0) {
       endpoint += tags.map((tag) => '&tag=' + tag).join('');
+    }
+
+    if (searchText && searchText.length > 0) {
+      endpoint += '&serch-text=' + searchText;
     }
 
     return this.http.get<PostsResponse>(endpoint.toString());
@@ -81,6 +91,17 @@ export class PostRepositoryService {
       .get<Response<TagCount[]>>(`${this.tagEndpoint}`, {
         params,
       })
+      .pipe(map((res) => res.data || []));
+  }
+
+  getAllTags({ size, include }: GetTagsOptions) {
+    let endpoint = this.tagEndpoint;
+    endpoint += '?n=' + size;
+    if (include && include.length > 0) {
+      endpoint += '&looklike=' + include;
+    }
+    return this.http
+      .get<Response<TagCount[]>>(endpoint)
       .pipe(map((res) => res.data || []));
   }
 }

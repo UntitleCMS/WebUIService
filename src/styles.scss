@@ -54,4 +54,8 @@ body {
   @apply bg-zinc-500 rounded-full;
 }
 
+.codex-editor__redactor {
+  padding-bottom: 100px !important;
+}
+
 @import url("./app/core/tools/code-block.css");

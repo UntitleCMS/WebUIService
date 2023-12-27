@@ -1,1 +1,57 @@
-<p>one-search works!</p>
+<div class="p-8 space-y-8">
+  <div
+    class="px-4 py-2 rounded-lg bg-zinc-100 flex items-center gap-4 max-w-screen-sm mx-auto"
+  >
+    <input
+      type="text"
+      class="grow w-full bg-transparent outline-0"
+      placeholder="ค้นหาที่นี่..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchTextChange()"
+    />
+    <button
+      (click)="search()"
+      class="flex justify-center items-center hover:text-green-700"
+    >
+      <span class="material-symbols-rounded">search</span>
+    </button>
+  </div>
+  <div *ngIf="isSearched; else waitSearch" class="space-y-8">
+    <h3 class="text-xl font-bold">ผลลัพธ์การค้นหา</h3>
+    <div>
+      <h4 class="text-lg font-semibold mb-2">ผู้ใช้</h4>
+      <div></div>
+    </div>
+    <div>
+      <h4 class="text-lg font-semibold mb-2">แท็ก</h4>
+      <div
+        *ngIf="tags.length; else emptyTags"
+        class="flex gap-4 items-center flex-wrap"
+      >
+        <div *ngFor="let tag of tags">
+          <app-tag [tag]="tag"></app-tag>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-lg font-semibold mb-2">โพสต์</h4>
+      <div *ngIf="ppas.length; else emptyPosts" class="space-y-4">
+        <div *ngFor="let post of ppas">
+          <app-post-preview [postPreviewAndAuthor]="post"></app-post-preview>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #waitSearch>
+  <div class="text-center text-zinc-400">ผลลัพธ์จะแสดงหลังจากคุณกดค้นหา</div>
+</ng-template>
+
+<ng-template #emptyTags>
+  <p class="text-center text-zinc-400">ไม่พบแท็กจากคำที่ค้นหา</p>
+</ng-template>
+
+<ng-template #emptyPosts>
+  <p class="text-center text-zinc-400">ไม่พบโพสต์จากคำที่ค้นหา</p>
+</ng-template>

@@ -35,6 +35,13 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/search/search.module').then((m) => m.SearchModule),
       },
+      {
+        path: 'tags/:tagId',
+        loadComponent: () =>
+          import(
+            './features/search/pages/tag-search/tag-search.component'
+          ).then((m) => m.TagSearchComponent),
+      },
     ],
   },
   {

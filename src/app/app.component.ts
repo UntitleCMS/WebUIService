@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { LoadingBarModule, LoadingBarService } from '@ngx-loading-bar/core';
-import { LoadingBarState } from '@ngx-loading-bar/core/loading-bar.state';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 @Component({
   selector: 'app-root',

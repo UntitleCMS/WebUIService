@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Tag } from '../models/tag';
 import { Tags } from '../constants/tags';
 import { map } from 'rxjs';
-import { PostRepositoryService } from '../repositories/post-repository.service';
+import {
+  GetTagsOptions,
+  PostRepositoryService,
+} from '../repositories/post-repository.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,10 @@ export class TagService {
   defaultColor = '3f3f46';
 
   constructor(private postRepo: PostRepositoryService) {}
+
+  getTags({ size, include }: GetTagsOptions) {
+    return this.postRepo.getAllTags({ size, include });
+  }
 
   getTopTags() {
     return this.postRepo

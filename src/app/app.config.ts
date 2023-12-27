@@ -19,7 +19,11 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideHttpClient(
-      withInterceptors([tokenInterceptor, publicEndpointInterceptor])
+      withInterceptors([
+        loadingBarTrackInterceptor,
+        tokenInterceptor,
+        publicEndpointInterceptor,
+      ])
     ),
     {
       provide: Runner,

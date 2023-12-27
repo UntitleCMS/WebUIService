@@ -51,14 +51,11 @@ export class ProfilePageComponent implements OnInit {
         ),
         tap((profile) => {
           this.userProfile = profile;
-          console.log(profile);
-          
         }),
         filter(() => this.isLoggedIn),
         switchMap((profile) =>
           this.userInformationService.getFollow(profile.userId)
         ),
-        tap((fs) => console.log(fs)),
         tap((followStatus) => (this.followStatus = !!followStatus))
       )
       .subscribe();

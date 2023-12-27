@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { PostPreviewAndAuthor } from '../models/post';
 import { PostService } from './post.service';
+import { GetPostsOptions } from '../repositories/post-repository.service';
 
 type LoadMoreOptions = {
   author?: string;
@@ -50,31 +51,36 @@ export class LazyPostService {
   private _lazyCacheMap = new Map<string, LazyPost>();
 
   constructor(private postService: PostService) {
-    this._lazyCacheMap.set('all', new LazyPost());
-    this._lazyCacheMap.set('following', new LazyPost());
+    this._lazyCacheMap.set('all:', new LazyPost());
+    this._lazyCacheMap.set('following:', new LazyPost());
   }
 
-  getLazyMap(key: string) {
-    if (this._lazyCacheMap.has(key)) {
-      return this._lazyCacheMap.get(key)!;
+  getLazyMap(keyType: string, keyId: string) {
+    if (this._lazyCacheMap.has(`${keyType}:${keyId}`)) {
+      return this._lazyCacheMap.get(`${keyType}:${keyId}`)!;
     }
-    this._lazyCacheMap.set(key, new LazyPost());
-    return this._lazyCacheMap.get(key)!;
+
+    this._lazyCacheMap.set(`${keyType}:${keyId}`, new LazyPost());
+    return this._lazyCacheMap.get(`${keyType}:${keyId}`)!;
   }
 
   loadMoreTo(
-    key: string,
-    { zeroLengthHandler, completeCallback, author }: LoadMoreOptions
+    keyType: string,
+    keyId: string,
+    { zeroLengthHandler, completeCallback }: LoadMoreOptions
   ) {
-    if (!this._lazyCacheMap.has(key)) return;
-    const currentMap = this._lazyCacheMap.get(key)!;
+    if (!this._lazyCacheMap.has(`${keyType}:${keyId}`)) return;
+    const currentMap = this._lazyCacheMap.get(`${keyType}:${keyId}`)!;
+
+    let options: GetPostsOptions = {
+      size: 20,
+      pivot: currentMap.pivot,
+      author: keyType === 'author' ? keyId : undefined,
+      tags: keyType === 'tag' ? [keyId] : undefined,
+    };
 
     this.postService
-      .getAllPosts({
-        size: 20,
-        pivot: currentMap.pivot,
-        author,
-      })
+      .getAllPosts(options)
       .pipe(
         tap((newPosts) => {
           if (newPosts.length > 0) {

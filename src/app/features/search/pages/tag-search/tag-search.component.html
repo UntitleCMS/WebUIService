@@ -1,1 +1,7 @@
-<p>tag-search works!</p>
+<div class="p-8">
+  <p class="text-xl font-bold mb-4">ค้นหาด้วยแท็ก : {{ tag }}</p>
+  <app-lazy-post-generator
+    [postType]="'tag'"
+    [keyId]="tag"
+  ></app-lazy-post-generator>
+</div>
