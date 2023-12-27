@@ -13,11 +13,12 @@ import { PostPreviewAndAuthor } from '../../../../core/models/post';
 import { PostPreviewComponent } from '../post-preview/post-preview.component';
 import { CommonModule } from '@angular/common';
 import { LazyPostService } from '../../../../core/services/lazy-post.service';
+import { BlockGroupSkeletonComponent } from '../../../skeletons/block-group-skeleton/block-group-skeleton.component';
 
 @Component({
   selector: 'app-lazy-post-generator',
   standalone: true,
-  imports: [CommonModule, PostPreviewComponent],
+  imports: [CommonModule, PostPreviewComponent, BlockGroupSkeletonComponent],
   templateUrl: './lazy-post-generator.component.html',
   styleUrl: './lazy-post-generator.component.scss',
 })

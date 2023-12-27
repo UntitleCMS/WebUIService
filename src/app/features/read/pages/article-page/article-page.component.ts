@@ -15,6 +15,7 @@ import { ClickOutsideDirective } from '../../../../shared/directives/click-outsi
 import { CommentSectionComponent } from '../../../../shared/components/comments/comment-section/comment-section.component';
 import { LoveButtonComponent } from '../../../../shared/components/ui/love-button/love-button.component';
 import { BookmarkButtonComponent } from '../../../../shared/components/ui/bookmark-button/bookmark-button.component';
+import { LargeBlockSkeletonComponent } from '../../../../shared/skeletons/large-block-skeleton/large-block-skeleton.component';
 
 @Component({
   selector: 'app-article-page',
@@ -30,6 +31,7 @@ import { BookmarkButtonComponent } from '../../../../shared/components/ui/bookma
     CommentSectionComponent,
     LoveButtonComponent,
     BookmarkButtonComponent,
+    LargeBlockSkeletonComponent
   ],
   templateUrl: './article-page.component.html',
   styleUrl: './article-page.component.scss',

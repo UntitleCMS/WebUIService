@@ -1,8 +1,7 @@
 <div class="space-y-4" #postgroup>
+  @defer (when ppas) {
   <div *ngFor="let post of ppas">
-    <app-post-preview
-      [postPreviewAndAuthor]="post"
-    ></app-post-preview>
+    <app-post-preview [postPreviewAndAuthor]="post"></app-post-preview>
   </div>
   <div
     *ngIf="!readyStatus && ppas.length"
@@ -12,6 +11,15 @@
       progress_activity </span
     >กำลังโหลดข้อมูลเพิ่มเติม...
   </div>
+  }@placeholder {
+  <div>
+    <app-block-group-skeleton></app-block-group-skeleton>
+  </div>
+  }@loading {
+  <div>
+    <app-block-group-skeleton [isAnimate]="true"></app-block-group-skeleton>
+  </div>
+  }
 
   <div
     *ngIf="endLoad && ppas.length"
@@ -22,3 +30,5 @@
     <div class="border border-zinc-500 grow"></div>
   </div>
 </div>
+
+<ng-template #loading>loading...</ng-template>
