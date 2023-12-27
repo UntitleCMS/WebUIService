@@ -16,6 +16,7 @@ export type GetPostsOptions = {
   tags?: string[];
   author?: string;
   searchText?: string;
+  bookmark?: boolean;
 };
 
 export type GetTagsOptions = {
@@ -29,11 +30,19 @@ export type GetTagsOptions = {
 export class PostRepositoryService {
   private readonly postEndpoint = '/api/article/v1/articles';
   private readonly tagEndpoint = '/api/article/v1/tags';
+  private readonly bookmarkEndpoint = '/api/article/v1/bookmark';
 
   constructor(private http: HttpClient) {}
 
-  getPosts({ size, pivot, author, tags, searchText }: GetPostsOptions) {
-    let endpoint = this.postEndpoint;
+  getPosts({
+    size,
+    pivot,
+    author,
+    tags,
+    searchText,
+    bookmark,
+  }: GetPostsOptions) {
+    let endpoint = bookmark ? this.bookmarkEndpoint : this.postEndpoint;
     endpoint += '?take=' + size;
     if (pivot) {
       endpoint += '&from=<' + pivot;
@@ -47,6 +56,10 @@ export class PostRepositoryService {
 
     if (searchText && searchText.length > 0) {
       endpoint += '&serch-text=' + searchText;
+    }
+
+    if (bookmark) {
+      endpoint += '&bookmarked=true';
     }
 
     return this.http.get<PostsResponse>(endpoint.toString());

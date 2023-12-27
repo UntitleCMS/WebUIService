@@ -28,6 +28,15 @@
           <span class="text-sm">โพสต์ของฉัน</span>
         </button>
         <button
+          [routerLink]="['/bookmark']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
+        >
+          <span class="material-symbols-rounded">bookmark</span>
+          <span class="text-sm">บุ๊กมาร์กของฉัน</span>
+        </button>
+        <button
           [routerLink]="['/', 'profile', 'me']"
           class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
         >

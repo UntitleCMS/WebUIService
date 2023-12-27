@@ -24,8 +24,12 @@ import { LazyPostService } from '../../../../core/services/lazy-post.service';
 export class LazyPostGeneratorComponent
   implements OnChanges, OnInit, OnDestroy
 {
-  @Input({ required: true }) postType: 'all' | 'following' | 'author' | 'tag' =
-    'all';
+  @Input({ required: true }) postType:
+    | 'all'
+    | 'following'
+    | 'author'
+    | 'tag'
+    | 'bookmark' = 'all';
   @Input() keyId?: string;
 
   ppas: PostPreviewAndAuthor[] = [];
@@ -68,6 +72,13 @@ export class LazyPostGeneratorComponent
     } else if (this.postType === 'tag' && this.keyId) {
       this.lazyPostService
         .getLazyMap('tag', this.keyId)
+        .posts$.subscribe((ppas) => {
+          this.ppas = ppas;
+        });
+      this.loadMore();
+    } else if (this.postType === 'bookmark') {
+      this.lazyPostService
+        .getLazyMap('bookmark', '')
         .posts$.subscribe((ppas) => {
           this.ppas = ppas;
         });

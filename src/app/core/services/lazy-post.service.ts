@@ -77,6 +77,7 @@ export class LazyPostService {
       pivot: currentMap.pivot,
       author: keyType === 'author' ? keyId : undefined,
       tags: keyType === 'tag' ? [keyId] : undefined,
+      bookmark: keyType === 'bookmark' ? true : undefined,
     };
 
     this.postService

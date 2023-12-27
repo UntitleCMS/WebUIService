@@ -42,6 +42,13 @@ export const routes: Routes = [
             './features/search/pages/tag-search/tag-search.component'
           ).then((m) => m.TagSearchComponent),
       },
+      {
+        path: 'bookmark',
+        loadComponent: () =>
+          import(
+            './features/profile/pages/bookmark-page/bookmark-page.component'
+          ).then((m) => m.BookmarkPageComponent),
+      },
     ],
   },
   {

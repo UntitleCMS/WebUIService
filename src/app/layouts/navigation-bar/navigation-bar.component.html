@@ -83,6 +83,21 @@
           >
         </button>
         <button
+          [routerLink]="['/bookmark']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
+        >
+          <span class="material-symbols-rounded">bookmark</span>
+          <span
+            class="transition-all duration-500 lg:visible lg:opacity-100"
+            [ngClass]="
+              isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'
+            "
+            >บุ๊กมาร์กของฉัน</span
+          >
+        </button>
+        <button
           [routerLink]="['/', 'profile', 'me']"
           class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
         >

@@ -25,9 +25,9 @@ export class PostService {
     private userInformationService: UserInformationService
   ) {}
 
-  getAllPosts({ size, pivot, author, tags, searchText }: GetPostsOptions) {
+  getAllPosts({ size, pivot, author, tags, searchText, bookmark }: GetPostsOptions) {
     return this.postRepo
-      .getPosts({ size, pivot, author, tags, searchText })
+      .getPosts({ size, pivot, author, tags, searchText, bookmark })
       .pipe(
         switchMap((response) => {
           const postPreviews = response.data?.collections || [];
