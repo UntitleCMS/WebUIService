@@ -26,7 +26,7 @@ export default class CodeBlock implements BlockTool {
   block: BlockAPI;
   data: CodeBlockData = {
     name: '',
-    language: '',
+    language: 'c',
     code: '',
   };
 
@@ -55,8 +55,7 @@ export default class CodeBlock implements BlockTool {
     this.readOnly = readOnly;
     this.config = config;
     this.block = block!;
-    if (data) this.data = data;
-
+    if (data && data.language) this.data = data;
     this._wrapper = this.drawView();
   }
 
@@ -78,7 +77,7 @@ export default class CodeBlock implements BlockTool {
       this.ieditor = monaco.editor;
       this.monacoEditor = this.ieditor.create(this._editor, {
         value: this.data.code || '',
-        language: this.data.language || 'c',
+        language: this.data.language,
         theme: this.data.theme || 'vs',
         automaticLayout: true,
         minimap: {
