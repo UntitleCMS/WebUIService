@@ -19,7 +19,7 @@
 
 <ng-template #loginToComment>
   <span
-    ><a [routerLink]="['/auth/signin']" class="underline text-blue-600"
+    ><a (click)="login()" class="underline text-blue-600 cursor-pointer"
       >เข้าสู่ระบบ</a
     >
     เพื่อแสดงความคิดเห็น</span

@@ -16,6 +16,7 @@ import { CommentSectionComponent } from '../../../../shared/components/comments/
 import { LoveButtonComponent } from '../../../../shared/components/ui/love-button/love-button.component';
 import { BookmarkButtonComponent } from '../../../../shared/components/ui/bookmark-button/bookmark-button.component';
 import { LargeBlockSkeletonComponent } from '../../../../shared/skeletons/large-block-skeleton/large-block-skeleton.component';
+import { AuthorityService } from '../../../../core/auth/authority.service';
 
 @Component({
   selector: 'app-article-page',
@@ -46,10 +47,13 @@ export class ArticlePageComponent implements OnInit {
 
   isLoadComment = false;
 
+  isLoggedIn = false;
+
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
-    private tagService: TagService
+    private tagService: TagService,
+    private authorityService: AuthorityService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +72,8 @@ export class ArticlePageComponent implements OnInit {
         this.synthTags = this.tagService.mapAllTags(post.post.tags);
         this.post = post;
       });
+
+    this.authorityService.isLoggedin$.subscribe(status => this.isLoggedIn = status)
   }
 
   showFullCreateTime() {

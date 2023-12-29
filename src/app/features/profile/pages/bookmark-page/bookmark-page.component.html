@@ -1,6 +1,12 @@
-<div class="p-4 space-y-8 md:space-y-4">
+<div class="p-4 space-y-8 md:space-y-4 md:min-h-screen relative">
   <h2 class="text-2xl font-bold p-4">บุ๊กมาร์กของฉัน</h2>
   <div>
-    <app-lazy-post-generator [postType]="'bookmark'"></app-lazy-post-generator>
+    <app-lazy-post-generator [postType]="'bookmark'">
+      <div
+        class="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-center text-xl text-zinc-400"
+      >
+        ไม่มีโพสต์ให้แสดง
+      </div></app-lazy-post-generator
+    >
   </div>
 </div>

@@ -28,12 +28,18 @@
       ></app-follow-button>
     </div>
   </div>
-  <div class="w-full p-4">
+  <div class="w-full p-4 relative">
     <div>
       <app-lazy-post-generator
         [postType]="'author'"
         [keyId]="userProfile.userId"
-      ></app-lazy-post-generator>
+      >
+        <div
+          class="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex justify-center items-center text-xl text-zinc-400 text-center"
+        >
+          ไม่มีโพสต์ให้แสดง
+        </div></app-lazy-post-generator
+      >
     </div>
   </div>
 </div>

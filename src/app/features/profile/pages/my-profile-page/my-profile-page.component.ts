@@ -6,6 +6,8 @@ import { UserInformationRepositoryService } from '../../../../core/repositories/
 import { Profile } from '../../../../core/models/user';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { tap } from 'rxjs';
+import { UserInformationService } from '../../../../core/services/user-information.service';
 
 @Component({
   selector: 'app-my-profile-page',
@@ -24,12 +26,12 @@ export class MyProfilePageComponent implements OnInit {
 
   constructor(
     private auth: AuthorityService,
-    private userInformationService: UserInformationRepositoryService
+    private userInformationService: UserInformationService
   ) {}
 
   ngOnInit(): void {
     this.userInformationService
-      .getProfileById(this.auth.user_id!)
+      .getUserProfile(this.auth.user_id!)
       .subscribe((profile) => (this.userProfile = profile!));
   }
 }

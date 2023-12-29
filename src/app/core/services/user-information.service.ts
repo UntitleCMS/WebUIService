@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { UserInformationRepositoryService } from '../repositories/user-information-repository.service';
 import { ProfileUpdateDto } from '../models/user';
 import { map } from 'rxjs';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserInformationService {
   constructor(
-    private userInformationRepo: UserInformationRepositoryService,
+    private oauth: OAuthService,
+    private userInformationRepo: UserInformationRepositoryService
   ) {}
 
   getUserProfile(userId: string) {
@@ -17,7 +19,7 @@ export class UserInformationService {
         (profile) =>
           profile || {
             userId,
-            displayName: userId,
+            displayName: this.oauth.getIdentityClaims()['name'] as string,
             shortBio: '',
             followee: 0,
             follower: 0,

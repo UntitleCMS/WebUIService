@@ -1,8 +1,13 @@
 <div class="space-y-4" #postgroup>
   @defer (when ppas) {
-  <div *ngFor="let post of ppas">
-    <app-post-preview [postPreviewAndAuthor]="post"></app-post-preview>
-  </div>
+  <ng-container *ngIf="ppas.length; else empty">
+    <div *ngFor="let post of ppas">
+      <app-post-preview [postPreviewAndAuthor]="post"></app-post-preview>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!ppas.length">
+    <ng-content></ng-content>
+  </ng-container>
   <div
     *ngIf="!readyStatus && ppas.length"
     class="flex justify-center items-center gap-4 p-2"
@@ -31,4 +36,4 @@
   </div>
 </div>
 
-<ng-template #loading>loading...</ng-template>
+<ng-template #empty> </ng-template>

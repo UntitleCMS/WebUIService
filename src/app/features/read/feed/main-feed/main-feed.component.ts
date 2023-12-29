@@ -34,7 +34,7 @@ export class MainFeedComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.auth.isLoggedin;
+    this.auth.isLoggedin$.subscribe((status) => (this.isLoggedIn = status));
     this.postService
       .getAllPosts({ size: 20, pivot: null })
       .subscribe((ppas) => (this.posts = ppas));

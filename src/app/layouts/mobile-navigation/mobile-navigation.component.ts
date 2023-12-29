@@ -51,7 +51,6 @@ export class MobileNavigationComponent implements OnInit {
   }
 
   login() {
-    this.oauth.configure(authCodeFlowConfig);
     this.oauth.loadDiscoveryDocumentAndLogin();
   }
 

@@ -6,11 +6,17 @@ import { EditPostPageComponent } from './pages/edit-post-page/edit-post-page.com
 const routes: Routes = [
   {
     path: '',
-    component: AddPostPageComponent
+    component: AddPostPageComponent,
+    canDeactivate: [
+      (componet: AddPostPageComponent) => componet.canDeactivate(),
+    ],
   },
   {
     path: ':postId/edit',
-    component: EditPostPageComponent
+    component: EditPostPageComponent,
+    canDeactivate: [
+      (componet: EditPostPageComponent) => componet.canDeactivate(),
+    ],
   }
 ];
 

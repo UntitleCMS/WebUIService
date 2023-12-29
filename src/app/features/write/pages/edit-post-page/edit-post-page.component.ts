@@ -19,12 +19,13 @@ export class EditPostPageComponent implements OnInit {
   post!: PostAndAuthor;
 
   isConfirmPublishPanelOpen = false;
+  isPublished = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
-    private pds: PostDataService // private auth: AuthorityService, // private userInformationService: UserInformationService
+    private pds: PostDataService
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +73,7 @@ export class EditPostPageComponent implements OnInit {
         )
         .subscribe({
           next: (r) => {
+            this.isPublished = true;
             this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
             this.pds.clearPostData();
           },
@@ -88,10 +90,19 @@ export class EditPostPageComponent implements OnInit {
         })
         .subscribe({
           next: (r) => {
+            this.isPublished = true;
             this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
             this.pds.clearPostData();
           },
         });
     }
+  }
+
+  canDeactivate() {
+    if (this.isPublished) return true;
+    if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
+      return true;
+    }
+    return false;
   }
 }

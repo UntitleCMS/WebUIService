@@ -6,7 +6,7 @@ export const authCodeFlowConfig: AuthConfig = {
   redirectUri: window.location.origin,
   clientId: 'console',
   responseType: 'code',
-  scope: ' ',
+  scope: 'offline_access openid',
   showDebugInformation: true,
 };
 

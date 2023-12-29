@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { AuthorityService } from '../../core/auth/authority.service';
 import { UserInformationService } from '../../core/services/user-information.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from '../../core/auth/client-auth.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -44,7 +43,6 @@ export class NavigationBarComponent implements OnInit {
   }
 
   login() {
-    this.oauth.configure(authCodeFlowConfig);
     this.oauth.loadDiscoveryDocumentAndLogin();
   }
 

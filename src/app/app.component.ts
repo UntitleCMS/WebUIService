@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from './core/auth/client-auth.service';
-import { filter } from 'rxjs';
+import { filter, tap } from 'rxjs';
 import { TokenService } from './core/auth/token.service';
 
 @Component({
@@ -17,11 +17,15 @@ import { TokenService } from './core/auth/token.service';
 export class AppComponent implements OnInit {
   title = 'betablog';
 
-  constructor(private oauth: OAuthService, private tokenService: TokenService) {}
+  constructor(
+    private oauth: OAuthService,
+    private tokenService: TokenService
+  ) {}
 
   ngOnInit(): void {
     this.oauth.configure(authCodeFlowConfig);
     this.oauth.loadDiscoveryDocumentAndTryLogin();
+    this.oauth.setupAutomaticSilentRefresh();
 
     this.oauth.events
       .pipe(filter((e) => e.type === 'token_received'))

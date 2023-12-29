@@ -1,12 +1,12 @@
-<div *ngIf="userProfile" class="flex">
-  <div class="w-[300px] shrink-0 p-8 border-e h-screen space-y-4 sticky top-0">
+<div *ngIf="userProfile" class="flex flex-col md:flex-row">
+  <div class="md:w-[300px] shrink-0 p-8 md:border-e md:h-screen space-y-4 md:sticky md:top-0">
     <div class="flex justify-center items-center">
       <app-avatar [userId]="userProfile.userId" [size]="40"></app-avatar>
     </div>
     <span class="block text-center text-xl font-bold">{{
       userProfile.displayName
     }}</span>
-    <div class="space-y-1">
+    <div *ngIf="userProfile.shortBio.length" class="space-y-1">
       <span class="block text-xs text-zinc-400">คำอธิบายตัวฉัน</span>
       <span class="block text-sm">{{ userProfile.shortBio }}</span>
     </div>
@@ -30,12 +30,18 @@
       </button>
     </div>
   </div>
-  <div class="w-full p-4">
+  <div class="w-full p-4 relative">
     <div>
       <app-lazy-post-generator
         [postType]="'author'"
         [keyId]="userProfile.userId"
-      ></app-lazy-post-generator>
+      >
+        <div
+          class="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex justify-center items-center text-xl text-zinc-400 text-center"
+        >
+          ไม่มีโพสต์ให้แสดง
+        </div></app-lazy-post-generator
+      >
     </div>
   </div>
 </div>

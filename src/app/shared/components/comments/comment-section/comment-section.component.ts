@@ -10,6 +10,7 @@ import {
 } from '../../../../core/models/comment';
 import { CommentService } from '../../../../core/services/comment.service';
 import { AuthorityService } from '../../../../core/auth/authority.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-comment-section',
@@ -26,7 +27,8 @@ export class CommentSectionComponent implements OnInit {
 
   constructor(
     private commentService: CommentService,
-    private authorityService: AuthorityService
+    private authorityService: AuthorityService,
+    private oauth: OAuthService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +38,9 @@ export class CommentSectionComponent implements OnInit {
         .subscribe((comments) => (this.comments = comments));
     }
 
-    this.isLoggedIn = this.authorityService.isLoggedin;
+    this.authorityService.isLoggedin$.subscribe(
+      (status) => (this.isLoggedIn = status)
+    );
   }
 
   addCommentToPost(comment: CommentAndOwner) {
@@ -47,5 +51,9 @@ export class CommentSectionComponent implements OnInit {
     this.comments = this.comments.filter(
       (comment) => comment.comment.comment._id !== deletedComment._id
     );
+  }
+
+  login() {
+    this.oauth.loadDiscoveryDocumentAndLogin();
   }
 }

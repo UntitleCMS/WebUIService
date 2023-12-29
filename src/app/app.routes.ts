@@ -6,6 +6,7 @@ import { FollowingFeedComponent } from './features/read/feed/following-feed/foll
 import { PlainLayoutComponent } from './layouts/plain-layout/plain-layout.component';
 import { ArticlePageComponent } from './features/read/pages/article-page/article-page.component';
 import { MyPostPageComponent } from './features/read/pages/my-post-page/my-post-page.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -23,12 +24,14 @@ export const routes: Routes = [
           {
             path: 'following',
             component: FollowingFeedComponent,
+            canActivate: [authGuard],
           },
         ],
       },
       {
         path: 'my-posts',
         component: MyPostPageComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'search',
@@ -48,6 +51,7 @@ export const routes: Routes = [
           import(
             './features/profile/pages/bookmark-page/bookmark-page.component'
           ).then((m) => m.BookmarkPageComponent),
+        canActivate: [authGuard],
       },
     ],
   },
@@ -70,6 +74,7 @@ export const routes: Routes = [
         path: 'write',
         loadChildren: () =>
           import('./features/write/write.module').then((m) => m.WriteModule),
+        canActivate: [authGuard],
       },
     ],
   },

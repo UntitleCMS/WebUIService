@@ -21,6 +21,8 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
   post!: PostAndAuthor;
   isConfirmPublishPanelOpen = false;
 
+  isPublished = false;
+
   constructor(
     private router: Router,
     private postService: PostService,
@@ -86,6 +88,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
         )
         .subscribe({
           next: (r) => {
+            this.isPublished = true;
             this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
             this.pds.clearPostData();
           },
@@ -101,10 +104,19 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: (r) => {
+            this.isPublished = true;
             this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
             this.pds.clearPostData();
           },
         });
     }
+  }
+
+  canDeactivate() {
+    if (this.isPublished) return true;
+    if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
+      return true;
+    }
+    return false;
   }
 }
