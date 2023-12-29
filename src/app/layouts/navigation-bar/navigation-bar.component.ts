@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarComponent } from '../../shared/components/users/avatar/avatar.component';
 import { CommonModule } from '@angular/common';
 import { AuthorityService } from '../../core/auth/authority.service';
@@ -28,8 +28,10 @@ export class NavigationBarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.auth.isLoggedin;
-    this.userId = this.auth.user_id;
+    this.auth.isLoggedin$.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.auth.user_id$.subscribe((uid) => (this.userId = uid));
     if (this.userId) {
       this.userInformationService
         .getDisplayName([this.userId])
@@ -47,7 +49,8 @@ export class NavigationBarComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout();
-    window.location.reload();
+    if (confirm('คุณกำลังจะออกจากระบบใช่หรือไม่')) {
+      this.auth.logout();
+    }
   }
 }

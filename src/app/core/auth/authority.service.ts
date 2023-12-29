@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { TokenService } from './token.service';
-import { Token } from './token';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +28,7 @@ export class AuthorityService {
   }
 
   public logout() {
-    this._tokenService.token = null;
+    this._tokenService.revokeToken();
   }
 
   private loadToken() {
@@ -38,17 +37,16 @@ export class AuthorityService {
       .subscribe();
   }
 
-  private extractUsetId = (token: Token | null) => {
-    let uid: string | null = null;
+  private extractUsetId = (token: string | null) => {
+    let uid: string | null = null;    
     if (!!token) {
-      uid = JSON.parse(atob(token?.access_token.split('.')[1]))[
-        'sub-b64'
-      ] as string;
+      uid = JSON.parse(atob(token.split('.')[1]))['sub-b64'] as string;
     }
+
     this._user_id.next(uid);
   };
 
-  private checkIsLoggedIn = (token: Token | null) => {
+  private checkIsLoggedIn = (token: string | null) => {
     this._is_loggedin.next(!!token);
   };
 }

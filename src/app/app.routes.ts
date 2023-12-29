@@ -71,11 +71,6 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/write/write.module').then((m) => m.WriteModule),
       },
-      {
-        path: 'auth',
-        loadChildren: () =>
-          import('./features/auth/auth.module').then((m) => m.AuthModule),
-      },
     ],
   },
 ];

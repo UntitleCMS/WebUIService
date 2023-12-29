@@ -56,7 +56,8 @@ export class MobileNavigationComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout();
-    window.location.reload();
+    if (confirm('คุณกำลังจะออกจากระบบใช่หรือไม่')) {
+      this.auth.logout();
+    }
   }
 }

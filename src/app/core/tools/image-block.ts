@@ -14,7 +14,7 @@ interface ImageBlockData extends BlockToolData {
 }
 
 export interface ImageBlockConfig {
-  token: Token | null;
+  token: string | null;
   httpClient?: (cb: (http: HttpClient) => void) => void;
   onUploadFailure?: (e: any) => void;
   onUploadCompleate?: () => void;
@@ -137,7 +137,7 @@ export default class ImageBlock implements BlockTool {
             method: 'POST',
             body: formData,
             headers: {
-              Authorization: `${this.config.token.token_type} ${this.config.token.access_token}`,
+              Authorization: `Bearer ${this.config.token}`,
             },
           });
 
