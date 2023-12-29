@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarComponent } from '../../shared/components/users/avatar/avatar.component';
 import { AuthorityService } from '../../core/auth/authority.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from '../../core/auth/client-auth.service';
 
 @Component({
   selector: 'app-mobile-navigation',
@@ -24,7 +23,6 @@ export class MobileNavigationComponent implements OnInit {
 
   constructor(
     private auth: AuthorityService,
-    private router: Router,
     private oauth: OAuthService
   ) {}
 

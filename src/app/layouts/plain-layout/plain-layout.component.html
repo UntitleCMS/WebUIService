@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+<div class="relative">
+  <router-outlet></router-outlet>
+</div>
+
+<div
+  class="fixed right-4 flex gap-4 items-center p-2 rounded-full bg-zinc-100 shadow-md z-50 transition-all"
+  [ngClass]="isScrollDown ? '-bottom-16' : 'bottom-4'"
+>
+  <button
+    (click)="goBack()"
+    class="flex justify-center items-center p-2 bg-zinc-200 rounded-full hover:bg-zinc-300 transition-all"
+  >
+    <span class="material-symbols-rounded" style="font-size: 20px"
+      >arrow_back</span
+    >
+  </button>
+  <button
+    (click)="goHome()"
+    class="flex justify-center items-center p-2 bg-zinc-200 rounded-full hover:bg-zinc-300 transition-all"
+  >
+    <span class="material-symbols-rounded" style="font-size: 20px">home</span>
+  </button>
+</div>
