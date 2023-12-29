@@ -8,8 +8,8 @@ import { AuthorityService } from '../auth/authority.service';
   providedIn: 'root',
 })
 export class UserInformationRepositoryService {
-  private readonly profileEndpoint = '/apis/profiles';
-  private readonly followEndpoint = '/apis/follows';
+  private readonly profileEndpoint = '/api/user/v1/profiles';
+  private readonly followEndpoint = '/api/user/v1/follows';
 
   constructor(private http: HttpClient, private auth: AuthorityService) {}
 
