@@ -28,6 +28,7 @@
     "@editorjs/table": "^2.3.0",
     "@monaco-editor/loader": "^1.4.0",
     "@ngx-loading-bar/core": "^6.0.2",
+    "@tailwindcss/typography": "^0.5.10",
     "angular-oauth2-oidc": "^17.0.1",
     "codex-notifier": "^1.1.2",
     "codex-tooltip": "^1.0.5",
