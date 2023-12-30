@@ -8,15 +8,5 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "info"
-  },
-  "/apis/**": {
-    "target": {
-      "host": "localhost",
-      "protocol": "http:",
-      "port": 3000
-    },
-    "secure": false,
-    "changeOrigin": true,
-    "logLevel": "info"
   }
 }
