@@ -1,54 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AvatarComponent } from '../../shared/components/users/avatar/avatar.component';
 import { CommonModule } from '@angular/common';
 import { AuthorityService } from '../../core/auth/authority.service';
-import { UserInformationService } from '../../core/services/user-information.service';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { BrandComponent } from '../components/brand/brand.component';
+import { NavLinkComponent } from '../components/nav-link/nav-link.component';
+import { LoginButtonComponent } from '../components/login-button/login-button.component';
+import { LogoutButtonComponent } from '../components/logout-button/logout-button.component';
+import { ExpandButtonComponent } from '../components/expand-button/expand-button.component';
+import { UserPanelComponent } from '../components/user-panel/user-panel.component';
 
 @Component({
   selector: 'app-navigation-bar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, AvatarComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    BrandComponent,
+    NavLinkComponent,
+    LoginButtonComponent,
+    LogoutButtonComponent,
+    ExpandButtonComponent,
+    UserPanelComponent,
+  ],
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.scss',
 })
 export class NavigationBarComponent implements OnInit {
-  isLoggedIn = false;
+  isLoggedIn = true;
   isExpanded = false;
 
-  userId: string | null = null;
-  name = '';
-
-  constructor(
-    private auth: AuthorityService,
-    private userInformationService: UserInformationService,
-    private oauth: OAuthService
-  ) {}
+  constructor(private auth: AuthorityService) {}
 
   ngOnInit(): void {
     this.auth.isLoggedin$.subscribe((status) => {
       this.isLoggedIn = status;
     });
-    this.auth.user_id$.subscribe((uid) => (this.userId = uid));
-    if (this.userId) {
-      this.userInformationService
-        .getDisplayName([this.userId])
-        .subscribe((name) => (this.name = name[0].displayName));
-    }
   }
 
   toggleExpand() {
     this.isExpanded = !this.isExpanded;
-  }
-
-  login() {
-    this.oauth.loadDiscoveryDocumentAndLogin();
-  }
-
-  logout() {
-    if (confirm('คุณกำลังจะออกจากระบบใช่หรือไม่')) {
-      this.auth.logout();
-    }
   }
 }

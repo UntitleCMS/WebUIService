@@ -1,0 +1,17 @@
+<div class="p-3 space-y-2 whitespace-nowrap">
+  <span
+    class="text-xs text-zinc-400 transition-all duration-500"
+    [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
+    >คุณเข้าสู่ระบบในชื่อ</span
+  >
+  <div class="flex gap-4 items-center">
+    <div class="shrink-0">
+      <app-avatar [size]="10" [userId]="userId"></app-avatar>
+    </div>
+    <span
+      class="transition-all duration-500 lg:visible lg:opacity-100 overflow-hidden text-ellipsis"
+      [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
+      >{{ displayName }}</span
+    >
+  </div>
+</div>

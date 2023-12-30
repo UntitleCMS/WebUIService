@@ -24,7 +24,7 @@ export class MainLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.bpo
-      .observe('(min-width: 768px)')
+      .observe('(min-width: 1024px)')
       .subscribe((state) => (this.isLargeScreen = state.matches));
   }
 }

@@ -1,0 +1,12 @@
+<div class="p-3">
+  <button
+    (click)="toggleExpand()"
+    class="w-10 h-10 flex justify-center items-center rounded-lg bg-zinc-300 text-white"
+  >
+    <span
+      class="material-symbols-rounded transition-all duration-500"
+      [ngClass]="isExpanded ? 'rotate-180' : 'rotate-0'"
+      >arrow_forward_ios</span
+    >
+  </button>
+</div>

@@ -1,175 +1,72 @@
 <div
-  class="lg:w-[300px] h-screen flex flex-col justify-between gap-4 sticky top-0 border-e box-content min-w-0 transition-all duration-500"
-  [ngClass]="isExpanded ? 'w-[300px]' : 'w-16'"
+  class="expandable-navigation-bar"
+  [ngClass]="isExpanded ? 'nav-expand' : 'nav-collapse'"
 >
   <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-4 p-4 whitespace-nowrap">
-      <img src="assets/images/logo.svg" class="w-8 h-8" />
-      <span
-        class="transition-all duration-500 text-2xl font-semibold lg:visible lg:opacity-100"
-        [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-        >เบต้าบล็อก</span
-      >
-    </div>
-    <div class="p-4 space-y-4">
-      <button
-        [routerLink]="['/']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-      >
-        <span class="material-symbols-rounded">home</span>
-        <span
-          class="transition-all duration-500 lg:visible lg:opacity-100"
-          [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-          >หน้าหลัก</span
-        >
-      </button>
-      <button
+    <app-brand [isExpanded]="isExpanded"></app-brand>
+    <div class="p-4 flex flex-col gap-4">
+      <app-nav-link
+        [link]="['/']"
+        [icon]="'home'"
+        [name]="'หน้าหลัก'"
+        [isExpanded]="isExpanded"
+      ></app-nav-link>
+      <app-nav-link
         *ngIf="isLoggedIn"
-        [routerLink]="['/', 'following']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-      >
-        <span class="material-symbols-rounded">newspaper</span>
-        <span
-          class="transition-all duration-500 lg:visible lg:opacity-100"
-          [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-          >กำลังติดตาม</span
-        >
-      </button>
-      <button
-        [routerLink]="['/', 'search']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-      >
-        <span class="material-symbols-rounded">search</span>
-        <span
-          class="transition-all duration-500 lg:visible lg:opacity-100"
-          [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-          >ค้นหา</span
-        >
-      </button>
+        [link]="['/', 'following']"
+        [icon]="'newspaper'"
+        [name]="'กำลังติดตาม'"
+        [isExpanded]="isExpanded"
+      ></app-nav-link>
+      <app-nav-link
+        [link]="['/', 'search']"
+        [icon]="'search'"
+        [name]="'ค้นหา'"
+        [isExpanded]="isExpanded"
+      ></app-nav-link>
       <ng-container *ngIf="isLoggedIn">
         <hr />
-        <button
-          [routerLink]="['/', 'write']"
-          class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-        >
-          <span class="material-symbols-rounded">edit</span>
-          <span
-            class="transition-all duration-500 lg:visible lg:opacity-100"
-            [ngClass]="
-              isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'
-            "
-            >เขียนโพสต์</span
-          >
-        </button>
-        <button
-          [routerLink]="['/my-posts']"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-        >
-          <span class="material-symbols-rounded">article</span>
-          <span
-            class="transition-all duration-500 lg:visible lg:opacity-100"
-            [ngClass]="
-              isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'
-            "
-            >โพสต์ของฉัน</span
-          >
-        </button>
-        <button
-          [routerLink]="['/bookmark']"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-        >
-          <span class="material-symbols-rounded">bookmark</span>
-          <span
-            class="transition-all duration-500 lg:visible lg:opacity-100"
-            [ngClass]="
-              isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'
-            "
-            >บุ๊กมาร์กของฉัน</span
-          >
-        </button>
-        <button
-          [routerLink]="['/', 'profile', 'me']"
-          class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-        >
-          <span class="material-symbols-rounded">person</span>
-          <span
-            class="transition-all duration-500 lg:visible lg:opacity-100"
-            [ngClass]="
-              isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'
-            "
-            >โปรไฟล์ของฉัน</span
-          >
-        </button>
+        <app-nav-link
+          [link]="['/', 'write']"
+          [icon]="'edit'"
+          [name]="'เขียนโพสต์'"
+          [isExpanded]="isExpanded"
+        ></app-nav-link>
+        <app-nav-link
+          [link]="['/', 'my-posts']"
+          [icon]="'article'"
+          [name]="'โพสต์ของฉัน'"
+          [isExpanded]="isExpanded"
+        ></app-nav-link>
+        <app-nav-link
+          [link]="['/', 'bookmark']"
+          [icon]="'bookmark'"
+          [name]="'บุ๊กมาร์กของฉัน'"
+          [isExpanded]="isExpanded"
+        ></app-nav-link>
+        <app-nav-link
+          [link]="['/', 'profile', 'me']"
+          [icon]="'person'"
+          [name]="'โปรไฟล์ของฉัน'"
+          [isExpanded]="isExpanded"
+        ></app-nav-link>
       </ng-container>
       <hr />
-      <button
-        *ngIf="isLoggedIn; else LoginButton"
-        (click)="logout()"
-        class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-      >
-        <span class="material-symbols-rounded">logout</span>
-        <span
-          class="transition-all duration-500 lg:visible lg:opacity-100"
-          [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-          >ออกจากระบบ</span
-        >
-      </button>
+      <ng-container *ngIf="isLoggedIn; else LoginButton">
+        <app-logout-button [isExpanded]="isExpanded"></app-logout-button>
+      </ng-container>
     </div>
   </div>
 
   <div class="flex flex-col gap-2">
-    <div class="p-3 lg:p-4 lg:hidden">
-      <button
-        (click)="toggleExpand()"
-        class="w-10 h-10 flex justify-center items-center rounded-lg bg-zinc-300 text-white"
-      >
-        <span
-          class="material-symbols-rounded transition-all duration-500"
-          [ngClass]="isExpanded ? 'rotate-180' : 'rotate-0'"
-          >arrow_forward_ios</span
-        >
-      </button>
-    </div>
-    <div *ngIf="isLoggedIn" class="p-3 lg:p-4 space-y-2 whitespace-nowrap">
-      <span
-        class="text-xs text-zinc-400 transition-all duration-500 lg:visible lg:opacity-100"
-        [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-        >คุณเข้าสู่ระบบในชื่อ</span
-      >
-      <div class="flex gap-4 items-center">
-        <div class="shrink-0">
-          <app-avatar [size]="10" [userId]="userId"></app-avatar>
-        </div>
-        <span
-          class="transition-all duration-500 lg:visible lg:opacity-100 overflow-hidden text-ellipsis"
-          [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-          >{{ name }}</span
-        >
-      </div>
-    </div>
+    <app-expand-button
+      [isExpanded]="isExpanded"
+      (expandChange)="toggleExpand()"
+    ></app-expand-button>
+    <app-user-panel *ngIf="isLoggedIn"></app-user-panel>
   </div>
 </div>
 
 <ng-template #LoginButton>
-  <button
-    (click)="login()"
-    class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
-  >
-    <span class="material-symbols-rounded">login</span>
-    <span
-      class="transition-all duration-500 lg:visible lg:opacity-100"
-      [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
-      >เข้าสู่ระบบ</span
-    >
-  </button>
+  <app-login-button [isExpanded]="isExpanded"></app-login-button>
 </ng-template>

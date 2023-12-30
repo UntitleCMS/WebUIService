@@ -1,8 +1,8 @@
-<div class="md:flex">
+<div class="lg:flex">
   <div *ngIf="isLargeScreen; else mobileNav">
     <app-navigation-bar></app-navigation-bar>
   </div>
-  <div class="grow py-16 md:p-0">
+  <div class="grow">
     <router-outlet></router-outlet>
   </div>
 </div>
