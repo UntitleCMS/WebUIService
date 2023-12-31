@@ -13,5 +13,6 @@ export class NavLinkComponent {
   @Input() link: string[] = ['/'];
   @Input() icon: string = 'home';
   @Input() name: string = 'หน้าหลัก';
+  @Input() variant: 'desktop' | 'mobile' | 'mobile-bottom' = 'desktop';
   @Input() isExpanded: boolean = false;
 }

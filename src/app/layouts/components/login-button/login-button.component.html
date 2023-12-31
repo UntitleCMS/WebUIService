@@ -1,4 +1,5 @@
 <button
+  *ngIf="variant === 'desktop'; else mobileLogin"
   (click)="login()"
   class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
 >
@@ -9,3 +10,9 @@
     >เข้าสู่ระบบ</span
   >
 </button>
+
+<ng-template #mobileLogin>
+  <button (click)="login()" class="flex justify-center items-center">
+    <span class="material-symbols-rounded">login</span>
+  </button>
+</ng-template>

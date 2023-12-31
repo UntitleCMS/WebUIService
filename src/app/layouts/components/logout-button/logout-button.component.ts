@@ -11,6 +11,7 @@ import { AuthorityService } from '../../../core/auth/authority.service';
 })
 export class LogoutButtonComponent {
   @Input() isExpanded: boolean = false;
+  @Input() variant: 'desktop' | 'mobile' = 'desktop'
 
   constructor(private auth: AuthorityService) {}
 

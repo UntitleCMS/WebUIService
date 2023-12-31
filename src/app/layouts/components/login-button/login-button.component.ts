@@ -11,6 +11,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class LoginButtonComponent {
   @Input() isExpanded: boolean = false;
+  @Input() variant: 'desktop' | 'mobile' = 'desktop';
 
   constructor(private oauth: OAuthService) {}
 

@@ -1,8 +1,14 @@
-<div class="flex items-center gap-4 p-4 whitespace-nowrap">
+<div
+  class="flex items-center gap-4"
+  [ngClass]="{ 'p-4 whitespace-nowrap': variant === 'desktop' }"
+>
   <img src="assets/images/logo.svg" class="w-8 h-8" />
   <span
     class="transition-all duration-500 text-2xl font-semibold"
-    [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
+    [ngClass]="{
+      'opacity-100 visible': variant === 'desktop' && isExpanded,
+      'opacity-0 invisible': variant === 'desktop' && !isExpanded
+    }"
     >เบต้าบล็อก</span
   >
 </div>

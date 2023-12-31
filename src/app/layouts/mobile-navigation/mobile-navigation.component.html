@@ -1,114 +1,74 @@
 <div
   class="fixed left-0 w-full transition-all"
-  [ngClass]="isScrollDown ? '-top-16' : 'top-0'"
+  [ngClass]="[
+    isScrollDown ? '-top-16' : 'top-0',
+    isScrolledFromOrigin ? 'shadow-md' : ''
+  ]"
 >
   <div class="flex justify-between items-center p-4 bg-zinc-50">
-    <div class="flex items-center gap-4">
-      <img src="assets/images/logo.svg" class="w-8 h-8" />
-      <span class="text-2xl font-semibold">เบต้าบล็อก</span>
-    </div>
-    <div *ngIf="isLoggedIn; else LoginButton" class="relative">
-      <button
-        (click)="toggleAccountMenu()"
-        class="flex justify-center items-center"
-      >
-        <app-avatar [userId]="userId"></app-avatar>
-      </button>
-      <div
-        *ngIf="isAccountMenuOpen"
-        class="absolute top-10 right-0 w-40 bg-white shadow-md rounded-lg p-4 space-y-4"
-      >
-        <button
-          [routerLink]="['/my-posts']"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
-        >
-          <span class="material-symbols-rounded">article</span>
-          <span class="text-sm">โพสต์ของฉัน</span>
-        </button>
-        <button
-          [routerLink]="['/bookmark']"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
-        >
-          <span class="material-symbols-rounded">bookmark</span>
-          <span class="text-sm">บุ๊กมาร์กของฉัน</span>
-        </button>
-        <button
-          [routerLink]="['/', 'profile', 'me']"
-          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
-        >
-          <span class="material-symbols-rounded">person</span>
-          <span class="text-sm">โปรไฟล์ของฉัน</span>
-        </button>
+    <app-brand variant="mobile"></app-brand>
+    <ng-container *ngIf="isLoggedIn; else LoginButton">
+      <app-mobile-account-button>
+        <app-nav-link
+          [link]="['/', 'my-posts']"
+          [icon]="'article'"
+          [name]="'โพสต์ของฉัน'"
+          variant="mobile"
+        ></app-nav-link>
+        <app-nav-link
+          [link]="['/', 'bookmark']"
+          [icon]="'bookmark'"
+          [name]="'บุ๊กมาร์กของฉัน'"
+          variant="mobile"
+        ></app-nav-link>
+        <app-nav-link
+          [link]="['/', 'profile', 'me']"
+          [icon]="'person'"
+          [name]="'โปรไฟล์ของฉัน'"
+          variant="mobile"
+        ></app-nav-link>
         <hr />
-        <button
-          (click)="logout()"
-          class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
-        >
-          <span class="material-symbols-rounded">logout</span>
-          <span class="text-sm">ออกจากระบบ</span>
-        </button>
-      </div>
-    </div>
+        <app-logout-button variant="mobile"></app-logout-button>
+      </app-mobile-account-button>
+    </ng-container>
   </div>
 </div>
 <div
-  class="fixed left-0 w-full transition-all"
+  class="fixed left-0 w-full transition-all border-t shadow-md"
   [ngClass]="isScrollDown ? '-bottom-16' : 'bottom-0'"
 >
   <div
     class="bg-zinc-50 grid divide-x"
     [ngClass]="isLoggedIn ? 'grid-cols-4' : 'grid-cols-3'"
   >
-    <button
-      [routerLink]="['/']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
-    >
-      <span class="material-symbols-rounded" style="font-size: 20px">home</span>
-      <span class="text-xs">หน้าหลัก</span>
-    </button>
-    <button
+    <app-nav-link
+      [link]="['/']"
+      [icon]="'home'"
+      [name]="'หน้าหลัก'"
+      variant="mobile-bottom"
+    ></app-nav-link>
+    <app-nav-link
       *ngIf="isLoggedIn"
-      [routerLink]="['/following']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
-    >
-      <span class="material-symbols-rounded" style="font-size: 20px"
-        >newspaper</span
-      >
-      <span class="text-xs">กำลังติดตาม</span>
-    </button>
-    <button
-      [routerLink]="['/search']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
-    >
-      <span class="material-symbols-rounded" style="font-size: 20px"
-        >search</span
-      >
-      <span class="text-xs">ค้นหา</span>
-    </button>
-    <button
-      [routerLink]="['/write']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="w-full flex flex-col items-center justify-center px-4 py-2 gap-1 text-zinc-400 hover:text-zinc-600"
-    >
-      <span class="material-symbols-rounded" style="font-size: 20px">edit</span>
-      <span class="text-xs">เขียนโพสต์</span>
-    </button>
+      [link]="['/', 'following']"
+      [icon]="'newspaper'"
+      [name]="'กำลังติดตาม'"
+      variant="mobile-bottom"
+    ></app-nav-link>
+    <app-nav-link
+      [link]="['/', 'search']"
+      [icon]="'search'"
+      [name]="'ค้นหา'"
+      variant="mobile-bottom"
+    ></app-nav-link>
+    <app-nav-link
+      [link]="['/', 'write']"
+      [icon]="'edit'"
+      [name]="'เขียนโพสต์'"
+      variant="mobile-bottom"
+    ></app-nav-link>
   </div>
 </div>
 
 <ng-template #LoginButton>
-  <button (click)="login()" class="flex justify-center items-center">
-    <span class="material-symbols-rounded">login</span>
-  </button>
+  <app-login-button variant="mobile"></app-login-button>
 </ng-template>

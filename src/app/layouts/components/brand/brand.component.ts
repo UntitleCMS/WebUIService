@@ -10,4 +10,5 @@ import { Component, Input } from '@angular/core';
 })
 export class BrandComponent {
   @Input() isExpanded: boolean = false;
+  @Input() variant: 'desktop' | 'mobile' = 'desktop';
 }
