@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { TagComponent } from '../../tags/tag/tag.component';
 import { TagService } from '../../../../core/services/tag.service';
 import { Tag } from '../../../../core/models/tag';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-post-preview',
@@ -26,11 +27,14 @@ import { Tag } from '../../../../core/models/tag';
 export class PostPreviewComponent implements OnInit {
   @Input({ required: true }) postPreviewAndAuthor!: PostPreviewAndAuthor;
 
+  isMediumScreen = false;
+
   synthTags: Tag[] = [];
 
-  constructor(private tagService: TagService) {}
+  constructor(private tagService: TagService, private bpo: BreakpointObserver) {}
 
   ngOnInit(): void {
+    this.bpo.observe('(min-width: 768px)').subscribe(status => this.isMediumScreen = status.matches)
     this.synthTags = this.tagService.mapAllTags(
       this.postPreviewAndAuthor.postPreview.tags
     );

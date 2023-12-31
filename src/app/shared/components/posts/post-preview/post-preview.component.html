@@ -1,50 +1,61 @@
 <div
-  class="space-y-2 p-4 rounded-xl bg-white shadow hover:shadow-md transition-all"
+  class="flex flex-col gap-2 p-4 rounded-xl bg-white shadow hover:shadow-md transition-all"
 >
-  <div>
-    <app-user-header
-      [linkable]="true"
-      [userId]="postPreviewAndAuthor.author.userId"
-      [name]="postPreviewAndAuthor.author.displayName"
-    ></app-user-header>
-  </div>
-  <div class="flex gap-4 justify-between">
-    <div class="flex flex-col justify-between gap-4">
-      <div
-        class="line-clamp-3 space-y-2 hover:cursor-pointer group"
-        [routerLink]="['/post', postPreviewAndAuthor.postPreview.id]"
-      >
-        <h3
-          class="font-bold group-hover:text-blue-600 group-hover:underline underline-offset-2"
-        >
-          {{ postPreviewAndAuthor.postPreview.title }}
-        </h3>
-        <p class="text-sm">
-          {{ postPreviewAndAuthor.postPreview.description }}
-        </p>
-      </div>
-      <div class="justify-self-end flex gap-4 items-center">
+  <app-cover
+    *ngIf="!isMediumScreen"
+    [src]="postPreviewAndAuthor.postPreview.coverImage || ''"
+    [type]="'preview'"
+    variant="mobile"
+    class="cursor-pointer"
+    [routerLink]="['/post', postPreviewAndAuthor.postPreview.id]"
+  ></app-cover>
+  <div class="flex gap-4 justify-between items-center">
+    <div class="flex flex-col gap-2 grow">
+      <app-user-header
+        [linkable]="true"
+        [userId]="postPreviewAndAuthor.author.userId"
+        [name]="postPreviewAndAuthor.author.displayName"
+      ></app-user-header>
+      <div class="flex flex-col justify-between gap-4">
         <div
-          *ngIf="synthTags.length"
-          class="flex gap-2 items-center flex-nowrap overflow-x-auto max-w-[96px] sm:max-w-none rounded-lg hide-scrollbar whitespace-nowrap"
+          class="line-clamp-3 space-y-2 hover:cursor-pointer group"
+          [routerLink]="['/post', postPreviewAndAuthor.postPreview.id]"
         >
-          <div *ngFor="let tag of synthTags">
-            <app-tag [tag]="tag"></app-tag>
-          </div>
+          <h3
+            class="font-bold group-hover:text-blue-600 group-hover:underline underline-offset-2"
+          >
+            {{ postPreviewAndAuthor.postPreview.title }}
+          </h3>
+          <p class="text-sm">
+            {{ postPreviewAndAuthor.postPreview.description }}
+          </p>
         </div>
-        <div
-          class="p-0.5 rounded-full bg-zinc-900"
-          *ngIf="synthTags.length"
-        ></div>
-        <span class="text-xs">{{
-          postPreviewAndAuthor.postPreview.lastUpdatedTime | relativeTime
-        }}</span>
+        <div class="justify-self-end flex gap-4 items-center">
+          <div
+            *ngIf="synthTags.length"
+            class="flex gap-2 items-center flex-nowrap overflow-x-auto max-w-[96px] sm:max-w-none rounded-lg hide-scrollbar whitespace-nowrap"
+          >
+            <div *ngFor="let tag of synthTags">
+              <app-tag [tag]="tag"></app-tag>
+            </div>
+          </div>
+          <div
+            class="p-0.5 rounded-full bg-zinc-900"
+            *ngIf="synthTags.length"
+          ></div>
+          <span class="text-xs">{{
+            postPreviewAndAuthor.postPreview.lastUpdatedTime | relativeTime
+          }}</span>
+        </div>
       </div>
     </div>
-    <div class="grow-0 shrink-0 self-end">
+    <div class="h-36 shrink-0">
       <app-cover
+        *ngIf="isMediumScreen"
         [src]="postPreviewAndAuthor.postPreview.coverImage || ''"
         [type]="'preview'"
+        class="cursor-pointer"
+        [routerLink]="['/post', postPreviewAndAuthor.postPreview.id]"
       ></app-cover>
     </div>
   </div>
