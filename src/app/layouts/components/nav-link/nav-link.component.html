@@ -4,9 +4,9 @@
   [routerLinkActiveOptions]="{ exact: true }"
   class="flex w-full items-center text-zinc-400 hover:text-zinc-600"
   [ngClass]="{
-    'p-1 border-transparent font-semibold whitespace-nowrap gap-4':
+    'p-1 border-transparent font-semibold whitespace-nowrap':
       variant === 'desktop',
-    'gap-4': variant === 'mobile',
+    'gap-4': variant === 'mobile' || variant === 'desktop',
     'flex-col justify-center px-4 py-2 gap-1': variant === 'mobile-bottom'
   }"
 >
