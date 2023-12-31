@@ -5,8 +5,6 @@ import { RouterLink } from '@angular/router';
 import { PostPreviewAndAuthor } from '../../../../core/models/post';
 import { PostService } from '../../../../core/services/post.service';
 import { LazyPostGeneratorComponent } from '../../../../shared/components/posts/lazy-post-generator/lazy-post-generator.component';
-import { AuthorityService } from '../../../../core/auth/authority.service';
-
 @Component({
   selector: 'app-main-feed',
   standalone: true,
@@ -20,21 +18,13 @@ import { AuthorityService } from '../../../../core/auth/authority.service';
   styleUrl: './main-feed.component.scss',
 })
 export class MainFeedComponent implements OnInit {
-  isLoggedIn = false;
-
-  title = 'โปรแกรมเมอร์มือหนึ่ง';
-  description =
-    'เบต้าบล็อกให้บริการในการเขียนบทความในรูปแบบบล็อก โดยอำนวยความสะดวกให้โปรแกรมเมอร์โดยการเพิ่มฟังก์ชันในการเขียนโค้ด และสั่งให้โค้ดทำงาน ขณะนี้ ระบบของเราให้บริการในภาษา C, Python, Java';
-
   posts: PostPreviewAndAuthor[] = [];
 
   constructor(
     private postService: PostService,
-    private auth: AuthorityService
   ) {}
 
   ngOnInit(): void {
-    this.auth.isLoggedin$.subscribe((status) => (this.isLoggedIn = status));
     this.postService
       .getAllPosts({ size: 20, pivot: null })
       .subscribe((ppas) => (this.posts = ppas));

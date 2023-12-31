@@ -1,5 +1,5 @@
 <div
-  class="fixed left-0 w-full transition-all"
+  class="fixed left-0 w-full transition-all z-50"
   [ngClass]="[
     isScrollDown ? '-top-16' : 'top-0',
     isScrolledFromOrigin ? 'shadow-md' : ''
@@ -34,7 +34,7 @@
   </div>
 </div>
 <div
-  class="fixed left-0 w-full transition-all border-t shadow-md"
+  class="fixed left-0 w-full transition-all border-t shadow-md z-50"
   [ngClass]="isScrollDown ? '-bottom-16' : 'bottom-0'"
 >
   <div
