@@ -25,7 +25,14 @@ export class PostService {
     private userInformationService: UserInformationService
   ) {}
 
-  getAllPosts({ size, pivot, author, tags, searchText, bookmark }: GetPostsOptions) {
+  getAllPosts({
+    size,
+    pivot,
+    author,
+    tags,
+    searchText,
+    bookmark,
+  }: GetPostsOptions) {
     return this.postRepo
       .getPosts({ size, pivot, author, tags, searchText, bookmark })
       .pipe(
@@ -105,5 +112,9 @@ export class PostService {
 
   unsavePost(id: string) {
     return this.postRepo.unsavePost(id);
+  }
+
+  getTopPosts() {
+    return this.postRepo.getTopLovePosts(20);
   }
 }

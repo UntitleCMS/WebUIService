@@ -6,7 +6,7 @@ import {
   PostsResponse,
   SinglePostResponse,
 } from '../models/post';
-import { Response } from '../models/response';
+import { KeyPair, Response } from '../models/response';
 import { TagCount } from '../models/tag';
 import { map } from 'rxjs';
 
@@ -115,6 +115,12 @@ export class PostRepositoryService {
     }
     return this.http
       .get<Response<TagCount[]>>(endpoint)
+      .pipe(map((res) => res.data || []));
+  }
+
+  getTopLovePosts(n: number) {
+    return this.http
+      .get<Response<KeyPair[]>>(`${this.postEndpoint}/top/${n}`)
       .pipe(map((res) => res.data || []));
   }
 }
