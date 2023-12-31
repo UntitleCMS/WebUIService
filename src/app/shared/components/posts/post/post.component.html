@@ -14,12 +14,15 @@
   <div *ngIf="isEditable">
     <app-post-tag [tags]="this.postAndAuthor.post.tags"></app-post-tag>
   </div>
-  <div>
+  <div class="flex gap-4 justify-between items-center">
     <app-user-header
       [userId]="postAndAuthor.author.userId"
       [name]="postAndAuthor.author.displayName"
       [linkable]="linkableAuthor"
     ></app-user-header>
+    <div class="hidden sm:block">
+      <ng-content></ng-content>
+    </div>
   </div>
   <div>
     <app-post-cover
