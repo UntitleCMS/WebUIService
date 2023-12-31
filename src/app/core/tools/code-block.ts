@@ -61,11 +61,12 @@ export default class CodeBlock implements BlockTool {
 
   save() {
     const lang = this.monacoEditor.getModel()?.getLanguageId()!;
-    return {
+    const codemodel: CodeModel = {
       language: lang,
       code: this.monacoEditor.getValue(),
-      name: this.data.name || 'untitled',
-    } as CodeModel;
+      name: this.data.name.length ? this.data.name : 'โค้ดบล็อกไม่มีชื่อ',
+    };
+    return codemodel;
   }
 
   render() {
@@ -158,21 +159,19 @@ export default class CodeBlock implements BlockTool {
   }
 
   private structFilenameInput() {
-    const filenamePattern = /^[a-zA-Z0-9_-]+$/;
+    // const filenamePattern = /^[a-zA-Z0-9_-]+$/;
+    const maxNameLength = 24;
     this._filenameInput = document.createElement('input');
     this._filenameInput.type = 'text';
     this._filenameInput.required = true;
-    this._filenameInput.placeholder = 'Enter file name';
+    this._filenameInput.placeholder = 'ชื่อโค้ดบล็อก...';
     this._filenameInput.value = this.data.name || '';
 
-    this._filenameInput.addEventListener('keyup', () => {
-      let currentValue = this._filenameInput.value;
-      if (!currentValue.match(filenamePattern)) {
-        this._filenameInput.value = this.previousValue;
+    this._filenameInput.addEventListener('input', () => {
+      if (this._filenameInput.value.length > maxNameLength) {
+        this._filenameInput.value = this.data.name;
       }
-
       this.data.name = this._filenameInput.value;
-      this.previousValue = this.data.name;
     });
   }
 
@@ -212,7 +211,7 @@ export default class CodeBlock implements BlockTool {
   private runCode() {
     let code = this.monacoEditor.getValue();
     this.sendToExternal({
-      name: this.data.name,
+      name: this.data.name.length ? this.data.name : 'โค้ดบล็อกไม่มีชื่อ',
       language: this.data.language,
       code,
       theme: this.data.theme,
