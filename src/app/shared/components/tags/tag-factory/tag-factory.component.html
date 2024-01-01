@@ -1,4 +1,4 @@
-<div class="flex gap-4">
+<div class="flex flex-col-reverse lg:flex-row  gap-4">
   <div
     class="shrink-0 grow-0 relative"
     data-toggle="false"
@@ -10,13 +10,15 @@
       class="w-40 px-4 py-2 bg-zinc-100 outline-0"
       [ngClass]="isTagSearchPanelOpen ? 'rounded-t-lg shadow-md' : 'rounded-lg'"
       placeholder="ค้นหาแท็ก"
+      [(ngModel)]="searchText"
+      (input)="searchTag($event)"
     />
     <div
       *ngIf="isTagSearchPanelOpen"
-      class="absolute top-full w-40 h-72 bg-white shadow-md rounded-b-lg z-10 overflow-auto"
+      class="absolute top-full w-40 max-h-72 bg-white shadow-md rounded-b-lg z-10 overflow-auto"
     >
       <ul>
-        <li *ngFor="let tag of availableTags">
+        <li *ngFor="let tag of filterAvailableTags">
           <div
             class="p-2 text-center relative group cursor-pointer"
             (click)="addTagToUsingTags(tag)"
