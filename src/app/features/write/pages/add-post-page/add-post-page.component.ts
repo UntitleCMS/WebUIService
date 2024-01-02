@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostComponent } from '../../../../shared/components/posts/post/post.component';
 import { CommonModule } from '@angular/common';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
-import { PostAndAuthor } from '../../../../core/models/post';
+import { PostAddRequest, PostAndAuthor } from '../../../../core/models/post';
 import { PostDataService } from '../../../../core/services/post-data.service';
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { UserInformationService } from '../../../../core/services/user-information.service';
 import { PostService } from '../../../../core/services/post.service';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,8 +20,9 @@ import { Router } from '@angular/router';
 export class AddPostPageComponent implements OnInit, OnDestroy {
   post!: PostAndAuthor;
   isConfirmPublishPanelOpen = false;
+  isConfirmDraftPanelOpen = false;
 
-  isPublished = false;
+  isPostAdded = false;
 
   constructor(
     private router: Router,
@@ -66,57 +67,109 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     this.isConfirmPublishPanelOpen = false;
   }
 
+  openConfirmDraftPanel() {
+    this.isConfirmDraftPanelOpen = true;
+  }
+
+  closeConfirmDraftPanel() {
+    this.isConfirmDraftPanelOpen = false;
+  }
+
   publish() {
     const { title, description, coverImageFile, content, tags } =
       this.pds.getCurrentPostData();
+
     if (coverImageFile) {
-      const formData = new FormData();
-      formData.append('img', coverImageFile);
-      this.postService
-        .uploadImage(formData)
-        .pipe(
-          switchMap((coveImage) =>
-            this.postService.addPost({
-              title,
-              description,
-              coverImage: '/api/img/v1/img/' + coveImage.img,
-              content,
-              isPublish: true,
-              tags,
-            })
-          )
+      this.uploadCoverImage(coverImageFile).pipe(
+        switchMap((coverImage) =>
+          this.publishPost({
+            title,
+            description,
+            coverImage: '/api/img/v1/img/' + coverImage.img,
+            content,
+            tags,
+            isPublish: true,
+          })
         )
-        .subscribe({
-          next: (r) => {
-            this.isPublished = true;
-            this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-            this.pds.clearPostData();
-          },
-        });
+      );
     } else {
-      this.postService
-        .addPost({
-          title,
-          description,
-          content,
-          tags: tags,
-          isPublish: true,
-        })
-        .subscribe({
-          next: (r) => {
-            this.isPublished = true;
-            this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-            this.pds.clearPostData();
-          },
-        });
+      this.publishPost({
+        title,
+        description,
+        content,
+        tags,
+        isPublish: true,
+      });
+    }
+  }
+
+  draft() {
+    console.log('drafting');
+    
+    const { title, description, coverImageFile, content, tags } =
+      this.pds.getCurrentPostData();
+
+    if (coverImageFile) {
+      this.uploadCoverImage(coverImageFile).pipe(
+        switchMap((coverImage) =>
+          this.draftPost({
+            title,
+            description,
+            coverImage: '/api/img/v1/img/' + coverImage.img,
+            content,
+            tags,
+            isPublish: false,
+          })
+        )
+      ).subscribe();
+    } else {
+      console.log('draf2');
+      
+      this.draftPost({
+        title,
+        description,
+        content,
+        tags,
+        isPublish: false,
+      }).subscribe();
     }
   }
 
   canDeactivate() {
-    if (this.isPublished) return true;
+    if (this.isPostAdded) return true;
     if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
       return true;
     }
     return false;
+  }
+
+  uploadCoverImage(coverImageFile: File) {
+    const formData = new FormData();
+    formData.append('img', coverImageFile);
+    return this.postService.uploadImage(formData);
+  }
+
+  publishPost(postAdd: PostAddRequest) {
+    return this.postService.addPost(postAdd).pipe(
+      tap({
+        next: (r) => {
+          this.isPostAdded = true;
+          this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
+          this.pds.clearPostData();
+        },
+      })
+    );
+  }
+
+  draftPost(postAdd: PostAddRequest) {
+    return this.postService.addPost(postAdd).pipe(
+      tap({
+        next: () => {
+          this.isPostAdded = true;
+          this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
+          this.pds.clearPostData();
+        },
+      })
+    );
   }
 }

@@ -6,11 +6,18 @@ import { RouterLink } from '@angular/router';
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { PostService } from '../../../../core/services/post.service';
 import { PostPreviewAndAuthor } from '../../../../core/models/post';
+import { LazyPostGeneratorComponent } from '../../../../shared/components/posts/lazy-post-generator/lazy-post-generator.component';
 
 @Component({
   selector: 'app-my-post-page',
   standalone: true,
-  imports: [CommonModule, PostPreviewComponent, OverlayComponent, RouterLink],
+  imports: [
+    CommonModule,
+    PostPreviewComponent,
+    OverlayComponent,
+    RouterLink,
+    LazyPostGeneratorComponent,
+  ],
   templateUrl: './my-post-page.component.html',
   styleUrl: './my-post-page.component.scss',
 })
@@ -18,6 +25,8 @@ export class MyPostPageComponent implements OnInit {
   posts: PostPreviewAndAuthor[] = [];
   currentDeletePostId?: string;
   currentDeletePost?: PostPreviewAndAuthor;
+
+  currentUserId: string | null = null;
 
   isConfirmDeletePanelOpen = false;
 
@@ -34,6 +43,8 @@ export class MyPostPageComponent implements OnInit {
         author: this.auth.user_id!,
       })
       .subscribe((ppas) => (this.posts = ppas));
+
+    this.auth.user_id$.subscribe((userId) => (this.currentUserId = userId));
   }
 
   openConfirmDeletePostPanel(postId: string) {

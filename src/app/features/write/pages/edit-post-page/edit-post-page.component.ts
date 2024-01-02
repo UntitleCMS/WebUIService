@@ -17,9 +17,12 @@ import { map, switchMap } from 'rxjs';
 })
 export class EditPostPageComponent implements OnInit {
   post!: PostAndAuthor;
-
   isConfirmPublishPanelOpen = false;
-  isPublished = false;
+  isConfirmDraftPanelOpen = false;
+
+  isPostAdded = false;
+
+  isDraftPost = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +43,10 @@ export class EditPostPageComponent implements OnInit {
         }),
         switchMap((postId) => this.postService.getSinglePostById(postId))
       )
-      .subscribe((post) => (this.post = post));
+      .subscribe((post) => {
+        this.post = post;
+        this.isDraftPost = !post.post.isPublished
+      });
   }
 
   openConfirmPublishPanel() {
@@ -73,7 +79,7 @@ export class EditPostPageComponent implements OnInit {
         )
         .subscribe({
           next: (r) => {
-            this.isPublished = true;
+            this.isPostAdded = true;
             this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
             this.pds.clearPostData();
           },
@@ -90,7 +96,7 @@ export class EditPostPageComponent implements OnInit {
         })
         .subscribe({
           next: (r) => {
-            this.isPublished = true;
+            this.isPostAdded = true;
             this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
             this.pds.clearPostData();
           },
@@ -99,7 +105,7 @@ export class EditPostPageComponent implements OnInit {
   }
 
   canDeactivate() {
-    if (this.isPublished) return true;
+    if (this.isPostAdded) return true;
     if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
       return true;
     }

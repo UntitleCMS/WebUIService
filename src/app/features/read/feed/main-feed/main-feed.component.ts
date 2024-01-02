@@ -17,16 +17,6 @@ import { LazyPostGeneratorComponent } from '../../../../shared/components/posts/
   templateUrl: './main-feed.component.html',
   styleUrl: './main-feed.component.scss',
 })
-export class MainFeedComponent implements OnInit {
-  posts: PostPreviewAndAuthor[] = [];
+export class MainFeedComponent {
 
-  constructor(
-    private postService: PostService,
-  ) {}
-
-  ngOnInit(): void {
-    this.postService
-      .getAllPosts({ size: 20, pivot: null })
-      .subscribe((ppas) => (this.posts = ppas));
-  }
 }

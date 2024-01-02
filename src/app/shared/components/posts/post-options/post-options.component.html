@@ -1,0 +1,67 @@
+<div
+  class="relative"
+  data-toggle="false"
+  (clickInside)="openOptionsMenu()"
+  (clickOutside)="closeOptionsMenu()"
+>
+  <button
+    (click)="openOptionsMenu()"
+    class="flex justify-center items-center p-2 rounded-full hover:bg-zinc-100"
+  >
+    <span class="material-symbols-rounded" style="font-size: 20px"
+      >more_vert</span
+    >
+  </button>
+  <div
+    *ngIf="isOptionsMenuOpen"
+    class="absolute top-full right-0 w-48 bg-white p-2 shadow-lg rounded-lg"
+  >
+    <div class="flex flex-col gap-2 text-sm font-semibold">
+      <button class="px-2 py-1 flex items-center gap-4 hover:text-orange-600">
+        <span class="material-symbols-rounded"> unpublished </span
+        >ยกเลิกการเผยแพร่
+      </button>
+      <button
+        [routerLink]="['/', 'write', post.postPreview.id, 'edit']"
+        class="px-2 py-1 flex items-center gap-4 hover:text-yellow-600"
+      >
+        <span class="material-symbols-rounded"> edit </span>แก้ไข
+      </button>
+      <button
+        (click)="openConfirmDeletePostPanel()"
+        class="px-2 py-1 flex items-center gap-4 hover:text-red-600"
+      >
+        <span class="material-symbols-rounded"> delete </span>ลบ
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="isConfirmDeletePostPanelOpen">
+  <app-overlay>
+    <div class="bg-white rounded-lg p-4 space-y-4 max-w-sm mx-auto">
+      <div class="flex justify-between items-center gap-4">
+        <span class="font-semibold"
+          >ยืนยันที่จะลบ {{ post.postPreview.title }} หรือไม่</span
+        >
+      </div>
+      <div>
+        <span class="text-sm"> โพสต์ของคุณจะถูกลบอย่างถาวร </span>
+      </div>
+      <div class="flex justify-end items-center gap-4 text-sm font-semibold">
+        <button
+          (click)="closeConfirmDeletePostPanel()"
+          class="px-4 py-2 flex justify-center items-center rounded-md"
+        >
+          ยกเลิก
+        </button>
+        <button
+          (click)="deletePost()"
+          class="px-4 py-2 flex justify-center items-center bg-red-600 hover:bg-red-800 text-white rounded-md"
+        >
+          ลบ
+        </button>
+      </div>
+    </div>
+  </app-overlay>
+</ng-container>
