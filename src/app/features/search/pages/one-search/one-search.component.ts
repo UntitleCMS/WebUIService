@@ -8,6 +8,8 @@ import { Subject, debounceTime } from 'rxjs';
 import { TagService } from '../../../../core/services/tag.service';
 import { Tag } from '../../../../core/models/tag';
 import { TagComponent } from '../../../../shared/components/tags/tag/tag.component';
+import { TopLovePostComponent } from '../../../read/feat/top-love-post/top-love-post.component';
+import { TopTagComponent } from '../../../read/feat/top-tag/top-tag.component';
 
 @Component({
   selector: 'app-one-search',
@@ -18,6 +20,8 @@ import { TagComponent } from '../../../../shared/components/tags/tag/tag.compone
     ReactiveFormsModule,
     PostPreviewComponent,
     TagComponent,
+    TopTagComponent,
+    TopLovePostComponent
   ],
   templateUrl: './one-search.component.html',
   styleUrl: './one-search.component.scss',

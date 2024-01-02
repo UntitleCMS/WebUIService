@@ -45,7 +45,11 @@
 </div>
 
 <ng-template #waitSearch>
-  <div class="text-center text-zinc-400">ผลลัพธ์จะแสดงหลังจากคุณกดค้นหา</div>
+  <div class="flex flex-col gap-4">
+    <div class="text-center text-zinc-400">ผลลัพธ์จะแสดงหลังจากคุณกดค้นหา</div>
+    <app-top-tag></app-top-tag>
+    <app-top-love-post></app-top-love-post>
+  </div>
 </ng-template>
 
 <ng-template #emptyTags>

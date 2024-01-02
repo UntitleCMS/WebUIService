@@ -28,7 +28,7 @@ import { UserPanelComponent } from '../components/user-panel/user-panel.componen
 })
 export class NavigationBarComponent implements OnInit {
   isLoggedIn = true;
-  isExpanded = false;
+  isExpanded = true;
 
   constructor(private auth: AuthorityService) {}
 

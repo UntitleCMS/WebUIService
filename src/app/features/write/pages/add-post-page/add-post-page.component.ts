@@ -91,7 +91,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
             isPublish: true,
           })
         )
-      );
+      ).subscribe();
     } else {
       this.publishPost({
         title,
@@ -99,7 +99,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
         content,
         tags,
         isPublish: true,
-      });
+      }).subscribe();
     }
   }
 
