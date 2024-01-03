@@ -31,10 +31,10 @@
           </p>
         </div>
         <div class="justify-self-end flex gap-4 justify-between items-center">
-          <div class="flex gap-4 items-center">
+          <div class="flex gap-4 md:items-center flex-col md:flex-row">
             <div
               *ngIf="synthTags.length"
-              class="flex gap-2 items-center flex-nowrap overflow-x-auto max-w-[96px] sm:max-w-none rounded-lg hide-scrollbar whitespace-nowrap"
+              class="flex gap-2 items-center"
             >
               <div *ngFor="let tag of synthTags">
                 <app-tag [tag]="tag"></app-tag>
@@ -42,7 +42,7 @@
             </div>
             <div
               class="p-0.5 rounded-full bg-zinc-900"
-              *ngIf="synthTags.length"
+              *ngIf="synthTags.length && isMediumScreen"
             ></div>
             <span class="text-xs">{{
               postPreviewAndAuthor.postPreview.lastUpdatedTime | relativeTime

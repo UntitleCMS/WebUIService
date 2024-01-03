@@ -1,12 +1,12 @@
 <div *ngIf="!isLoggedIn" class="max-w-screen-lg mx-auto">
   <app-landing></app-landing>
 </div>
-<div class="flex flex-col-reverse lg:flex-row">
+<div class="flex flex-col-reverse xl:flex-row">
   <main class="grow">
     <router-outlet></router-outlet>
   </main>
   <aside
-    class="shrink-0 grow-0 w-full lg:w-[300px] lg:h-screen lg:sticky lg:top-0 p-4 hide-scrollbar overflow-auto flex flex-col gap-8"
+    class="shrink-0 grow-0 w-full xl:w-[300px] xl:h-screen xl:sticky xl:top-0 p-4 hide-scrollbar overflow-auto flex flex-col gap-8"
   >
     <app-top-tag></app-top-tag>
     <ng-container *ngIf="isLargeScreen">

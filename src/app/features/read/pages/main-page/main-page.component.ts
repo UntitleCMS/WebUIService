@@ -33,7 +33,7 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.auth.isLoggedin$.subscribe((status) => (this.isLoggedIn = status));
     this.bpo
-      .observe('(min-width: 1024px)')
+      .observe('(min-width: 1280px)')
       .subscribe((status) => (this.isLargeScreen = status.matches));
   }
 }
