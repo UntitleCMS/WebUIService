@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LandingComponent } from '../../components/landing/landing.component';
@@ -25,6 +25,8 @@ export class MainPageComponent implements OnInit {
 
   isLargeScreen = false;
 
+  @ViewChild('main') mainView!: ElementRef<HTMLElement>;
+
   constructor(
     private auth: AuthorityService,
     private bpo: BreakpointObserver
@@ -35,5 +37,12 @@ export class MainPageComponent implements OnInit {
     this.bpo
       .observe('(min-width: 1280px)')
       .subscribe((status) => (this.isLargeScreen = status.matches));
+  }
+
+  scrollToMainView() {
+    this.mainView.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 }

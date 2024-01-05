@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 export class LandingComponent {
   isLoggedIn = false;
 
+  @Output() scrollButton = new EventEmitter();
+
   title = 'โปรแกรมเมอร์มือหนึ่ง';
   description =
     'เบต้าบล็อกให้บริการในการเขียนบทความในรูปแบบบล็อก โดยอำนวยความสะดวกให้โปรแกรมเมอร์โดยการเพิ่มฟังก์ชันในการเขียนโค้ด และสั่งให้โค้ดทำงาน ขณะนี้ ระบบของเราให้บริการในภาษา C, Python, Java';
@@ -20,5 +22,9 @@ export class LandingComponent {
 
   login() {
     this.oauth.loadDiscoveryDocumentAndLogin();
+  }
+
+  scrollToMain() {
+    this.scrollButton.emit();
   }
 }
