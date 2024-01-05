@@ -1,13 +1,22 @@
 <div class="p-4 flex flex-col gap-4 md:min-h-screen relative">
   <h2 class="text-2xl font-bold p-4">โพสต์ของฉัน</h2>
   <div class="flex gap-4">
-    <button class="px-4 py-2 font-semibold rounded-full bg-zinc-200">
-      ทั้งหมด
+    <button
+      (click)="switchFilterTo('published')"
+      class="px-4 py-2 font-semibold rounded-full"
+      [ngClass]="{ 'bg-zinc-200': postFilter === 'published' }"
+    >
+      เผยแพร่แล้ว
     </button>
-    <button class="px-4 py-2 font-semibold rounded-full">เผยแพร่แล้ว</button>
-    <button class="px-4 py-2 font-semibold rounded-full">ฉบับร่าง</button>
+    <button
+      (click)="switchFilterTo('drafted')"
+      class="px-4 py-2 font-semibold rounded-full"
+      [ngClass]="{ 'bg-zinc-200': postFilter === 'drafted' }"
+    >
+      ฉบับร่าง
+    </button>
   </div>
-  <div>
+  <div *ngIf="postFilter === 'published'; else draftZone">
     <app-lazy-post-generator
       [postType]="'author'"
       [keyId]="currentUserId!"
@@ -15,43 +24,11 @@
   </div>
 </div>
 
-<ng-container *ngIf="isConfirmDeletePanelOpen">
-  <app-overlay>
-    <div class="bg-white rounded-lg p-4 space-y-4 max-w-sm mx-auto">
-      <div class="flex justify-between items-center gap-4">
-        <span class="font-semibold"
-          >ยืนยันที่จะลบ{{
-            currentDeletePost
-              ? " " + currentDeletePost.postPreview.title + " "
-              : ""
-          }}หรือไม่</span
-        >
-      </div>
-      <div>
-        <span class="text-sm"> โพสต์ของคุณจะถูกลบอย่างถาวร </span>
-      </div>
-      <div class="flex justify-end items-center gap-4 text-sm font-semibold">
-        <button
-          (click)="closeConfirmDeletePostPanel()"
-          class="px-4 py-2 flex justify-center items-center rounded-md"
-        >
-          ยกเลิก
-        </button>
-        <button
-          (click)="deletePost()"
-          class="px-4 py-2 flex justify-center items-center bg-red-600 hover:bg-red-800 text-white rounded-md"
-        >
-          ลบ
-        </button>
-      </div>
-    </div>
-  </app-overlay>
-</ng-container>
-
-<ng-template #emptyPost>
-  <div
-    class="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-center text-xl text-zinc-400"
-  >
-    ไม่มีโพสต์ให้แสดง
+<ng-template #draftZone>
+  <div class="flex flex-col gap-4">
+    <app-post-preview
+      *ngFor="let post of posts"
+      [postPreviewAndAuthor]="post"
+    ></app-post-preview>
   </div>
 </ng-template>

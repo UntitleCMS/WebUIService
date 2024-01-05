@@ -31,6 +31,7 @@ export class PostRepositoryService {
   private readonly postEndpoint = '/api/article/v1/articles';
   private readonly tagEndpoint = '/api/article/v1/tags';
   private readonly bookmarkEndpoint = '/api/article/v1/bookmark';
+  private readonly draftEndpoint = '/api/article/v1/darfts';
 
   constructor(private http: HttpClient) {}
 
@@ -122,5 +123,15 @@ export class PostRepositoryService {
     return this.http
       .get<Response<KeyPair[]>>(`${this.postEndpoint}/top/${n}`)
       .pipe(map((res) => res.data || []));
+  }
+
+  getDraftPosts({ size, pivot }: GetPostsOptions) {
+    let endpoint = this.draftEndpoint;
+    endpoint += '?take=' + size;
+    if (pivot) {
+      endpoint += '&from=<' + pivot;
+    }
+
+    return this.http.get<PostsResponse>(endpoint.toString());
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostComponent } from '../../../../shared/components/posts/post/post.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
 import { PostAddRequest, PostAndAuthor } from '../../../../core/models/post';
 import { PostDataService } from '../../../../core/services/post-data.service';
@@ -9,6 +9,7 @@ import { UserInformationService } from '../../../../core/services/user-informati
 import { PostService } from '../../../../core/services/post.service';
 import { switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
 
 @Component({
   selector: 'app-add-post-page',
@@ -29,7 +30,9 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     private postService: PostService,
     private pds: PostDataService,
     private auth: AuthorityService,
-    private userInformationService: UserInformationService
+    private userInformationService: UserInformationService,
+    private location: Location,
+    private postManipulate: PostManipulateService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +62,34 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  publish() {
+    this.postManipulate.add().subscribe({
+      next: (r) => {
+        this.isPostAdded = true;
+        this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
+        this.pds.clearPostData();
+      },
+    });
+  }
+
+  draft() {
+    this.postManipulate.add('draft').subscribe({
+      next: (r) => {
+        this.isPostAdded = true;
+        this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
+        this.pds.clearPostData();
+      },
+    });
+  }
+
+  canDeactivate() {
+    if (this.isPostAdded) return true;
+    if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
+      return true;
+    }
+    return false;
+  }
+
   openConfirmPublishPanel() {
     this.isConfirmPublishPanelOpen = true;
   }
@@ -75,101 +106,7 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     this.isConfirmDraftPanelOpen = false;
   }
 
-  publish() {
-    const { title, description, coverImageFile, content, tags } =
-      this.pds.getCurrentPostData();
-
-    if (coverImageFile) {
-      this.uploadCoverImage(coverImageFile).pipe(
-        switchMap((coverImage) =>
-          this.publishPost({
-            title,
-            description,
-            coverImage: '/api/img/v1/img/' + coverImage.img,
-            content,
-            tags,
-            isPublish: true,
-          })
-        )
-      ).subscribe();
-    } else {
-      this.publishPost({
-        title,
-        description,
-        content,
-        tags,
-        isPublish: true,
-      }).subscribe();
-    }
-  }
-
-  draft() {
-    console.log('drafting');
-    
-    const { title, description, coverImageFile, content, tags } =
-      this.pds.getCurrentPostData();
-
-    if (coverImageFile) {
-      this.uploadCoverImage(coverImageFile).pipe(
-        switchMap((coverImage) =>
-          this.draftPost({
-            title,
-            description,
-            coverImage: '/api/img/v1/img/' + coverImage.img,
-            content,
-            tags,
-            isPublish: false,
-          })
-        )
-      ).subscribe();
-    } else {
-      console.log('draf2');
-      
-      this.draftPost({
-        title,
-        description,
-        content,
-        tags,
-        isPublish: false,
-      }).subscribe();
-    }
-  }
-
-  canDeactivate() {
-    if (this.isPostAdded) return true;
-    if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
-      return true;
-    }
-    return false;
-  }
-
-  uploadCoverImage(coverImageFile: File) {
-    const formData = new FormData();
-    formData.append('img', coverImageFile);
-    return this.postService.uploadImage(formData);
-  }
-
-  publishPost(postAdd: PostAddRequest) {
-    return this.postService.addPost(postAdd).pipe(
-      tap({
-        next: (r) => {
-          this.isPostAdded = true;
-          this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-          this.pds.clearPostData();
-        },
-      })
-    );
-  }
-
-  draftPost(postAdd: PostAddRequest) {
-    return this.postService.addPost(postAdd).pipe(
-      tap({
-        next: () => {
-          this.isPostAdded = true;
-          this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
-          this.pds.clearPostData();
-        },
-      })
-    );
+  cancelAddAndGoBack() {
+    this.location.back();
   }
 }

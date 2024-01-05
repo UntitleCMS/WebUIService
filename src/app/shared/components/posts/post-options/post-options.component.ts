@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { OverlayComponent } from '../../utils/overlay/overlay.component';
 import { PostPreviewAndAuthor } from '../../../../core/models/post';
 import { PostService } from '../../../../core/services/post.service';
+// import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
 
 @Component({
   selector: 'app-post-options',
@@ -25,8 +26,12 @@ export class PostOptionsComponent {
   isOptionsMenuOpen = false;
 
   isConfirmDeletePostPanelOpen = false;
+  // isCancelPublishPanelOpen = false;
 
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    // private postManipulate: PostManipulateService
+  ) {}
 
   openOptionsMenu() {
     this.isOptionsMenuOpen = true;
@@ -44,9 +49,25 @@ export class PostOptionsComponent {
     this.isConfirmDeletePostPanelOpen = false;
   }
 
+  // openCancelPublishPanel() {
+  //   this.isCancelPublishPanelOpen = true;
+  // }
+
+  // closeCancelPublishPanel() {
+  //   this.isCancelPublishPanelOpen = false;
+  // }
+
   deletePost() {
     this.postService.deletePost(this.post.postPreview.id).subscribe(() => {
       this.closeConfirmDeletePostPanel();
     });
   }
+
+  // draft() {
+  //   this.postManipulate.update(this.post.postPreview.id, 'draft').subscribe({
+  //     next: () => {
+  //       this.closeCancelPublishPanel();
+  //     },
+  //   });
+  // }
 }

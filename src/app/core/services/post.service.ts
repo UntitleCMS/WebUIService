@@ -117,4 +117,16 @@ export class PostService {
   getTopPosts() {
     return this.postRepo.getTopLovePosts(20);
   }
+
+  getDraftPosts({ size, pivot }: GetPostsOptions) {
+    return this.postRepo.getDraftPosts({ size, pivot }).pipe(
+      switchMap((response) => {
+        const postPreviews = response.data?.collections || [];
+        const authorIds = postPreviews.map(
+          (postPreview) => postPreview.authorId
+        );
+        return this.mapPostPreviewsAndAuthors(postPreviews, authorIds);
+      })
+    );
+  }
 }

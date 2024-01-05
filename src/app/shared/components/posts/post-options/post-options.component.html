@@ -17,10 +17,13 @@
     class="absolute top-full right-0 w-48 bg-white p-2 shadow-lg rounded-lg"
   >
     <div class="flex flex-col gap-2 text-sm font-semibold">
-      <button class="px-2 py-1 flex items-center gap-4 hover:text-orange-600">
+      <!-- <button
+        (click)="openCancelPublishPanel()"
+        class="px-2 py-1 flex items-center gap-4 hover:text-orange-600"
+      >
         <span class="material-symbols-rounded"> unpublished </span
         >ยกเลิกการเผยแพร่
-      </button>
+      </button> -->
       <button
         [routerLink]="['/', 'write', post.postPreview.id, 'edit']"
         class="px-2 py-1 flex items-center gap-4 hover:text-yellow-600"
@@ -65,3 +68,30 @@
     </div>
   </app-overlay>
 </ng-container>
+
+<!-- <ng-container *ngIf="isCancelPublishPanelOpen">
+  <app-overlay>
+    <div class="bg-white rounded-lg p-4 space-y-4 max-w-sm mx-auto">
+      <div class="flex justify-between items-center gap-4">
+        <span class="font-semibold">ยืนยันที่จะบันทึกเป็นฉบับร่างหรือไม่</span>
+      </div>
+      <div>
+        <span class="text-sm"> โพสต์จะถูกเก็บไว้ที่คลังฉบับร่างของคุณ</span>
+      </div>
+      <div class="flex justify-end items-center gap-4 text-sm font-semibold">
+        <button
+          (click)="closeCancelPublishPanel()"
+          class="px-4 py-2 flex justify-center items-center rounded-md"
+        >
+          ยกเลิก
+        </button>
+        <button
+          (click)="draft()"
+          class="px-4 py-2 flex justify-center items-center bg-zinc-600 hover:bg-zinc-800 text-white rounded-md"
+        >
+          ลบ
+        </button>
+      </div>
+    </div>
+  </app-overlay>
+</ng-container> -->
