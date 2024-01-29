@@ -2,20 +2,20 @@
   class="fixed h-screen w-full top-0 left-0 bg-black/25 z-[100] backdrop-blur p-4"
 >
   <div class="w-full bar-h bg-white rounded-t-xl flex justify-end">
-    <div class="gap-2 p-4 pe-1 sm:pe-4 flex justify-start flex-auto">
-      <div class="p-2 flex w-full overflow-clip justify-start">
+    <div class="gap-2 p-4 pe-1 sm:pe-4 flex justify-between flex-auto">
+      <div class="p-2 flex overflow-clip justify-start">
         <img
           [src]="'assets/images/lang-logo/' + code.language + '.svg'"
           alt="code logo"
           class="w-6 me-1 sm:me-6"
         />
-        <p>{{ code.language }}</p>
+        <p class="hidden md:block">{{ code.language }}</p>
       </div>
       <div class="p-2 flex-auto text-center hidden sm:block">
         {{ code.name }}
       </div>
       <div class="text-xs shrink-0 self-center">
-        จำนวนครั้งที่รันได้ {{ "10/10" }}
+        <span class="hidden sm:inline">จำนวนครั้งที่</span>รันได้ {{ "10/10" }}
       </div>
     </div>
     <div class="gap-2 p-4 ps-1 sm:ps-4 min-w-[152px]">
