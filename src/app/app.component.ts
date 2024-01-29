@@ -23,9 +23,16 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (
+      this.oauth.getAccessTokenExpiration() &&
+      Date.now() > this.oauth.getAccessTokenExpiration()
+    ) {
+      this.tokenService.revokeToken();
+    }
     this.oauth.configure(authCodeFlowConfig);
     this.oauth.loadDiscoveryDocumentAndTryLogin();
     this.oauth.setupAutomaticSilentRefresh();
+
 
     this.oauth.events
       .pipe(filter((e) => e.type === 'token_received'))
