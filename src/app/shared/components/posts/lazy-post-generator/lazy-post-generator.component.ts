@@ -4,8 +4,6 @@ import {
   HostListener,
   Input,
   OnChanges,
-  OnDestroy,
-  OnInit,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -22,9 +20,7 @@ import { BlockGroupSkeletonComponent } from '../../../skeletons/block-group-skel
   templateUrl: './lazy-post-generator.component.html',
   styleUrl: './lazy-post-generator.component.scss',
 })
-export class LazyPostGeneratorComponent
-  implements OnChanges, OnInit, OnDestroy
-{
+export class LazyPostGeneratorComponent implements OnChanges {
   @Input({ required: true }) postType:
     | 'all'
     | 'following'
@@ -47,42 +43,25 @@ export class LazyPostGeneratorComponent
     }
   }
 
-  ngOnInit(): void {
-    // this.selectMethod();
-  }
-
-  ngOnDestroy(): void {
-    // console.log('destroyed');
-  }
-
   selectMethod() {
-    if (this.postType === 'all') {
-      this.lazyPostService.getLazyMap('all', '').posts$.subscribe((ppas) => {
+    const postTypeActions = {
+      all: () => this.lazyPostService.getLazyMap('all', ''),
+      following: () => this.lazyPostService.getLazyMap('following', ''),
+      author: () =>
+        this.keyId
+          ? this.lazyPostService.getLazyMap('author', this.keyId)
+          : null,
+      tag: () =>
+        this.keyId ? this.lazyPostService.getLazyMap('tag', this.keyId) : null,
+      bookmark: () => this.lazyPostService.getLazyMap('bookmark', ''),
+    };
+
+    const action = postTypeActions[this.postType];
+
+    if (action) {
+      action()?.posts$.subscribe((ppas) => {
         this.ppas = ppas;
       });
-      this.loadMore();
-    } else if (this.postType === 'following') {
-      this.ppas = [];
-    } else if (this.postType === 'author' && this.keyId) {
-      this.lazyPostService
-        .getLazyMap('author', this.keyId)
-        .posts$.subscribe((ppas) => {
-          this.ppas = ppas;
-        });
-      this.loadMore();
-    } else if (this.postType === 'tag' && this.keyId) {
-      this.lazyPostService
-        .getLazyMap('tag', this.keyId)
-        .posts$.subscribe((ppas) => {
-          this.ppas = ppas;
-        });
-      this.loadMore();
-    } else if (this.postType === 'bookmark') {
-      this.lazyPostService
-        .getLazyMap('bookmark', '')
-        .posts$.subscribe((ppas) => {
-          this.ppas = ppas;
-        });
       this.loadMore();
     }
   }

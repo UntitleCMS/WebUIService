@@ -32,9 +32,10 @@ export class PostService {
     tags,
     searchText,
     bookmark,
+    following
   }: GetPostsOptions) {
     return this.postRepo
-      .getPosts({ size, pivot, author, tags, searchText, bookmark })
+      .getPosts({ size, pivot, author, tags, searchText, bookmark, following })
       .pipe(
         switchMap((response) => {
           const postPreviews = response.data?.collections || [];

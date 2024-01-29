@@ -17,6 +17,7 @@ export type GetPostsOptions = {
   author?: string;
   searchText?: string;
   bookmark?: boolean;
+  following?: boolean;
 };
 
 export type GetTagsOptions = {
@@ -42,6 +43,7 @@ export class PostRepositoryService {
     tags,
     searchText,
     bookmark,
+    following
   }: GetPostsOptions) {
     let endpoint = bookmark ? this.bookmarkEndpoint : this.postEndpoint;
     endpoint += '?take=' + size;
@@ -61,6 +63,10 @@ export class PostRepositoryService {
 
     if (bookmark) {
       endpoint += '&bookmarked=true';
+    }
+
+    if (following) {
+      endpoint += '&following=true';
     }
 
     return this.http.get<PostsResponse>(endpoint.toString());
