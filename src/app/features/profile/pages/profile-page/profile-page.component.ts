@@ -9,6 +9,7 @@ import { LazyPostGeneratorComponent } from '../../../../shared/components/posts/
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { FollowButtonComponent } from '../../../../shared/components/users/follow-button/follow-button.component';
 import { LazyPostService } from '../../../../core/services/lazy-post.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -32,7 +33,8 @@ export class ProfilePageComponent implements OnInit {
     private route: ActivatedRoute,
     private authority: AuthorityService,
     private userInformationService: UserInformationService,
-    private lazyPostService: LazyPostService
+    private lazyPostService: LazyPostService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +71,11 @@ export class ProfilePageComponent implements OnInit {
         this.followStatus = true;
         this.userProfile.follower += 1;
         this.lazyPostService.revokeCache('following');
+        this.toastService.push({
+          title: `ติดตาม ${this.userProfile.displayName} สำเร็จ`,
+          type: 'success',
+          icon: 'done',
+        });
       },
       error: (e) => {
         if (e.status === 409) {
@@ -84,6 +91,11 @@ export class ProfilePageComponent implements OnInit {
         this.followStatus = false;
         this.userProfile.follower -= 1;
         this.lazyPostService.revokeCache('following');
+        this.toastService.push({
+          title: `เลิกติดตาม ${this.userProfile.displayName} สำเร็จ`,
+          type: 'success',
+          icon: 'done',
+        });
       },
       error: (e) => {
         if (e.status === 409) {

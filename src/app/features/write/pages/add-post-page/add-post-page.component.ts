@@ -2,14 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostComponent } from '../../../../shared/components/posts/post/post.component';
 import { CommonModule, Location } from '@angular/common';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
-import { PostAddRequest, PostAndAuthor } from '../../../../core/models/post';
+import { PostAndAuthor } from '../../../../core/models/post';
 import { PostDataService } from '../../../../core/services/post-data.service';
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { UserInformationService } from '../../../../core/services/user-information.service';
-import { PostService } from '../../../../core/services/post.service';
-import { switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-add-post-page',
@@ -27,12 +26,12 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private postService: PostService,
     private pds: PostDataService,
     private auth: AuthorityService,
     private userInformationService: UserInformationService,
     private location: Location,
-    private postManipulate: PostManipulateService
+    private postManipulate: PostManipulateService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +65,11 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     this.postManipulate.add().subscribe({
       next: (r) => {
         this.isPostAdded = true;
+        this.toastService.push({
+          title: 'เผยแพร่โพสต์สำเร็จ',
+          type: 'success',
+          icon: 'done',
+        });
         this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
         this.pds.clearPostData();
       },
@@ -76,6 +80,11 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     this.postManipulate.add('draft').subscribe({
       next: (r) => {
         this.isPostAdded = true;
+        this.toastService.push({
+          title: 'บันทึกเป็นฉบับร่างแล้ว',
+          type: 'success',
+          icon: 'done',
+        });
         this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
         this.pds.clearPostData();
       },

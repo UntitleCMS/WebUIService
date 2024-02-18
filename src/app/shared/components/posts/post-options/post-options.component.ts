@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { OverlayComponent } from '../../utils/overlay/overlay.component';
 import { PostPreviewAndAuthor } from '../../../../core/models/post';
 import { PostService } from '../../../../core/services/post.service';
+import { ToastService } from '../../../../core/services/toast.service';
 // import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
 
 @Component({
@@ -30,8 +31,9 @@ export class PostOptionsComponent {
 
   constructor(
     private postService: PostService,
-    // private postManipulate: PostManipulateService
-  ) {}
+    private toastService: ToastService
+  ) // private postManipulate: PostManipulateService
+  {}
 
   openOptionsMenu() {
     this.isOptionsMenuOpen = true;
@@ -59,6 +61,11 @@ export class PostOptionsComponent {
 
   deletePost() {
     this.postService.deletePost(this.post.postPreview.id).subscribe(() => {
+      this.toastService.push({
+        title: 'ลบโพสต์สำเร็จ',
+        type: 'success',
+        icon: 'done',
+      });
       this.closeConfirmDeletePostPanel();
     });
   }

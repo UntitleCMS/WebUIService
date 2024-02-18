@@ -8,6 +8,7 @@ import { PostService } from '../../../../core/services/post.service';
 import { PostDataService } from '../../../../core/services/post-data.service';
 import { map, switchMap } from 'rxjs';
 import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-edit-post-page',
@@ -31,7 +32,8 @@ export class EditPostPageComponent implements OnInit {
     private postService: PostService,
     private pds: PostDataService,
     private location: Location,
-    private postManipulate: PostManipulateService
+    private postManipulate: PostManipulateService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +58,11 @@ export class EditPostPageComponent implements OnInit {
     this.postManipulate.update(this.post.post.id).subscribe({
       next: (r) => {
         this.isPostAdded = true;
+        this.toastService.push({
+          title: 'อัปเดตโพสต์สำเร็จ',
+          type: 'success',
+          icon: 'done',
+        });
         this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
         this.pds.clearPostData();
       },
@@ -64,8 +71,13 @@ export class EditPostPageComponent implements OnInit {
 
   draft() {
     this.postManipulate.update(this.post.post.id, 'draft').subscribe({
-      next: (r) => {
+      next: () => {
         this.isPostAdded = true;
+        this.toastService.push({
+          title: 'บันทึกเป็นฉบับร่างแล้ว',
+          type: 'success',
+          icon: 'done',
+        });
         this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
         this.pds.clearPostData();
       },
