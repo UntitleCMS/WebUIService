@@ -10,7 +10,7 @@ export class PostManipulateService {
   constructor(private pds: PostDataService, private postService: PostService) {}
 
   update(postId: string, type: 'publish' | 'draft' = 'publish') {
-    const { title, description, coverImageFile, content, tags } =
+    const { title, description, coverImageFile, coverImageSrc, content, tags } =
       this.pds.getCurrentPostData();
 
     if (coverImageFile) {
@@ -34,6 +34,7 @@ export class PostManipulateService {
         description,
         content,
         tags: tags,
+        coverImage: coverImageSrc,
         isPublish: type === 'publish',
       });
     }
@@ -64,6 +65,7 @@ export class PostManipulateService {
         description,
         content,
         tags,
+        coverImage: undefined,
         isPublish: type === 'publish',
       });
     }

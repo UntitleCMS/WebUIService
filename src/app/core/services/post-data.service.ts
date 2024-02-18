@@ -33,6 +33,10 @@ export class PostDataService {
     this._content = newContent;
   }
 
+  get coverImageSrc() {
+    return this._coverImageSrc;
+  }
+
   get coverImage() {
     return this._coverImage;
   }
