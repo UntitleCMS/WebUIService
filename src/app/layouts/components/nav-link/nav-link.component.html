@@ -2,24 +2,18 @@
   [routerLink]="link"
   routerLinkActive="active"
   [routerLinkActiveOptions]="{ exact: true }"
-  class="flex w-full items-center text-zinc-400 hover:text-zinc-600"
+  class="flex w-full items-center text-zinc-400 hover:text-zinc-600 gap-4"
   [ngClass]="{
     'p-1 border-transparent font-semibold whitespace-nowrap':
       variant === 'desktop',
-    'gap-4': variant === 'mobile' || variant === 'desktop',
-    'flex-col justify-center px-4 py-2 gap-1': variant === 'mobile-bottom'
+    'px-4 py-2 whitespace-nowrap': variant === 'mobile-bottom'
   }"
 >
-  <span
-    class="material-symbols-rounded"
-    [style.fontSize]="variant === 'mobile-bottom' ? '20px' : '24px'"
-    >{{ icon }}</span
-  >
+  <span class="material-symbols-rounded">{{ icon }}</span>
   <span
     class="transition-all duration-500"
     [ngClass]="{
-      'text-sm': variant === 'mobile',
-      'text-xs': variant === 'mobile-bottom',
+      'text-sm': variant === 'mobile' || 'mobile-bottom',
       'opacity-100 visible': variant === 'desktop' && isExpanded,
       'opacity-0 invisible': variant === 'desktop' && !isExpanded,
     }"

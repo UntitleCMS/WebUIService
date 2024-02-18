@@ -31,6 +31,8 @@ export class MobileNavigationComponent implements OnInit {
 
   isScrolledFromOrigin = false;
 
+  isMenuOpen = false;
+
   constructor(private auth: AuthorityService, private oauth: OAuthService) {}
 
   ngOnInit(): void {
@@ -54,5 +56,13 @@ export class MobileNavigationComponent implements OnInit {
 
     this.isScrollDown = scrollTop > this.lastScrollTop;
     this.lastScrollTop = scrollTop;
+  }
+
+  openMenu() {
+    this.isMenuOpen = true;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 }

@@ -6,6 +6,11 @@
   ]"
 >
   <div class="flex justify-between items-center p-4 bg-zinc-50">
+    <div class="flex items-center">
+      <button (click)="openMenu()" class="p-1 flex items-center">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+    </div>
     <app-brand variant="mobile"></app-brand>
     <ng-container *ngIf="isLoggedIn; else LoginButton">
       <app-mobile-account-button>
@@ -33,18 +38,32 @@
     </ng-container>
   </div>
 </div>
+
 <div
-  class="fixed left-0 w-full transition-all border-t shadow-md z-50"
-  [ngClass]="isScrollDown ? '-bottom-16' : 'bottom-0'"
+  class="h-screen fixed top-0 z-50 min-w-0 overflow-hidden transition-all duration-300"
+  [ngClass]="[
+    isMenuOpen ? '-left-0 w-full visible' : '-left-full w-0 invisible'
+  ]"
 >
   <div
-    class="bg-zinc-50 grid divide-x"
-    [ngClass]="isLoggedIn ? 'grid-cols-4' : 'grid-cols-3'"
+    class="bg-zinc-50 h-screen"
+    [ngClass]="[
+      isLoggedIn ? 'grid-cols-4' : 'grid-cols-3',
+      isScrollDown ? '' : ''
+    ]"
   >
+    <div class="p-4 flex justify-between gap-4">
+      <app-brand variant="mobile" [hideLabel]="true"></app-brand>
+      <button (click)="closeMenu()" class="p-1 text-red-500 flex items-center">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+
     <app-nav-link
       [link]="['/']"
       [icon]="'home'"
       [name]="'หน้าหลัก'"
+      (click)="closeMenu()"
       variant="mobile-bottom"
     ></app-nav-link>
     <app-nav-link
@@ -52,18 +71,21 @@
       [link]="['/', 'following']"
       [icon]="'newspaper'"
       [name]="'กำลังติดตาม'"
+      (click)="closeMenu()"
       variant="mobile-bottom"
     ></app-nav-link>
     <app-nav-link
       [link]="['/', 'search']"
       [icon]="'search'"
       [name]="'ค้นหา'"
+      (click)="closeMenu()"
       variant="mobile-bottom"
     ></app-nav-link>
     <app-nav-link
       [link]="['/', 'write']"
       [icon]="'edit'"
       [name]="'เขียนโพสต์'"
+      (click)="closeMenu()"
       variant="mobile-bottom"
     ></app-nav-link>
   </div>

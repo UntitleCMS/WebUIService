@@ -4,6 +4,7 @@
 >
   <img src="assets/images/logo.svg" class="w-8 h-8" />
   <span
+    *ngIf="!hideLabel"
     class="transition-all duration-500 text-2xl font-semibold"
     [ngClass]="{
       'opacity-100 visible': variant === 'desktop' && isExpanded,
