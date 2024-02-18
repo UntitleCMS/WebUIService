@@ -1,5 +1,7 @@
 <div *ngIf="userProfile" class="flex flex-col lg:flex-row">
-  <div class="lg:w-[300px] shrink-0 p-8 lg:border-e lg:h-screen space-y-4 lg:sticky lg:top-0">
+  <div
+    class="lg:w-[300px] shrink-0 p-8 lg:border-e lg:h-screen space-y-4 lg:sticky lg:top-0"
+  >
     <div class="flex justify-center items-center">
       <app-avatar [userId]="userProfile.userId" [size]="40"></app-avatar>
     </div>
@@ -36,12 +38,7 @@
         [postType]="'author'"
         [keyId]="userProfile.userId"
       >
-        <div
-          class="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex justify-center items-center text-xl text-zinc-400 text-center"
-        >
-          ไม่มีโพสต์ให้แสดง
-        </div></app-lazy-post-generator
-      >
+      </app-lazy-post-generator>
     </div>
   </div>
 </div>

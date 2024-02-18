@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { LazyPostGeneratorComponent } from '../../../../shared/components/posts/lazy-post-generator/lazy-post-generator.component';
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { FollowButtonComponent } from '../../../../shared/components/users/follow-button/follow-button.component';
+import { LazyPostService } from '../../../../core/services/lazy-post.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -30,7 +31,8 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authority: AuthorityService,
-    private userInformationService: UserInformationService
+    private userInformationService: UserInformationService,
+    private lazyPostService: LazyPostService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,7 @@ export class ProfilePageComponent implements OnInit {
       next: () => {
         this.followStatus = true;
         this.userProfile.follower += 1;
+        this.lazyPostService.revokeCache('following');
       },
       error: (e) => {
         if (e.status === 409) {
@@ -80,6 +83,7 @@ export class ProfilePageComponent implements OnInit {
       next: () => {
         this.followStatus = false;
         this.userProfile.follower -= 1;
+        this.lazyPostService.revokeCache('following');
       },
       error: (e) => {
         if (e.status === 409) {

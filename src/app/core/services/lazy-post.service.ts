@@ -78,7 +78,7 @@ export class LazyPostService {
       author: keyType === 'author' ? keyId : undefined,
       tags: keyType === 'tag' ? [keyId] : undefined,
       bookmark: keyType === 'bookmark' ? true : undefined,
-      following: keyType === 'following' ? true : undefined
+      following: keyType === 'following' ? true : undefined,
     };
 
     this.postService
@@ -97,5 +97,9 @@ export class LazyPostService {
       .subscribe({
         complete: () => completeCallback(),
       });
+  }
+
+  revokeCache(keyType: string, keyId: string = '') {
+    this._lazyCacheMap.delete(`${keyType}:${keyId}`);
   }
 }
