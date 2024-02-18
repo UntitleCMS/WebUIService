@@ -60,9 +60,11 @@ export class MobileNavigationComponent implements OnInit {
 
   openMenu() {
     this.isMenuOpen = true;
+    document.body.classList.add('overflow-hidden')
   }
 
   closeMenu() {
     this.isMenuOpen = false;
+    document.body.classList.remove('overflow-hidden')
   }
 }

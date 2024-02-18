@@ -1,5 +1,5 @@
 <div
-  class="fixed left-0 w-full transition-all z-50"
+  class="fixed left-0 w-full transition-all z-[100]"
   [ngClass]="[
     isScrollDown ? '-top-16' : 'top-0',
     isScrolledFromOrigin ? 'shadow-md' : ''
@@ -40,7 +40,7 @@
 </div>
 
 <div
-  class="h-screen fixed top-0 z-50 min-w-0 overflow-hidden transition-all duration-300"
+  class="h-screen fixed top-0 z-[101] min-w-0 overflow-hidden transition-all duration-300"
   [ngClass]="[
     isMenuOpen ? '-left-0 w-full visible' : '-left-full w-0 invisible'
   ]"
