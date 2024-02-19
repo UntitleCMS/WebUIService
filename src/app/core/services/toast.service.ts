@@ -22,7 +22,7 @@ export interface ToastData extends ToastDataBase {
 export class ToastService {
   private _toasts: BehaviorSubject<ToastData[]>;
 
-  private readonly TOAST_LIFETIME = 2000;
+  private readonly TOAST_LIFETIME = 6000;
 
   get toasts$() {
     return this._toasts.asObservable();
