@@ -1,5 +1,6 @@
 # Stage 1
 FROM node:18-alpine as node
+LABEL org.opencontainers.image.source = "https://github.com/UntitleCMS/WebUIService"
 
 WORKDIR /app
 COPY package* .
