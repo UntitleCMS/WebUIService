@@ -6,20 +6,28 @@ import { RouterLink } from '@angular/router';
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { PostService } from '../../../../core/services/post.service';
 import { PostPreviewAndAuthor } from '../../../../core/models/post';
+import { LazyPostGeneratorComponent } from '../../../../shared/components/posts/lazy-post-generator/lazy-post-generator.component';
 
 @Component({
   selector: 'app-my-post-page',
   standalone: true,
-  imports: [CommonModule, PostPreviewComponent, OverlayComponent, RouterLink],
+  imports: [
+    CommonModule,
+    PostPreviewComponent,
+    OverlayComponent,
+    RouterLink,
+    LazyPostGeneratorComponent,
+    PostPreviewComponent
+  ],
   templateUrl: './my-post-page.component.html',
   styleUrl: './my-post-page.component.scss',
 })
 export class MyPostPageComponent implements OnInit {
   posts: PostPreviewAndAuthor[] = [];
-  currentDeletePostId?: string;
-  currentDeletePost?: PostPreviewAndAuthor;
 
-  isConfirmDeletePanelOpen = false;
+  currentUserId: string | null = null;
+
+  postFilter: 'published' | 'drafted' = 'published';
 
   constructor(
     private auth: AuthorityService,
@@ -28,35 +36,20 @@ export class MyPostPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService
-      .getAllPosts({
+      .getDraftPosts({
         size: 20,
         pivot: null,
-        author: this.auth.user_id!,
       })
       .subscribe((ppas) => (this.posts = ppas));
+
+    this.auth.user_id$.subscribe((userId) => (this.currentUserId = userId));
   }
 
-  openConfirmDeletePostPanel(postId: string) {
-    this.isConfirmDeletePanelOpen = true;
-    this.currentDeletePostId = postId;
-    this.currentDeletePost = this.posts.find(
-      (post) => post.postPreview.id === this.currentDeletePostId
-    );
-  }
-
-  closeConfirmDeletePostPanel() {
-    this.isConfirmDeletePanelOpen = false;
-  }
-
-  deletePost() {
-    if (!this.currentDeletePostId) return;
-    this.postService.deletePost(this.currentDeletePostId).subscribe(() => {
-      this.posts = this.posts.filter(
-        (post) => post.postPreview.id !== this.currentDeletePostId
-      );
-      this.closeConfirmDeletePostPanel();
-      this.currentDeletePost = undefined;
-      this.currentDeletePostId = undefined;
-    });
+  switchFilterTo(filter: 'published' | 'drafted') {
+    if (filter === 'published') {
+      this.postFilter = 'published';
+    } else {
+      this.postFilter = 'drafted';
+    }
   }
 }

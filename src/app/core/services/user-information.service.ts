@@ -55,4 +55,8 @@ export class UserInformationService {
   getFollowees(userId: string) {
     return this.userInformationRepo.getFolloweesOf(userId);
   }
+
+  getProfilesByName(keyword: string) {
+    return this.userInformationRepo.getProfilesByKeyword(keyword);
+  }
 }

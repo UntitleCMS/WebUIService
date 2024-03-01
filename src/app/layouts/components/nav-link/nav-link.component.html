@@ -1,0 +1,22 @@
+<button
+  [routerLink]="link"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="flex w-full items-center text-zinc-400 hover:text-zinc-600 gap-4"
+  [ngClass]="{
+    'p-1 border-transparent font-semibold whitespace-nowrap':
+      variant === 'desktop',
+    'px-4 py-2 whitespace-nowrap': variant === 'mobile-bottom'
+  }"
+>
+  <span class="material-symbols-rounded">{{ icon }}</span>
+  <span
+    class="transition-all duration-500"
+    [ngClass]="{
+      'text-sm': variant === 'mobile' || 'mobile-bottom',
+      'opacity-100 visible': variant === 'desktop' && isExpanded,
+      'opacity-0 invisible': variant === 'desktop' && !isExpanded,
+    }"
+    >{{ name }}</span
+  >
+</button>

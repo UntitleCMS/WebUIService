@@ -1,3 +1,15 @@
+.expandable-navigation-bar {
+  @apply h-screen flex flex-col justify-between gap-4 sticky top-0 border-e box-content min-w-0 transition-all duration-500 overflow-hidden;
+}
+
+.nav-expand {
+  @apply w-[300px];
+}
+
+.nav-collapse {
+  @apply w-16;
+}
+
 .active {
   @apply text-zinc-900;
 }

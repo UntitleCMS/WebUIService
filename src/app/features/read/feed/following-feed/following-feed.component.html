@@ -1,6 +1,6 @@
 <div class="p-4 space-y-4">
   <h2 class="text-2xl font-bold p-4">กำลังติดตาม</h2>
-  <div *ngFor="let p of posts">
-    <!-- <app-post-preview></app-post-preview> -->
+  <div>
+    <app-lazy-post-generator [postType]="'following'"></app-lazy-post-generator>
   </div>
 </div>

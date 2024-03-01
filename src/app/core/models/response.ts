@@ -4,3 +4,8 @@ export interface Response<T> {
   message: string;
   error?: object;
 }
+
+export interface KeyPair {
+  key: string;
+  value: string;
+}

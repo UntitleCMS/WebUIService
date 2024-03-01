@@ -1,0 +1,18 @@
+<button
+  *ngIf="variant === 'desktop'; else mobileLogin"
+  (click)="login()"
+  class="flex w-full items-center gap-4 font-semibold text-zinc-400 p-1 border-transparent hover:text-zinc-600 whitespace-nowrap"
+>
+  <span class="material-symbols-rounded">login</span>
+  <span
+    class="transition-all duration-500"
+    [ngClass]="isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'"
+    >เข้าสู่ระบบ</span
+  >
+</button>
+
+<ng-template #mobileLogin>
+  <button (click)="login()" class="flex justify-center items-center">
+    <span class="material-symbols-rounded">login</span>
+  </button>
+</ng-template>

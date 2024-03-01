@@ -1,23 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Tag } from '../../../../core/models/tag';
-import { TagService } from '../../../../core/services/tag.service';
-import { TagComponent } from '../../../../shared/components/tags/tag/tag.component';
 import { CommonModule } from '@angular/common';
+import { LandingComponent } from '../../components/landing/landing.component';
+import { AuthorityService } from '../../../../core/auth/authority.service';
+import { TopTagComponent } from '../../feat/top-tag/top-tag.component';
+import { TopLovePostComponent } from '../../feat/top-love-post/top-love-post.component';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, TagComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    LandingComponent,
+    TopTagComponent,
+    TopLovePostComponent,
+  ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
 })
 export class MainPageComponent implements OnInit {
-  tags: Tag[] = [];
+  isLoggedIn = false;
 
-  constructor(private tagService: TagService) {}
+  isLargeScreen = false;
+
+  @ViewChild('main') mainView!: ElementRef<HTMLElement>;
+
+  constructor(
+    private auth: AuthorityService,
+    private bpo: BreakpointObserver
+  ) {}
 
   ngOnInit(): void {
-    this.tagService.getTopTags().subscribe((tags) => (this.tags = tags));
+    this.auth.isLoggedin$.subscribe((status) => (this.isLoggedIn = status));
+    this.bpo
+      .observe('(min-width: 1280px)')
+      .subscribe((status) => (this.isLargeScreen = status.matches));
+  }
+
+  scrollToMainView() {
+    this.mainView.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 }

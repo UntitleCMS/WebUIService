@@ -1,17 +1,16 @@
-<div class="flex flex-col-reverse xl:flex-row">
+<div *ngIf="!isLoggedIn" class="max-w-screen-lg mx-auto">
+  <app-landing (scrollButton)="scrollToMainView()"></app-landing>
+</div>
+<div class="flex flex-col-reverse xl:flex-row" #main>
   <main class="grow">
     <router-outlet></router-outlet>
   </main>
   <aside
-    class="shrink-0 grow-0 w-full xl:w-[300px] xl:h-screen xl:sticky xl:top-0 p-4 hide-scrollbar"
+    class="shrink-0 grow-0 w-full xl:w-[300px] xl:h-screen xl:sticky xl:top-0 p-4 hide-scrollbar overflow-auto flex flex-col gap-8"
   >
-    <div>
-      <h4 class="text-2xl font-bold p-4">แท็กที่นิยม</h4>
-      <div class="p-4 flex justify-center md:justify-start flex-wrap gap-2 items-center">
-        <div *ngFor="let tag of tags">
-          <app-tag [tag]="tag"></app-tag>
-        </div>
-      </div>
-    </div>
+    <app-top-tag></app-top-tag>
+    <ng-container *ngIf="isLargeScreen">
+      <app-top-love-post></app-top-love-post>
+    </ng-container>
   </aside>
 </div>

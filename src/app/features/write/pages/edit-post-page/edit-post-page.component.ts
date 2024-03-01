@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PostComponent } from '../../../../shared/components/posts/post/post.component';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../../../../core/services/post.service';
 import { PostDataService } from '../../../../core/services/post-data.service';
 import { map, switchMap } from 'rxjs';
+import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-edit-post-page',
@@ -17,15 +19,21 @@ import { map, switchMap } from 'rxjs';
 })
 export class EditPostPageComponent implements OnInit {
   post!: PostAndAuthor;
-
   isConfirmPublishPanelOpen = false;
-  isPublished = false;
+  isConfirmDraftPanelOpen = false;
+
+  isPostAdded = false;
+
+  isDraftPost = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
-    private pds: PostDataService
+    private pds: PostDataService,
+    private location: Location,
+    private postManipulate: PostManipulateService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +48,48 @@ export class EditPostPageComponent implements OnInit {
         }),
         switchMap((postId) => this.postService.getSinglePostById(postId))
       )
-      .subscribe((post) => (this.post = post));
+      .subscribe((post) => {
+        this.post = post;
+        this.isDraftPost = !post.post.isPublished;
+      });
+  }
+
+  publish() {
+    this.postManipulate.update(this.post.post.id).subscribe({
+      next: (r) => {
+        this.isPostAdded = true;
+        this.toastService.push({
+          title: 'อัปเดตโพสต์สำเร็จ',
+          type: 'success',
+          icon: 'done',
+        });
+        this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
+        this.pds.clearPostData();
+      },
+    });
+  }
+
+  draft() {
+    this.postManipulate.update(this.post.post.id, 'draft').subscribe({
+      next: () => {
+        this.isPostAdded = true;
+        this.toastService.push({
+          title: 'บันทึกเป็นฉบับร่างแล้ว',
+          type: 'success',
+          icon: 'done',
+        });
+        this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
+        this.pds.clearPostData();
+      },
+    });
+  }
+
+  cancelEditAndGoBack() {
+    this.location.back();
+  }
+
+  cancelPublishing() {
+    this.draft();
   }
 
   openConfirmPublishPanel() {
@@ -51,55 +100,16 @@ export class EditPostPageComponent implements OnInit {
     this.isConfirmPublishPanelOpen = false;
   }
 
-  publish() {
-    const { title, description, coverImageFile, content, tags } =
-      this.pds.getCurrentPostData();
-    if (coverImageFile) {
-      const formData = new FormData();
-      formData.append('img', coverImageFile);
-      this.postService
-        .uploadImage(formData)
-        .pipe(
-          switchMap((coveImage) =>
-            this.postService.updatePost(this.post.post.id, {
-              title,
-              description,
-              coverImage: '/api/img/v1/img/' + coveImage.img,
-              content,
-              isPublish: true,
-              tags,
-            })
-          )
-        )
-        .subscribe({
-          next: (r) => {
-            this.isPublished = true;
-            this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-            this.pds.clearPostData();
-          },
-        });
-    } else {
-      this.postService
-        .updatePost(this.post.post.id, {
-          title,
-          description,
-          content,
-          coverImage: this.post.post.coverImage,
-          tags: tags,
-          isPublish: true,
-        })
-        .subscribe({
-          next: (r) => {
-            this.isPublished = true;
-            this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-            this.pds.clearPostData();
-          },
-        });
-    }
+  openConfirmDraftPanel() {
+    this.isConfirmDraftPanelOpen = true;
+  }
+
+  closeConfirmDraftPanel() {
+    this.isConfirmDraftPanelOpen = false;
   }
 
   canDeactivate() {
-    if (this.isPublished) return true;
+    if (this.isPostAdded) return true;
     if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
       return true;
     }

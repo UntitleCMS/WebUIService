@@ -10,6 +10,7 @@ import { Component, Input } from '@angular/core';
 })
 export class CoverComponent {
   @Input() type: 'preview' | 'full' = 'preview';
+  @Input() variant: 'desktop' | 'mobile' = 'desktop';
   @Input() src: string = 'assets/images/default-image.svg';
 
   onCoverImageError(e: Event) {

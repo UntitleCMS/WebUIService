@@ -14,6 +14,8 @@ interface ServerToClientEvents {
   stderr: (output: string) => void;
   exit: (code: number | null) => void;
   error: (msg: string) => void;
+  qoataReport: (report: string) => void;
+  quota_consumed_alert: () => void;
 }
 
 interface ClientToServerEvents {
@@ -37,6 +39,8 @@ export class Runner {
   private _isConnected = new BehaviorSubject<boolean>(false);
   private _output = new Subject<IO>();
   private _error = new Subject<string>();
+  private _report = new Subject<string>();
+  private _quotaConsume = new Subject<void>();
 
   private constructor() {
     Runner.io = io(environment.baseUrl.toString(), {
@@ -68,6 +72,11 @@ export class Runner {
       this._output.next({ type: 'exit', data: data })
     );
     Runner.io.on('error', (data) => this._error.next(data));
+
+    Runner.io.on('quota_consumed_alert', () => this._quotaConsume.next());
+    Runner.io.on('qoataReport', (rep) => {
+      this._report.next(rep);
+    });
   }
 
   public get isConnected$() {
@@ -84,6 +93,14 @@ export class Runner {
 
   public get error$() {
     return this._error.asObservable();
+  }
+
+  public get report$() {
+    return this._report.asObservable();
+  }
+
+  public get quotaConsume$() {
+    return this._quotaConsume.asObservable();
   }
 
   public static getInstance(): Runner {

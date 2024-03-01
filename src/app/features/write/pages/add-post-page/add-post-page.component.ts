@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostComponent } from '../../../../shared/components/posts/post/post.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
 import { PostAndAuthor } from '../../../../core/models/post';
 import { PostDataService } from '../../../../core/services/post-data.service';
 import { AuthorityService } from '../../../../core/auth/authority.service';
 import { UserInformationService } from '../../../../core/services/user-information.service';
-import { PostService } from '../../../../core/services/post.service';
-import { switchMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { PostManipulateService } from '../../../../core/services/post-manipulate.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-add-post-page',
@@ -20,15 +20,18 @@ import { Router } from '@angular/router';
 export class AddPostPageComponent implements OnInit, OnDestroy {
   post!: PostAndAuthor;
   isConfirmPublishPanelOpen = false;
+  isConfirmDraftPanelOpen = false;
 
-  isPublished = false;
+  isPostAdded = false;
 
   constructor(
     private router: Router,
-    private postService: PostService,
     private pds: PostDataService,
     private auth: AuthorityService,
-    private userInformationService: UserInformationService
+    private userInformationService: UserInformationService,
+    private location: Location,
+    private postManipulate: PostManipulateService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +61,44 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  publish() {
+    this.postManipulate.add().subscribe({
+      next: (r) => {
+        this.isPostAdded = true;
+        this.toastService.push({
+          title: 'เผยแพร่โพสต์สำเร็จ',
+          type: 'success',
+          icon: 'done',
+        });
+        this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
+        this.pds.clearPostData();
+      },
+    });
+  }
+
+  draft() {
+    this.postManipulate.add('draft').subscribe({
+      next: (r) => {
+        this.isPostAdded = true;
+        this.toastService.push({
+          title: 'บันทึกเป็นฉบับร่างแล้ว',
+          type: 'success',
+          icon: 'done',
+        });
+        this.router.navigate(['/', 'my-posts'], { replaceUrl: true });
+        this.pds.clearPostData();
+      },
+    });
+  }
+
+  canDeactivate() {
+    if (this.isPostAdded) return true;
+    if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
+      return true;
+    }
+    return false;
+  }
+
   openConfirmPublishPanel() {
     this.isConfirmPublishPanelOpen = true;
   }
@@ -66,57 +107,15 @@ export class AddPostPageComponent implements OnInit, OnDestroy {
     this.isConfirmPublishPanelOpen = false;
   }
 
-  publish() {
-    const { title, description, coverImageFile, content, tags } =
-      this.pds.getCurrentPostData();
-    if (coverImageFile) {
-      const formData = new FormData();
-      formData.append('img', coverImageFile);
-      this.postService
-        .uploadImage(formData)
-        .pipe(
-          switchMap((coveImage) =>
-            this.postService.addPost({
-              title,
-              description,
-              coverImage: '/api/img/v1/img/' + coveImage.img,
-              content,
-              isPublish: true,
-              tags,
-            })
-          )
-        )
-        .subscribe({
-          next: (r) => {
-            this.isPublished = true;
-            this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-            this.pds.clearPostData();
-          },
-        });
-    } else {
-      this.postService
-        .addPost({
-          title,
-          description,
-          content,
-          tags: tags,
-          isPublish: true,
-        })
-        .subscribe({
-          next: (r) => {
-            this.isPublished = true;
-            this.router.navigate(['/', 'post', r.data], { replaceUrl: true });
-            this.pds.clearPostData();
-          },
-        });
-    }
+  openConfirmDraftPanel() {
+    this.isConfirmDraftPanelOpen = true;
   }
 
-  canDeactivate() {
-    if (this.isPublished) return true;
-    if (confirm('ข้อมูลจะไม่ถูกบันทึก แน่ใจที่จะออกหรือไม่?')) {
-      return true;
-    }
-    return false;
+  closeConfirmDraftPanel() {
+    this.isConfirmDraftPanelOpen = false;
+  }
+
+  cancelAddAndGoBack() {
+    this.location.back();
   }
 }

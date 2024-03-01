@@ -25,9 +25,17 @@ export class PostService {
     private userInformationService: UserInformationService
   ) {}
 
-  getAllPosts({ size, pivot, author, tags, searchText, bookmark }: GetPostsOptions) {
+  getAllPosts({
+    size,
+    pivot,
+    author,
+    tags,
+    searchText,
+    bookmark,
+    following
+  }: GetPostsOptions) {
     return this.postRepo
-      .getPosts({ size, pivot, author, tags, searchText, bookmark })
+      .getPosts({ size, pivot, author, tags, searchText, bookmark, following })
       .pipe(
         switchMap((response) => {
           const postPreviews = response.data?.collections || [];
@@ -105,5 +113,21 @@ export class PostService {
 
   unsavePost(id: string) {
     return this.postRepo.unsavePost(id);
+  }
+
+  getTopPosts() {
+    return this.postRepo.getTopLovePosts(20);
+  }
+
+  getDraftPosts({ size, pivot }: GetPostsOptions) {
+    return this.postRepo.getDraftPosts({ size, pivot }).pipe(
+      switchMap((response) => {
+        const postPreviews = response.data?.collections || [];
+        const authorIds = postPreviews.map(
+          (postPreview) => postPreview.authorId
+        );
+        return this.mapPostPreviewsAndAuthors(postPreviews, authorIds);
+      })
+    );
   }
 }

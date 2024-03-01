@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AuthConfig, OAuthStorage } from 'angular-oauth2-oidc';
+import { environment } from '../../../environments/environment';
 
 export const authCodeFlowConfig: AuthConfig = {
-  issuer: window.location.origin + '/api/auth/v2',
+  issuer: environment.authIssuer,
   redirectUri: window.location.origin,
   clientId: 'console',
   responseType: 'code',

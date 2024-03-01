@@ -73,6 +73,12 @@ export class UserInformationRepositoryService {
     );
   }
 
+  getProfilesByKeyword(keyword: string) {
+    return this.http.get<Profile[]>(`${this.profileEndpoint}/search`, {
+      params: { keyword },
+    });
+  }
+
   //Mock Sub query for Dev
   private subQuery() {
     const userId = this.auth.user_id!;

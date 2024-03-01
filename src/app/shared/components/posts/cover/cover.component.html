@@ -1,7 +1,11 @@
 <img
   *ngIf="type === 'preview'; else full"
   [src]="src"
-  class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg object-cover object-center"
+  class="h-24 rounded-lg object-cover object-center"
+  [ngClass]="{
+    'w-full': variant === 'mobile',
+    'w-16 sm:w-20 sm:h-20 md:w-36 md:h-36': variant === 'desktop'
+  }"
   (error)="onCoverImageError($event)"
 />
 <ng-template #full>

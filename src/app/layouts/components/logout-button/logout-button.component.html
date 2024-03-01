@@ -1,0 +1,19 @@
+<button
+  (click)="logout()"
+  class="flex w-full items-center gap-4 text-zinc-400 hover:text-zinc-600"
+  [ngClass]="{
+    'font-semibold whitespace-nowrap p-1 border-transparent':
+      variant === 'desktop'
+  }"
+>
+  <span class="material-symbols-rounded">logout</span>
+  <span
+    class="transition-all duration-500"
+    [ngClass]="{
+      'text-sm': variant === 'mobile',
+      'opacity-100 visible': variant === 'desktop' && isExpanded,
+      'opacity-0 invisible': variant === 'desktop' && !isExpanded
+    }"
+    >ออกจากระบบ</span
+  >
+</button>

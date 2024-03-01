@@ -6,6 +6,7 @@ import {
   Input,
   Output,
   ViewChild,
+  signal,
 } from '@angular/core';
 import { CodeModel } from '../../../core/tools/code-model';
 
@@ -15,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { Runner } from '../../../socket/runner';
 import loader from '@monaco-editor/loader';
 import { FitAddon } from 'xterm-addon-fit';
+import { ToastService } from '../../../core/services/toast.service';
 
 enum State {
   LOADING,
@@ -53,7 +55,9 @@ export class CodePageComponent {
   prompt = '';
   inputBuffer = '';
 
-  constructor(private runner: Runner) {}
+  quota = signal('');
+
+  constructor(private runner: Runner, private toastService: ToastService) {}
 
   ngOnInit() {
     this.runner.connect();
@@ -116,6 +120,8 @@ export class CodePageComponent {
     this.checkServerStatus();
     this.listenError();
     this.listenOutput();
+    this.listenReport();
+    this.listenQuotaConsume();
   }
 
   ngOnDestroy(): void {
@@ -162,8 +168,40 @@ export class CodePageComponent {
   }
 
   private listenError() {
-    const error = this.runner.error$.subscribe(console.error);
+    const error = this.runner.error$.subscribe({
+      next: (codeErr) => {
+        console.error(codeErr);
+        this.executeStatus = State.READY;
+        this.toastService.push({
+          title: codeErr,
+          icon: 'warning',
+          type: 'error',
+        });
+      },
+    });
     this.subscriptions.add(error);
+  }
+
+  private listenReport() {
+    const report = this.runner.report$.subscribe({
+      next: (rep) => {
+        this.quota.set(rep);
+      },
+    });
+    this.subscriptions.add(report);
+  }
+
+  private listenQuotaConsume() {
+    const quotaConsume = this.runner.quotaConsume$.subscribe({
+      next: () => {
+        this.toastService.push({
+          title: 'คุณใช้ 1 โควตา',
+          icon: 'info',
+          type: 'success',
+        });
+      },
+    });
+    this.subscriptions.add(quotaConsume);
   }
 
   private mapSupportedLanguages(lang: string) {

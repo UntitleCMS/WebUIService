@@ -6,7 +6,7 @@ import {
   PostsResponse,
   SinglePostResponse,
 } from '../models/post';
-import { Response } from '../models/response';
+import { KeyPair, Response } from '../models/response';
 import { TagCount } from '../models/tag';
 import { map } from 'rxjs';
 
@@ -17,6 +17,7 @@ export type GetPostsOptions = {
   author?: string;
   searchText?: string;
   bookmark?: boolean;
+  following?: boolean;
 };
 
 export type GetTagsOptions = {
@@ -31,6 +32,7 @@ export class PostRepositoryService {
   private readonly postEndpoint = '/api/article/v1/articles';
   private readonly tagEndpoint = '/api/article/v1/tags';
   private readonly bookmarkEndpoint = '/api/article/v1/bookmark';
+  private readonly draftEndpoint = '/api/article/v1/darfts';
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +43,7 @@ export class PostRepositoryService {
     tags,
     searchText,
     bookmark,
+    following
   }: GetPostsOptions) {
     let endpoint = bookmark ? this.bookmarkEndpoint : this.postEndpoint;
     endpoint += '?take=' + size;
@@ -60,6 +63,10 @@ export class PostRepositoryService {
 
     if (bookmark) {
       endpoint += '&bookmarked=true';
+    }
+
+    if (following) {
+      endpoint += '&following=true';
     }
 
     return this.http.get<PostsResponse>(endpoint.toString());
@@ -116,5 +123,21 @@ export class PostRepositoryService {
     return this.http
       .get<Response<TagCount[]>>(endpoint)
       .pipe(map((res) => res.data || []));
+  }
+
+  getTopLovePosts(n: number) {
+    return this.http
+      .get<Response<KeyPair[]>>(`${this.postEndpoint}/top/${n}`)
+      .pipe(map((res) => res.data || []));
+  }
+
+  getDraftPosts({ size, pivot }: GetPostsOptions) {
+    let endpoint = this.draftEndpoint;
+    endpoint += '?take=' + size;
+    if (pivot) {
+      endpoint += '&from=<' + pivot;
+    }
+
+    return this.http.get<PostsResponse>(endpoint.toString());
   }
 }
