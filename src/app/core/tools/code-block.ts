@@ -128,9 +128,18 @@ export default class CodeBlock implements BlockTool {
 
   private listenContentChangeAndUpdateElHeight() {
     this.monacoEditor.getModel()?.onDidChangeContent((e) => {
-      this._editor.style.height = `${
-        this.monacoEditor.getModel()!.getLineCount() * 1.22
-      }rem`;
+      const loc = this.monacoEditor.getModel()!.getLineCount();
+      if (loc > 200) {
+        let diff = loc - 200;
+        let range = {
+          startLineNumber: loc - diff + 1,
+          startColumn: 1,
+          endLineNumber: loc,
+          endColumn: this.monacoEditor.getModel()!.getLineMaxColumn(loc),
+        };
+        this.monacoEditor.getModel()!.applyEdits([{ range, text: '' }]);
+      }
+      this._editor.style.height = `${loc * 1.22}rem`;
     });
   }
 

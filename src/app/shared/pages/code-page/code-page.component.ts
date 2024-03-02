@@ -78,6 +78,20 @@ export class CodePageComponent {
         }
       );
 
+      this.monacoEditor.getModel()?.onDidChangeContent((e) => {
+        const loc = this.monacoEditor.getModel()!.getLineCount();
+        if (loc > 200) {
+          let diff = loc - 200;
+          let range = {
+            startLineNumber: loc - diff + 1,
+            startColumn: 1,
+            endLineNumber: loc,
+            endColumn: this.monacoEditor.getModel()!.getLineMaxColumn(loc),
+          };
+          this.monacoEditor.getModel()!.applyEdits([{ range, text: '' }]);
+        }
+      });
+
       this.monacoEditor.addAction({
         id: 'run',
         label: 'Run Code',
