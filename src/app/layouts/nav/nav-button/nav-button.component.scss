@@ -1,0 +1,16 @@
+.nav-button {
+  @apply flex gap-4 items-center w-full
+         py-2
+         rounded-xl
+       hover:bg-sky-50 hover:text-sky-950
+         overflow-hidden whitespace-nowrap
+         transition-all duration-300;
+
+  &.active {
+    @apply text-sky-500 bg-sky-100;
+
+    .msr {
+        font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 48;
+    }
+  }
+}

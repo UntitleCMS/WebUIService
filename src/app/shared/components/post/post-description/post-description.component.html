@@ -1,0 +1,12 @@
+<div class="flex flex-col">
+  <textarea
+    name="description"
+    class="text-xl font-bold outline-0 bg-transparent pt-2 w-full resize-none placeholder-zinc-400"
+    [(ngModel)]="description"
+    (input)="adjustTextareaHeight($event)"
+    placeholder="คำอธิบาย"
+    [readOnly]="!isEditable"
+    rows="1"
+  ></textarea>
+  <span class="text-xs text-zinc-400"> {{ description.length }}/{{ maxLength }} </span>
+</div>

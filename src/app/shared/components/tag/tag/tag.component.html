@@ -1,0 +1,8 @@
+<button
+  [routerLink]="['/tags', tag.name]"
+  class="px-3 py-1.5 text-xs font-semibold rounded-full hover:brightness-75"
+  [style.color]="tag.color | contrast"
+  [style.backgroundColor]="tag.color[0] === '#' ? tag.color : '#' + tag.color"
+>
+  {{ tag.name }}
+</button>

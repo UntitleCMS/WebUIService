@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Noto Sans Thai";
+  src: url("./assets/fonts/NotoSansThai.ttf");
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  src: url("./assets/fonts/MaterialSymbolsRounded.woff2") format("woff2");
+}
+
+body {
+  font-family: "Noto Sans Thai";
+  @apply bg-zinc-50 text-zinc-900;
+}
+
+.msr {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 32px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
+}
+
+.msr.fill {
+  font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 48;
+}
+
+.msr.small {
+  font-size: 24px;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

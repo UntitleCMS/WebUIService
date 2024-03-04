@@ -1,0 +1,14 @@
+<button
+  [routerLink]="to"
+  [routerLinkActive]="['active']"
+  [routerLinkActiveOptions]="{exact}"
+  class="nav-button"
+  [ngClass]="[isExpanded ? 'px-4' : 'px-2']"
+>
+  <span class="msr">{{ icon }}</span
+  ><span
+    class="transition-all duration-300"
+    [ngClass]="[isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible']"
+    >{{ label }}</span
+  >
+</button>

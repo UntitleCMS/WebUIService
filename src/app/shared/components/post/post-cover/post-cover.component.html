@@ -1,0 +1,28 @@
+<ng-container *ngIf="!coverImageSrc && isEditable; else showCoverImage">
+  <input
+    type="file"
+    accept="image/*"
+    (input)="onCoverImageChange($event)"
+    class="hidden"
+    #coverInput
+  />
+  <div role="button" (click)="coverInput.click()"
+    class="h-72 w-full rounded-lg hover:bg-zinc-100 relative flex justify-center items-center gap-4 border-2 border-dashed"
+  >
+      <span class="msr"> image </span>
+      <span>เพิ่มรูปภาพปกบทความ</span>
+  </div>
+</ng-container>
+
+<ng-template #showCoverImage>
+  <div class="h-72 w-full relative flex justify-center items-center">
+    <CoverImage [type]="'full'" [src]="coverImageSrc!"></CoverImage>
+    <button
+      [disabled]="!isEditable"
+      (click)="clearCoverImage()"
+      class="absolute bottom-3 right-3 p-2 rounded-full flex items-center bg-red-50 hover:bg-red-100 hover:scale-125 transition-all text-red-700 shadow-md disabled:hidden"
+    >
+      <span class="msr">delete</span>
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,38 @@
+<div class="flex flex-col gap-4" *ngIf="postAndAuthor">
+  <PostTitle
+    [title]="postAndAuthor.post.title"
+    [isEditable]="isEditable"
+  ></PostTitle>
+  <PostDescription
+    *ngIf="!(!postAndAuthor.post.description && !isEditable)"
+    [description]="postAndAuthor.post.description"
+    [isEditable]="isEditable"
+  ></PostDescription>
+  <PostTag
+    *ngIf="isEditable"
+    [existingTags]="postAndAuthor.post.tags"
+  ></PostTag>
+  <!-- 
+  <div class="flex gap-4 justify-between items-center">
+      <app-user-header
+        [userId]="postAndAuthor.author.userId"
+        [name]="postAndAuthor.author.displayName"
+        [linkable]="linkableAuthor"
+      ></app-user-header>
+      <div class="hidden sm:block">
+        <ng-content></ng-content>
+      </div>
+    </div>-->
+  <div>
+    <PostCover
+      [coverImageSrc]="postAndAuthor.post.coverImage"
+      [isEditable]="isEditable"
+    ></PostCover>
+  </div>
+  <div>
+    <PostContent
+      [content]="postAndAuthor.post.content"
+      [isEditable]="isEditable"
+    ></PostContent>
+  </div>
+</div>

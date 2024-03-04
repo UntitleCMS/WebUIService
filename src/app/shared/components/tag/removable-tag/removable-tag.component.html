@@ -1,0 +1,9 @@
+<span class="relative group">
+  <Tag [tag]="tag" [linkable]="false"></Tag>
+  <button
+    (click)="removeTag()"
+    class="md:invisible group-hover:visible absolute -top-3 -right-3 w-6 h-6 p-2 bg-red-500 text-white hover:bg-red-700 flex justify-center items-center rounded-full"
+  >
+    <span class="msr" style="font-size: 16px">close</span>
+  </button>
+</span>
