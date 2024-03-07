@@ -6,7 +6,7 @@ import { map, switchMap, tap } from 'rxjs';
 import { PostAndAuthor, PostUpdateRequest } from '../../../../core/models/post';
 import { PostService } from '../../../../core/services/post.service';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { LazyPostService } from '../../../../core/services/lazy-post.service';
 import { ToastService } from '../../../../core/services/toast.service';
 
@@ -24,6 +24,7 @@ export class EditArticlePageComponent implements OnInit {
   private router = inject(Router);
   private lazyPost = inject(LazyPostService);
   private toastService = inject(ToastService);
+  private location = inject(Location);
 
   isConfirmDraftPanelOpen = false;
   isConfirmPublishedPanelOpen = false;
@@ -117,5 +118,9 @@ export class EditArticlePageComponent implements OnInit {
 
   closeDraftPanel() {
     this.isConfirmDraftPanelOpen = false;
+  }
+
+  back() {
+    this.location.back();
   }
 }

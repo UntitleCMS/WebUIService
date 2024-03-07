@@ -1,6 +1,9 @@
 <div
-  class="hidden lg:flex shrink-0 sticky top-0 h-screen bg-white flex-col justify-between gap-4 py-4 border-e transition-all duration-300"
-  [ngClass]="[isExpanded ? 'w-72 px-4' : 'w-16 px-2']"
+  class="fixed lg:sticky lg:left-0 lg:visible lg:opacity-100 flex shrink-0 top-0 h-screen bg-white flex-col justify-between gap-4 py-4 border-e transition-all duration-300 z-50"
+  [ngClass]="[
+    isExpanded ? 'w-72 px-4' : 'w-16 px-2',
+    isNavIn ? 'left-0 visible opacity-100' : '-left-full invisible opacity-0'
+  ]"
 >
   <div class="flex flex-col gap-2">
     <ng-container *ngFor="let item of menu">
@@ -11,6 +14,7 @@
         [label]="item.label"
         [exact]="item.exact"
         [isExpanded]="isExpanded"
+        (click)="slideNavOut()"
       />
     </ng-container>
     <hr />
@@ -25,7 +29,7 @@
   </div>
   <button
     (click)="toggleExpand()"
-    class="p-2 bg-zinc-200 self-start rounded-xl flex items-center text-white transition-all"
+    class="hidden lg:flex p-2 bg-zinc-200 self-start rounded-xl items-center text-white transition-all"
     [ngClass]="[isExpanded ? 'ms-2' : '']"
   >
     <span class="msr transition-all" [ngClass]="{ 'rotate-180': isExpanded }"
@@ -56,3 +60,15 @@
     <span class="msr">logout</span>ออกจากระบบ
   </button>
 </ng-template>
+
+<div
+  *ngIf="isNavIn"
+  class="lg:hidden fixed top-0 left-0 w-full h-screen bg-black/50 backdrop-blur z-[49]"
+></div>
+
+<button
+  (click)="toggleNav()"
+  class="lg:hidden fixed top-2 right-2 flex justify-center items-center p-2 rounded-full bg-white/75 shadow-md z-[51]"
+>
+  <span class="msr">{{ isNavIn ? "close" : "menu" }}</span>
+</button>

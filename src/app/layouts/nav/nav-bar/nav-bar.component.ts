@@ -20,6 +20,8 @@ export class NavBarComponent {
   isLoggedIn = this.userService.isLoggedIn;
   isExpanded = true;
 
+  isNavIn = false;
+
   get menu() {
     return menu;
   }
@@ -34,5 +36,19 @@ export class NavBarComponent {
 
   logout() {
     this.auth.logout();
+  }
+
+  slideNavIn() {
+    this.isNavIn = true;
+    document.body.classList.add('overflow-hidden');
+  }
+
+  slideNavOut() {
+    this.isNavIn = false;
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  toggleNav() {
+    this.isNavIn ? this.slideNavOut() : this.slideNavIn();
   }
 }

@@ -1,6 +1,6 @@
-<main class="flex" *ngIf="profile">
+<main class="xl:flex" *ngIf="profile">
   <div
-    class="shrink-0 w-80 h-screen border-e flex flex-col gap-4 p-4 bg-white sticky top-0"
+    class="m-4 xl:m-0 shadow-md xl:shadow-none rounded-2xl xl:rounded-none xl:shrink-0 xl:w-80 xl:h-screen xl:border-e flex flex-col gap-4 p-4 bg-white xl:sticky top-0"
   >
     <Avatar class="mx-auto" [userId]="profile.userId" [size]="48" />
     <h1 class="text-2xl font-semibold mx-auto">{{ profile.displayName }}</h1>

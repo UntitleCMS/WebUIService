@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,36 +10,56 @@ import { tokenInterceptor } from './core/interceptors/token.interceptor';
 import { Runner } from './socket/runner';
 import { loadingBarTrackInterceptor } from './core/interceptors/loading-bar-track.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(
-      routes,
-      withInMemoryScrolling({
+    provideRouter(routes, withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
-      })
-    ),
-    provideHttpClient(
-      withInterceptors([
+    })),
+    provideHttpClient(withInterceptors([
         loadingBarTrackInterceptor,
         tokenInterceptor,
         publicEndpointInterceptor,
-      ])
-    ),
+    ])),
     provideAnimations(),
     {
-      provide: Runner,
-      useValue: Runner.getInstance(),
+        provide: Runner,
+        useValue: Runner.getInstance(),
     },
     provideOAuthClient({
-      resourceServer: {
-        allowedUrls: [],
-        sendAccessToken: true,
-      },
+        resourceServer: {
+            allowedUrls: [],
+            sendAccessToken: true,
+        },
     }),
     {
-      provide: OAuthStorage,
-      useFactory: storageFactory,
+        provide: OAuthStorage,
+        useFactory: storageFactory,
     },
-  ],
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    })
+],
 };

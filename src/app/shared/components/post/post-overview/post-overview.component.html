@@ -1,7 +1,12 @@
 <div
-  class="p-4 rounded-xl h-48 bg-white shadow hover:shadow-xl transition-all flex gap-4"
+  class="p-4 rounded-xl md:h-48 bg-white shadow hover:shadow-xl transition-all flex gap-4"
 >
-  <div class="grow flex flex-col gap-2">
+  <div class="grow flex flex-col gap-4 md:gap-2">
+    <CoverImage
+      class="md:hidden"
+      [src]="postOverviewAndAuthor.post.coverImage"
+      type="preview"
+    />
     <UserHeader
       [userId]="postOverviewAndAuthor.author.userId"
       [name]="postOverviewAndAuthor.author.displayName"
@@ -13,7 +18,9 @@
         linkable ? ['/', 'articles', postOverviewAndAuthor.post.id] : []
       "
     >
-      <h3 class="line-clamp-1 text-lg font-bold group-hover:underline">
+      <h3
+        class="line-clamp-2 md:line-clamp-1 text-lg font-bold group-hover:underline"
+      >
         {{ postOverviewAndAuthor.post.title }}
       </h3>
       <p class="line-clamp-2">
@@ -26,7 +33,7 @@
       }}</span>
       <div
         *ngIf="postOverviewAndAuthor.post.tags.length"
-        class="flex gap-2 items-center"
+        class="hidden md:flex gap-2 items-center"
       >
         <Tag
           *ngFor="let tag of postOverviewAndAuthor.post.tags | tag"
@@ -35,7 +42,7 @@
       </div>
     </div>
   </div>
-  <div class="shrink-0 flex flex-col gap-2">
+  <div class="hidden md:flex shrink-0 flex-col gap-2">
     <CoverImage [src]="postOverviewAndAuthor.post.coverImage" type="preview" />
     <div class="w-28 grow flex items-end justify-around">
       <button

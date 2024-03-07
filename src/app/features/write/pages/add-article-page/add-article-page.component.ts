@@ -7,7 +7,7 @@ import { UserService } from '../../../../core/auth/user.service';
 import { PostService } from '../../../../core/services/post.service';
 import { switchMap, tap } from 'rxjs';
 import { OverlayComponent } from '../../../../shared/components/utils/overlay/overlay.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { LazyPostService } from '../../../../core/services/lazy-post.service';
 import { ToastService } from '../../../../core/services/toast.service';
@@ -26,6 +26,7 @@ export class AddArticlePageComponent implements OnInit {
   private router = inject(Router);
   private lazyPost = inject(LazyPostService);
   private toastService = inject(ToastService);
+  private location = inject(Location);
 
   isConfirmDraftPanelOpen = false;
   isConfirmPublishedPanelOpen = false;
@@ -115,5 +116,9 @@ export class AddArticlePageComponent implements OnInit {
 
   closeDraftPanel() {
     this.isConfirmDraftPanelOpen = false;
+  }
+
+  back() {
+    this.location.back();
   }
 }

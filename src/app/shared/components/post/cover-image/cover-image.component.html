@@ -1,7 +1,7 @@
 <img
   *ngIf="type === 'preview'; else full"
   [src]="src"
-  class="rounded-lg object-cover object-center size-28"
+  class="rounded-lg object-cover object-center w-full h-28 md:size-28"
   [ngClass]="{}"
   (error)="onCoverImageError($event)"
 />

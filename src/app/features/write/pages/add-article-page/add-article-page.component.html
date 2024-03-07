@@ -1,26 +1,29 @@
 <main>
   <div
-    class="p-4 flex items-center justify-between gap-4 sticky top-0 bg-zinc-50 z-[15]"
+    class="p-4 flex items-center lg:justify-between gap-4 sticky top-0 bg-zinc-50 z-[15]"
   >
-    <button
+    <button (click)="back()"
       class="flex items-center gap-4 px-4 py-2 rounded-xl hover:bg-zinc-100"
     >
-      <span class="msr small">arrow_back</span> กลับ
+      <span class="msr small">arrow_back</span>
+      <span class="hidden lg:block"> กลับ </span>
     </button>
     <div class="flex gap-4 items-center">
       <button
         (click)="openDraftPanel()"
-        class="px-4 py-2 flex items-center gap-2 rounded-xl hover:text-orange-700 disabled:text-zinc-300"
+        class="px-4 py-2 flex items-center gap-2 rounded-xl hover:text-orange-700 disabled:text-zinc-300 border lg:border-0"
         [disabled]="!pds.title().length"
       >
-        บันทึกเป็นฉบับร่าง
+        <span class="msr small lg:hidden">draft</span>
+        <span class="hidden lg:block">บันทึกเป็นฉบับร่าง</span>
       </button>
       <button
         (click)="openPublishPanel()"
         class="px-4 py-2 flex items-center gap-2 rounded-xl text-green-700 bg-green-100 hover:bg-green-200 disabled:bg-zinc-100 disabled:text-zinc-300"
         [disabled]="!pds.title().length"
       >
-        <span class="msr small">publish</span>เผยแพร่
+        <span class="msr small">publish</span>
+        <span class="hidden lg:block">เผยแพร่</span>
       </button>
     </div>
   </div>
