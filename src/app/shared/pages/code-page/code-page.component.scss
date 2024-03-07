@@ -1,0 +1,10 @@
+$head-bar-h: 72px;
+$container-h: calc(100% - $head-bar-h);
+
+.bar-h{
+  height: $head-bar-h;
+}
+
+.container-h{
+  height: $container-h;
+}

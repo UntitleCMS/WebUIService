@@ -12,27 +12,20 @@
     *ngIf="isEditable"
     [existingTags]="postAndAuthor.post.tags"
   ></PostTag>
-  <!-- 
-  <div class="flex gap-4 justify-between items-center">
-      <app-user-header
-        [userId]="postAndAuthor.author.userId"
-        [name]="postAndAuthor.author.displayName"
-        [linkable]="linkableAuthor"
-      ></app-user-header>
-      <div class="hidden sm:block">
-        <ng-content></ng-content>
-      </div>
-    </div>-->
-  <div>
+  <UserHeader
+    [userId]="postAndAuthor.author.userId"
+    [name]="postAndAuthor.author.displayName"
+    [linkable]="!isEditable"
+    fontSize="medium"
+  />
+  <ng-container *ngIf="postAndAuthor.post.coverImage || isEditable">
     <PostCover
       [coverImageSrc]="postAndAuthor.post.coverImage"
       [isEditable]="isEditable"
     ></PostCover>
-  </div>
-  <div>
-    <PostContent
-      [content]="postAndAuthor.post.content"
-      [isEditable]="isEditable"
-    ></PostContent>
-  </div>
+  </ng-container>
+  <PostContent
+    [content]="postAndAuthor.post.content"
+    [isEditable]="isEditable"
+  ></PostContent>
 </div>

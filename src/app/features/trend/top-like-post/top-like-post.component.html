@@ -1,0 +1,31 @@
+<div>
+  <h2 class="text-xl font-bold mb-4">บทความที่ถูกใจมากที่สุด</h2>
+  <ol class="flex flex-col gap-4">
+    <li *ngFor="let post of posts; let i = index" class="group">
+      <div
+        role="button"
+        class="flex items-center gap-2"
+        [routerLink]="['/articles', post.key]"
+      >
+        <div class="flex gap-1 items-center">
+          <span
+            class="msr fill group-hover:rotate-12 group-hover:scale-125 group-hover:drop-shadow-md transition-all"
+            [ngClass]="[
+              i === 0
+                ? 'text-[#FFD700]'
+                : i === 1
+                ? 'text-[#C0C0C0]'
+                : i === 2
+                ? 'text-[#CD7F32]'
+                : 'invisible'
+            ]"
+            >trophy</span
+          >
+        </div>
+        <span class="group-hover:underline">
+          {{ post.value }}
+        </span>
+      </div>
+    </li>
+  </ol>
+</div>

@@ -1,15 +1,16 @@
-import { Component, ElementRef, Input, NgZone } from '@angular/core';
+import { Component, ElementRef, Input, NgZone, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PostDataService } from '../../../../core/services/post-data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'PostDescription',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './post-description.component.html',
   styleUrl: './post-description.component.scss',
 })
-export class PostDescriptionComponent {
+export class PostDescriptionComponent implements OnInit {
   @Input() description = '';
   @Input() isEditable = false;
 
@@ -22,7 +23,9 @@ export class PostDescriptionComponent {
   ) {}
 
   ngOnInit() {
-    this.adjustTextareaHeight();
+    if (this.isEditable) {
+      this.adjustTextareaHeight();
+    }
   }
 
   adjustTextareaHeight(e?: Event) {

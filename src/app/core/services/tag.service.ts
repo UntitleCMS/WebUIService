@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Tags } from '../constants/tags';
 import { Tag } from '../models/tag';
+import { GetTagsOptions, PostRepositoryService } from '../repositories/post-repository.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +11,13 @@ export class TagService {
   vtags: Tag[] = Tags;
   defaultColor = '3f3f46';
 
-  constructor() {}
+  postRepo = inject(PostRepositoryService);
+
+  getTopTags() {
+    return this.postRepo
+      .getTopTags(20)
+      .pipe(map((tags) => tags.map((tag) => this.mapTag(tag.key))));
+  }
 
   mapTag(tagName: string) {
     return (
@@ -34,5 +42,9 @@ export class TagService {
       // .join(' '),
       color: this.defaultColor,
     };
+  }
+
+  getTags({ size, include }: GetTagsOptions) {
+    return this.postRepo.getAllTags({ size, include });
   }
 }

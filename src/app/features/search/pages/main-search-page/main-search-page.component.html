@@ -7,23 +7,70 @@
       type="text"
       name="search"
       id="search"
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchTextChange()"
       class="grow bg-transparent focus:outline-0 focus:ring-0 placeholder-zinc-400"
-      placeholder="ค้นหาโพสต์ แท็ก หรือผู้ใช้"
+      placeholder="ค้นหาบทความ แท็ก หรือผู้ใช้"
     />
   </div>
   <div class="flex justify-center items-center text-zinc-400">
     ผลลัพธ์จะปรากฏหลังจากใส่คำค้น
   </div>
-  <div class="space-y-4">
-    <h1 class="text-xl font-bold">ผลลัพธ์การค้นหา</h1>
-    <div class="space-y-2">
-      <h2 class="text-lg font-semibold">ผู้ใช้</h2>
+  <div *ngIf="isSearched; else waitSearch" class="space-y-8">
+    <h3 class="text-xl font-bold">ผลลัพธ์การค้นหา</h3>
+    <div>
+      <h4 class="text-lg font-semibold mb-2">ผู้ใช้</h4>
+      <div *ngIf="users.length; else emptyUsers" class="flex flex-col gap-4">
+        <UserHeader
+          *ngFor="let user of users"
+          [linkable]="true"
+          [userId]="user.userId"
+          [name]="user.displayName"
+        ></UserHeader>
+      </div>
     </div>
-    <div class="space-y-2">
-      <h2 class="text-lg font-semibold">แท็ก</h2>
+    <div>
+      <h4 class="text-lg font-semibold mb-2">แท็ก</h4>
+      <div
+        *ngIf="tags.length; else emptyTags"
+        class="flex gap-4 items-center flex-wrap"
+      >
+        <div *ngFor="let tag of tags">
+          <Tag [tag]="tag"></Tag>
+        </div>
+      </div>
     </div>
-    <div class="space-y-2">
-      <h2 class="text-lg font-semibold">โพสต์</h2>
+    <div>
+      <h4 class="text-lg font-semibold mb-2">โพสต์</h4>
+      <div *ngIf="ppas.length; else emptyPosts" class="space-y-8">
+        <div *ngFor="let post of ppas">
+          <PostOverview [postOverviewAndAuthor]="post"></PostOverview>
+        </div>
+      </div>
     </div>
   </div>
+
+  <ng-template #waitSearch>
+    <div class="flex flex-col gap-4">
+      <div class="text-center text-zinc-400">
+        ผลลัพธ์จะแสดงหลังจากคุณกดค้นหา
+      </div>
+    </div>
+  </ng-template>
+  <div class="p-4 flex flex-col gap-8">
+    <TopUseTag />
+    <TopLikePost />
+  </div>
 </main>
+
+<ng-template #emptyTags>
+  <p class="text-center text-zinc-400">ไม่พบแท็กจากคำที่ค้นหา</p>
+</ng-template>
+
+<ng-template #emptyPosts>
+  <p class="text-center text-zinc-400">ไม่พบโพสต์จากคำที่ค้นหา</p>
+</ng-template>
+
+<ng-template #emptyUsers>
+  <p class="text-center text-zinc-400">ไม่พบผู้ใช้จากคำที่ค้นหา</p>
+</ng-template>

@@ -1,0 +1,19 @@
+<div>
+  <div class="flex items-center gap-4 p-4">
+    <button
+      [routerLink]="['published']"
+      [routerLinkActive]="['text-sky-500', 'bg-sky-100']"
+      class="px-4 py-2 flex items-center rounded-full text-zinc-600 bg-zinc-100 font-semibold"
+    >
+      บทความที่เผยแพร่แล้ว
+    </button>
+    <button
+      [routerLink]="['draft']"
+      [routerLinkActive]="['text-sky-500', 'bg-sky-100']"
+      class="px-4 py-2 flex items-center rounded-full text-zinc-600 bg-zinc-100 font-semibold"
+    >
+      ฉบับร่าง
+    </button>
+  </div>
+  <router-outlet></router-outlet>
+</div>

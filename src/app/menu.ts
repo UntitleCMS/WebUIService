@@ -31,14 +31,14 @@ export const menu: MenuItem[] = [
   {
     to: ['/', 'write'],
     icon: 'edit',
-    label: 'เขียนโพสต์',
+    label: 'เขียนบทความ',
     exact: false,
     requireLoggedIn: true,
   },
   {
     to: ['/', 'my-posts'],
     icon: 'article',
-    label: 'โพสต์ของฉัน',
+    label: 'บทความของฉัน',
     exact: false,
     requireLoggedIn: true,
   },
@@ -50,7 +50,7 @@ export const menu: MenuItem[] = [
     requireLoggedIn: true,
   },
   {
-    to: ['/', 'profile', 'me'],
+    to: ['/', 'me'],
     icon: 'person',
     label: 'โปรไฟล์ของฉัน',
     exact: false,

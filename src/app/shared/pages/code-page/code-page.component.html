@@ -1,0 +1,131 @@
+<div
+  class="fixed h-screen w-full top-0 left-0 bg-black/25 z-[100] backdrop-blur p-4"
+>
+  <div class="w-full bar-h bg-white rounded-t-xl flex justify-end">
+    <div class="gap-2 p-4 pe-1 sm:pe-4 flex justify-between flex-auto">
+      <div class="p-2 flex overflow-clip justify-start">
+        <img
+          [src]="'assets/images/lang-logo/' + code.language + '.svg'"
+          alt="code logo"
+          class="w-6 me-1 sm:me-6"
+        />
+        <p class="hidden md:block">{{ code.language }}</p>
+      </div>
+      <div class="p-2 flex-auto text-center hidden sm:block">
+        {{ code.name }}
+      </div>
+      <div class="text-xs shrink-0 self-center">
+        <span class="hidden sm:inline">จำนวนครั้งที่</span>รันได้ {{ quota() }}
+      </div>
+    </div>
+    <div class="gap-2 p-4 ps-1 sm:ps-4 min-w-[152px]">
+      <button
+        *ngIf="
+          serverStatus !== state.LOADING && executeStatus !== state.LOADING;
+          else loading
+        "
+        (click)="execute()"
+        class="rounded-full p-2 hover:bg-zinc-100"
+        [ngClass]="{
+          'text-zinc-300 cursor-not-allowed':
+            serverStatus === state.READY &&
+            executeStatus === state.RUNNING &&
+            exitStatus === state.ABORTED
+        }"
+        [disabled]="
+          serverStatus === state.READY &&
+          executeStatus === state.RUNNING &&
+          exitStatus === state.ABORTED
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
+          />
+        </svg>
+      </button>
+      <button
+        *ngIf="exitStatus !== state.LOADING; else loading"
+        (click)="abort()"
+        class="rounded-full p-2 hover:bg-zinc-100"
+        [ngClass]="{
+          'text-zinc-300 cursor-not-allowed':
+            executeStatus === state.READY && exitStatus === state.ABORTED
+        }"
+        [disabled]="
+          executeStatus === state.READY && exitStatus === state.ABORTED
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.25 7.5A2.25 2.25 0 017.5 5.25h9a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25v-9z"
+          />
+        </svg>
+      </button>
+      <button (click)="closePage()" class="rounded-full p-2 hover:bg-zinc-100">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="w-full container-h bg-white rounded-b-xl grid grid-cols-1 md:grid-cols-2 relative overflow-hidden"
+  >
+    <div class="hidden md:block h-full bg-white border-e relative">
+      <div class="h-full" #codeEditor></div>
+    </div>
+
+    <div class="h-full">
+      <div class="p-2 h-full bg-black" #terminal></div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <button class="rounded-full p-2 animate-spin cursor-not-allowed" disabled>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6"
+    >
+      <path
+        d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
+</ng-template>

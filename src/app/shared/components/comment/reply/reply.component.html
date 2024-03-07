@@ -1,0 +1,26 @@
+<div class="flex gap-2">
+  <div
+    class="shrink-0 w-10 h-14 flex justify-center items-center text-zinc-300"
+  >
+    <span class="msr small"> subdirectory_arrow_right </span>
+  </div>
+  <div class="p-2">
+    <UserHeader
+      [linkable]="true"
+      [name]="reply.owner.displayName"
+      [userId]="reply.owner.userId"
+    ></UserHeader>
+    <p class="my-3">
+      {{ reply.comment.data }}
+    </p>
+    <div class="flex items-center gap-4 text-xs">
+      <p>
+        {{ reply.comment.timestamp | relativeTime }}
+      </p>
+      <CommentOptions
+        *ngIf="user.currentUser()?.userId === reply.comment.commentOwnerId"
+        (onDeleteComment)="deleteReply()"
+      ></CommentOptions>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="grid grid-cols-1 gap-4">
+  <ng-container *ngIf="comments">
+    <ng-container *ngIf="comments.length; else emptyComment">
+      <Comment
+        *ngFor="let commentAndReplies of comments"
+        [commentAndReplies]="commentAndReplies"
+        [isLoggedIn]="user.isLoggedIn()"
+        (onDeleteCommentSuccess)="removeCommentFromPost($event)"
+      ></Comment>
+    </ng-container>
+  </ng-container>
+  <CommentInput
+    *ngIf="user.isLoggedIn(); else loginToComment"
+    [forPostId]="postId"
+    (addComment)="addCommentToPost($event)"
+  ></CommentInput>
+</div>
+
+<ng-template #loginToComment>
+  <span
+    ><a (click)="login()" class="underline text-blue-600 cursor-pointer"
+      >เข้าสู่ระบบ</a
+    >
+    เพื่อแสดงความคิดเห็น</span
+  >
+</ng-template>
+
+<ng-template #emptyComment>
+  <span class="p-4 text-center">ยังไม่มีความคิดเห็นในโพสต์นี้</span>
+</ng-template>

@@ -1,0 +1,82 @@
+<div
+  class="p-4 rounded-xl h-48 bg-white shadow hover:shadow-xl transition-all flex gap-4"
+>
+  <div class="grow flex flex-col gap-2">
+    <UserHeader
+      [userId]="postOverviewAndAuthor.author.userId"
+      [name]="postOverviewAndAuthor.author.displayName"
+    />
+    <div
+      role="button"
+      class="grow space-y-1 group"
+      [routerLink]="
+        linkable ? ['/', 'articles', postOverviewAndAuthor.post.id] : []
+      "
+    >
+      <h3 class="line-clamp-1 text-lg font-bold group-hover:underline">
+        {{ postOverviewAndAuthor.post.title }}
+      </h3>
+      <p class="line-clamp-2">
+        {{ postOverviewAndAuthor.post.description }}
+      </p>
+    </div>
+    <div class="flex gap-4 items-center">
+      <span class="text-sm">{{
+        postOverviewAndAuthor.post.createdTime | relativeTime
+      }}</span>
+      <div
+        *ngIf="postOverviewAndAuthor.post.tags.length"
+        class="flex gap-2 items-center"
+      >
+        <Tag
+          *ngFor="let tag of postOverviewAndAuthor.post.tags | tag"
+          [tag]="tag"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="shrink-0 flex flex-col gap-2">
+    <CoverImage [src]="postOverviewAndAuthor.post.coverImage" type="preview" />
+    <div class="w-28 grow flex items-end justify-around">
+      <button
+        loveButton
+        [forPostId]="postOverviewAndAuthor.post.id"
+        [isLiked]="postOverviewAndAuthor.post.isLiked || false"
+        (liked)="like($event)"
+        [disabled]="!user.isLoggedIn()"
+        class="flex items-center rounded-full hover:text-red-500 disabled:text-gray-200"
+      >
+        <span
+          class="msr small"
+          [ngClass]="{
+            'fill text-red-500': postOverviewAndAuthor.post.isLiked
+          }"
+          >favorite</span
+        >
+      </button>
+      <button
+        bookmarkButton
+        [forPostId]="postOverviewAndAuthor.post.id"
+        [isBookmark]="postOverviewAndAuthor.post.isSaved || false"
+        (bookmarked)="bookmark($event)"
+        [disabled]="!user.isLoggedIn()"
+        class="flex items-center rounded-full hover:text-yellow-500 disabled:text-gray-200"
+      >
+        <span
+          class="msr small"
+          [ngClass]="{
+            'fill text-yellow-500': postOverviewAndAuthor.post.isSaved
+          }"
+          >bookmark</span
+        >
+      </button>
+      <PostOptions
+        *ngIf="
+          user.currentUser()?.userId === postOverviewAndAuthor.author.userId
+        "
+        [forId]="postOverviewAndAuthor.post.id"
+        (delete)="deleteThisPost()"
+      />
+    </div>
+  </div>
+</div>

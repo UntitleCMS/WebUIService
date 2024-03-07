@@ -1,0 +1,16 @@
+<div
+  class="p-4 rounded-xl shadow-lg flex gap-4 items-center"
+  [ngClass]="{
+    'bg-green-50 text-green-700': toastData.type === 'success',
+    'bg-red-50 text-red-700': toastData.type === 'error',
+    'bg-yellow-50 text-yellow-700': toastData.type === 'warn'
+  }"
+>
+  <span class="msr">
+    {{ toastData.icon }}
+  </span>
+  <div>
+    <h4 class="font-semibold">{{ toastData.title }}</h4>
+    <p *ngIf="toastData.content">{{ toastData.content }}</p>
+  </div>
+</div>

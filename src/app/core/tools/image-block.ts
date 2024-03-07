@@ -6,7 +6,6 @@ import {
   BlockToolData,
   SanitizerConfig,
 } from '@editorjs/editorjs';
-import { Token } from '../auth/token';
 import { HttpClient } from '@angular/common/http';
 
 interface ImageBlockData extends BlockToolData {

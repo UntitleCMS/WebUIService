@@ -14,12 +14,6 @@ export class PostDataService {
   constructor() {}
 
   logging() {
-    console.log(this.title());
-    console.log(this.description());
-    console.log(this.tags());
-    console.log(this.coverFile());
-    console.log(this.coverSrc());
-    console.log(this.content());
-    
+   
   }
 }

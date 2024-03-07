@@ -24,10 +24,17 @@
     "@editorjs/inline-code": "^1.5.0",
     "@editorjs/nested-list": "^1.4.2",
     "@editorjs/table": "^2.3.0",
+    "@monaco-editor/loader": "^1.4.0",
+    "@ngx-loading-bar/core": "^6.0.2",
+    "angular-oauth2-oidc": "^17.0.1",
     "codex-notifier": "^1.1.2",
     "codex-tooltip": "^1.0.5",
+    "monaco-editor": "^0.46.0",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.7.4",
     "tslib": "^2.3.0",
+    "xterm": "^5.3.0",
+    "xterm-addon-fit": "^0.8.0",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

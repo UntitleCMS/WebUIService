@@ -1,0 +1,19 @@
+<div
+  role="button"
+  [routerLink]="linkable ? ['/', 'profiles', userId] : []"
+  class="flex gap-4 items-center transition-all duration-300"
+  [ngClass]="[linkable ? 'hover:underline cursor-pointer' : 'cursor-default']"
+>
+  <div class="shrink-0 flex items-center">
+    <Avatar [size]="8" [userId]="userId" />
+  </div>
+  <p
+    class="line-clamp-1 transition-all duration-300"
+    [ngClass]="[
+      !avatarOnly ? 'opacity-100 visible' : 'opacity-0 invisible',
+      fontSize === 'small' ? 'text-sm' : ''
+    ]"
+  >
+    {{ name }}
+  </p>
+</div>

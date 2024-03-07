@@ -1,0 +1,21 @@
+<ng-container *ngIf="user.currentUser()">
+  <UserHeader
+    [userId]="user.currentUser()?.userId!"
+    [name]="user.currentUser()?.displayName!"
+  ></UserHeader>
+</ng-container>
+<div class="grow flex flex-col gap-4">
+  <textarea
+    [(ngModel)]="data"
+    placeholder="แสดงความคิดเห็น"
+    class="my-3 rounded-lg p-4 w-full resize-none shadow-inner outline-0 bg-zinc-100 shadow-zinc-200"
+    [rows]="4"
+  ></textarea>
+  <button
+    (click)="sendComment()"
+    class="self-end flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 font-semibold rounded-lg text-sm"
+  >
+    <span class="msr small" style="font-size: 20px"> send </span>
+    ส่ง
+  </button>
+</div>

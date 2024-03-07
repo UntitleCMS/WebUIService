@@ -1,0 +1,22 @@
+<div class="flex gap-2">
+  <div class="shrink-0 w-10 h-14 flex justify-center items-center">
+    <span class="msr small"> subdirectory_arrow_right </span>
+  </div>
+  <div class="p-2 grow flex flex-col gap-4">
+    <textarea
+      [(ngModel)]="data"
+      placeholder="ข้อความตอบกลับ"
+      class="rounded-lg p-4 w-full resize-none shadow-inner outline-0 bg-zinc-100 shadow-zinc-200"
+      [rows]="4"
+    ></textarea>
+    <button
+      (click)="sendReply()"
+      class="self-end flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 font-semibold rounded-lg text-sm"
+    >
+      <span class="msr small" style="font-size: 20px">
+        reply
+      </span>
+      ตอบกลับ
+    </button>
+  </div>
+</div>

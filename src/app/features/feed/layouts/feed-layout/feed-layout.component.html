@@ -1,9 +1,9 @@
-<LandingPage>
+<LandingPage *ngIf="!isLoggedIn()">
   <button
     (click)="scrollToMainView()"
     class="flex flex-col items-center gap-1 self-center p-2 hover:text-sky-500"
   >
-    เลื่อนลงเพื่อดูโพสต์<span class="msr animate-bounce"
+    เลื่อนลงเพื่อดูบทความ<span class="msr animate-bounce"
       >arrow_downward_alt</span
     >
   </button>
@@ -13,16 +13,9 @@
     <router-outlet></router-outlet>
   </div>
   <div
-    class="hidden xl:block shrink-0 p-4 w-72 h-screen sticky top-0 space-y-8"
+    class="hidden xl:flex shrink-0 p-4 w-72 h-screen sticky top-0 flex-col gap-8"
   >
-    <div>
-      <h2 class="text-xl font-bold mb-2">แท็กติดอันดับ</h2>
-      <div class="flex flex-wrap gap-4 text-xs">
-        <button class="px-2 py-1 rounded-full bg-red-100">TAG</button>
-      </div>
-    </div>
-    <div>
-      <h2 class="text-xl font-bold">โพสต์ที่ถูกใจมากที่สุด</h2>
-    </div>
+    <TopUseTag />
+    <TopLikePost />
   </div>
 </main>

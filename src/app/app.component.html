@@ -1,65 +1,12 @@
-<div class="lg:flex">
-  <div
-    class="hidden lg:flex shrink-0 sticky top-0 h-screen bg-zinc-50 flex-col justify-between gap-4 py-4 border-e transition-all duration-300"
-    [ngClass]="[isExpanded ? 'w-60 px-4' : 'w-16 px-2']"
-  >
-    <div class="flex flex-col gap-2">
-      <ng-container *ngFor="let item of menu">
-        <NavButton
-          *ngIf="item.requireLoggedIn ? isLoggedIn : true"
-          [to]="item.to"
-          [icon]="item.icon"
-          [label]="item.label"
-          [exact]="item.exact"
-          [isExpanded]="isExpanded"
-        />
-      </ng-container>
-      <hr />
-      <button
-        *ngIf="!isLoggedIn; else logout"
-        class="flex gap-4 items-center w-full py-2 rounded-xl hover:bg-sky-50 hover:text-sky-950 overflow-hidden whitespace-nowrap transition-all duration-300"
-        [ngClass]="[isExpanded ? 'px-4' : 'px-2']"
-      >
-        <span class="msr">login</span>เข้าสู่ระบบ
-      </button>
-    </div>
-    <button
-      (click)="toggleExpand()"
-      class="p-2 bg-zinc-200 self-start rounded-xl flex items-center text-white transition-all"
-      [ngClass]="[isExpanded ? 'ms-2' : '']"
-    >
-      <span class="msr transition-all" [ngClass]="{ 'rotate-180': isExpanded }"
-        >arrow_forward_ios</span
-      >
-    </button>
-    <div
-      role="button"
-      class="py-2 flex gap-4 items-center rounded-xl hover:bg-zinc-100 transition-all duration-300"
-      [ngClass]="[isExpanded ? 'px-4' : 'px-2']"
-    >
-      <div class="size-8 shrink-0 bg-indigo-500 rounded-full"></div>
-      <div class="flex flex-col">
-        <p
-          class="line-clamp-1 text-sm transition-all duration-300"
-          [ngClass]="[
-            isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible'
-          ]"
-        >
-          Saksit Sirisakda
-        </p>
-      </div>
+<ng-container *ngIf="userService.currentUser() !== undefined; else load">
+  <ngx-loading-bar color="#0ea5e9"></ngx-loading-bar>
+  <div class="lg:flex">
+    <NavBar />
+    <div class="grow py-16 lg:p-0">
+      <router-outlet></router-outlet>
     </div>
   </div>
-  <div class="grow py-16 lg:p-0">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+  <app-toast-container></app-toast-container>
+</ng-container>
 
-<ng-template #logout>
-  <button
-    class="flex gap-4 items-center w-full py-2 rounded-xl hover:bg-sky-50 hover:text-sky-950 overflow-hidden whitespace-nowrap transition-all duration-300"
-    [ngClass]="[isExpanded ? 'px-4' : 'px-2']"
-  >
-    <span class="msr">logout</span>ออกจากระบบ
-  </button>
-</ng-template>
+<ng-template #load>loading...</ng-template>

@@ -16,7 +16,7 @@
 
 <ng-template #showCoverImage>
   <div class="h-72 w-full relative flex justify-center items-center">
-    <CoverImage [type]="'full'" [src]="coverImageSrc!"></CoverImage>
+    <CoverImage [type]="'full'" [src]="coverImageSrc"></CoverImage>
     <button
       [disabled]="!isEditable"
       (click)="clearCoverImage()"

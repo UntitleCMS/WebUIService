@@ -1,0 +1,72 @@
+<main class="flex" *ngIf="profile">
+  <div
+    class="shrink-0 w-80 h-screen border-e flex flex-col gap-4 p-4 bg-white sticky top-0"
+  >
+    <Avatar class="mx-auto" [userId]="profile.userId" [size]="48" />
+    <h1 class="text-2xl font-semibold mx-auto">{{ profile.displayName }}</h1>
+    <div class="grid grid-cols-2 place-items-center">
+      <div class="flex flex-col items-center gap-1">
+        <span class="text-xl"> {{ profile.follower }} </span>
+        <span class="text-xs">ผู้ติดตาม</span>
+      </div>
+      <div class="flex flex-col items-center gap-1">
+        <span class="text-xl"> {{ profile.followee }} </span>
+        <span class="text-xs">กำลังติดตาม</span>
+      </div>
+    </div>
+    <ng-container *ngIf="user.isLoggedIn()">
+      <ng-container *ngIf="follow !== undefined">
+        <button
+          *ngIf="!follow; else unfollowRef"
+          (click)="followThisUser()"
+          class="px-4 py-2 rounded-xl font-semibold text-green-700 flex justify-center items-center gap-2"
+        >
+          <span class="msr small">person_add</span>
+          ติดตาม
+        </button>
+      </ng-container>
+    </ng-container>
+    <p>
+      {{ profile.shortBio }}
+    </p>
+  </div>
+  <div class="grow p-4 flex flex-col gap-8">
+    <PostOverviewSection [postKey]="'author' + profile.userId" />
+  </div>
+</main>
+
+<ng-template #unfollowRef>
+  <button
+    (click)="openConfirmUnfollowPanel()"
+    class="px-4 py-2 rounded-xl font-semibold text-green-700 flex justify-center items-center gap-2"
+  >
+    <span class="msr small">person_add</span>
+    เลิกติดตาม
+  </button>
+</ng-template>
+
+<ng-container *ngIf="isConfirmUnfollowPanelOpen">
+  <app-overlay>
+    <div class="bg-white rounded-lg p-4 space-y-4 max-w-sm mx-auto">
+      <div class="text-xl font-bold">คุณกำลังจะเลิกติดตามบุคคลนี้ ?</div>
+      <div>
+        คุณจะไม่เห็นโพสต์ของบุคคลนี้ในหน้าเพจ กำลังติดตาม
+        และรายชื่อผู้ที่คุณกำลังติดตามจะไม่มีบุคคลนี้ด้วย
+      </div>
+      <div class="flex justify-end gap-4 text-sm">
+        <button
+          class="px-4 py-2 rounded-md"
+          (click)="closeConfirmUnfollowPanel()"
+        >
+          ติดตามต่อไป
+        </button>
+        <button
+          (click)="unFollowThisUser()"
+          class="px-4 py-2 rounded-md bg-red-600 hover:bg-red-800 text-white font-semibold"
+        >
+          เลิกติดตาม
+        </button>
+      </div>
+    </div>
+  </app-overlay>
+</ng-container>

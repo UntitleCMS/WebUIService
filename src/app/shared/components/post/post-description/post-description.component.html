@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div class="flex flex-col" *ngIf="isEditable; else read">
   <textarea
     name="description"
     class="text-xl font-bold outline-0 bg-transparent pt-2 w-full resize-none placeholder-zinc-400"
@@ -8,5 +8,11 @@
     [readOnly]="!isEditable"
     rows="1"
   ></textarea>
-  <span class="text-xs text-zinc-400"> {{ description.length }}/{{ maxLength }} </span>
+  <span *ngIf="isEditable" class="text-xs text-zinc-400">
+    {{ description.length }}/{{ maxLength }}
+  </span>
 </div>
+
+<ng-template #read>
+  <h1 class="text-xl font-bold">{{ description }}</h1>
+</ng-template>
