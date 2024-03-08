@@ -1,7 +1,5 @@
-<main class="p-4 space-y-8">
-  <div
-    class="max-w-screen-md mx-auto px-4 py-2 flex items-center gap-2 bg-zinc-100 rounded-xl"
-  >
+<main class="p-4 space-y-8 max-w-screen-md mx-auto">
+  <div class="px-4 py-2 flex items-center gap-2 bg-zinc-100 rounded-xl w-64 md:w-80 lg:w-auto">
     <span class="msr small">search</span>
     <input
       type="text"
@@ -12,9 +10,6 @@
       class="grow bg-transparent focus:outline-0 focus:ring-0 placeholder-zinc-400"
       placeholder="ค้นหาบทความ แท็ก หรือผู้ใช้"
     />
-  </div>
-  <div class="flex justify-center items-center text-zinc-400">
-    ผลลัพธ์จะปรากฏหลังจากใส่คำค้น
   </div>
   <div *ngIf="isSearched; else waitSearch" class="space-y-8">
     <h3 class="text-xl font-bold">ผลลัพธ์การค้นหา</h3>

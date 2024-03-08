@@ -1,6 +1,6 @@
 <ng-container *ngIf="userService.currentUser() !== undefined; else load">
   <ngx-loading-bar color="#0ea5e9"></ngx-loading-bar>
-  <div class="lg:flex">
+  <div class="lg:flex pt-16 lg:p-0">
     <NavBar />
     <div class="grow">
       <router-outlet></router-outlet>
@@ -9,4 +9,12 @@
   <app-toast-container></app-toast-container>
 </ng-container>
 
-<ng-template #load>loading...</ng-template>
+<ng-template #load>
+  <div class="fixed h-screen top-0 left-0 w-full bg-zinc-50 flex justify-center items-center">
+    <div class="relative size-40">
+      <div class="bg-zinc-200 absolute size-40 rounded-full animate-ping"></div>
+
+      <img class="size-40" src="assets/images/logo.svg" alt="logo">
+    </div>
+  </div>
+</ng-template>

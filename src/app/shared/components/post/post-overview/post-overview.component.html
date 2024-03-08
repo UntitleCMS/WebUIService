@@ -3,6 +3,9 @@
 >
   <div class="grow flex flex-col gap-4 md:gap-2">
     <CoverImage
+      [routerLink]="
+        linkable ? ['/', 'articles', postOverviewAndAuthor.post.id] : []
+      "
       class="md:hidden"
       [src]="postOverviewAndAuthor.post.coverImage"
       type="preview"
@@ -43,7 +46,13 @@
     </div>
   </div>
   <div class="hidden md:flex shrink-0 flex-col gap-2">
-    <CoverImage [src]="postOverviewAndAuthor.post.coverImage" type="preview" />
+    <CoverImage
+      [routerLink]="
+        linkable ? ['/', 'articles', postOverviewAndAuthor.post.id] : []
+      "
+      [src]="postOverviewAndAuthor.post.coverImage"
+      type="preview"
+    />
     <div class="w-28 grow flex items-end justify-around">
       <button
         loveButton

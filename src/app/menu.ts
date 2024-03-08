@@ -29,6 +29,13 @@ export const menu: MenuItem[] = [
     requireLoggedIn: false,
   },
   {
+    to: ['/', 'trend'],
+    icon: 'trending_up',
+    label: 'เทรนด์',
+    exact: false,
+    requireLoggedIn: false,
+  },
+  {
     to: ['/', 'write'],
     icon: 'edit',
     label: 'เขียนบทความ',

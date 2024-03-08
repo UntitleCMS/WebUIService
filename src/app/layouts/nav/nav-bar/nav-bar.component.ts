@@ -35,7 +35,9 @@ export class NavBarComponent {
   }
 
   logout() {
-    this.auth.logout();
+    if(confirm('คุณกำลังจะออกจะระบบ')){
+      this.auth.logout();
+    }
   }
 
   slideNavIn() {

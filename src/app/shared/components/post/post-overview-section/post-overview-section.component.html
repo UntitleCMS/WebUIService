@@ -1,15 +1,12 @@
 <div class="flex flex-col gap-8" #postgroup>
-  <ng-container
-    *ngIf="
-      postOverviewAndAuthors && postOverviewAndAuthors().length;
-      else empty
-    "
-  >
-    <PostOverview
-      *ngFor="let post of postOverviewAndAuthors(); trackBy: postTrackBy"
-      [postOverviewAndAuthor]="post"
-      (delete)="deleteFromList($event)"
-    />
+  <ng-container *ngIf="postOverviewAndAuthors; else loading">
+    <ng-container *ngIf="postOverviewAndAuthors().length; else empty">
+      <PostOverview
+        *ngFor="let post of postOverviewAndAuthors(); trackBy: postTrackBy"
+        [postOverviewAndAuthor]="post"
+        (delete)="deleteFromList($event)"
+      />
+    </ng-container>
   </ng-container>
 </div>
 <div *ngIf="!readyStatus" class="flex justify-center items-center h-40">
@@ -33,3 +30,5 @@
     ไม่มีโพสต์
   </div></ng-template
 >
+
+<ng-template #loading>load</ng-template>

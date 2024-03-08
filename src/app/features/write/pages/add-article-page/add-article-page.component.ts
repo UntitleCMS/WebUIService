@@ -121,4 +121,8 @@ export class AddArticlePageComponent implements OnInit {
   back() {
     this.location.back();
   }
+
+  canDeactivate() {
+    return confirm('คุณกำลังจะออกจากหน้านี้ ข้อมูลที่แก้ไขจะไม่ถูกบันทึก');
+  }
 }

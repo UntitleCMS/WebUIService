@@ -11,6 +11,7 @@ import { ProfileSettingsPageComponent } from './features/profile/pages/profile-s
 import { EditArticlePageComponent } from './features/write/pages/edit-article-page/edit-article-page.component';
 import { authGuard } from './core/guards/auth.guard';
 import { TagSearchComponent } from './features/search/pages/tag-search/tag-search.component';
+import { TrendPageComponent } from './features/trend/pages/trend-page/trend-page.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,10 @@ export const routes: Routes = [
     component: MainSearchPageComponent,
   },
   {
+    path: 'trend',
+    component: TrendPageComponent
+  },
+  {
     path: 'tags/:tagName',
     component: TagSearchComponent,
   },
@@ -40,11 +45,13 @@ export const routes: Routes = [
     path: 'write',
     component: AddArticlePageComponent,
     canActivate: [authGuard],
+    canDeactivate: [(cmp: AddArticlePageComponent) => cmp.canDeactivate()]
   },
   {
     path: 'edit/:postId',
     component: EditArticlePageComponent,
     canActivate: [authGuard],
+    canDeactivate: [(cmp: EditArticlePageComponent) => cmp.canDeactivate()]
   },
   {
     path: 'articles/:postId',

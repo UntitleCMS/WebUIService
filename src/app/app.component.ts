@@ -31,6 +31,12 @@ export class AppComponent implements OnInit {
   toastService = inject(ToastService);
 
   ngOnInit(): void {
+    if (
+      this.oauth.getAccessTokenExpiration() &&
+      Date.now() > this.oauth.getAccessTokenExpiration()
+    ) {
+      this.oauth.logOut();
+    }
     this.oauth.configure(authCodeFlowConfig);
     this.oauth.loadDiscoveryDocumentAndTryLogin();
 
