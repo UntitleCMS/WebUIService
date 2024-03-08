@@ -5,11 +5,12 @@ import { menu } from '../../../menu';
 import { AuthenticationService } from '../../../core/auth/authentication.service';
 import { UserService } from '../../../core/auth/user.service';
 import { UserHeaderComponent } from '../../../shared/components/user/user-header/user-header.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'NavBar',
   standalone: true,
-  imports: [CommonModule, NavButtonComponent, UserHeaderComponent],
+  imports: [CommonModule, NavButtonComponent, UserHeaderComponent, RouterLink],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss',
 })
