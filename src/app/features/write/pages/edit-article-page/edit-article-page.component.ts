@@ -31,6 +31,8 @@ export class EditArticlePageComponent implements OnInit {
 
   postAndAuthor!: PostAndAuthor;
 
+  isPublished = false;
+
   ngOnInit(): void {
     this.route.paramMap
       .pipe(
@@ -71,6 +73,7 @@ export class EditArticlePageComponent implements OnInit {
         )
         .subscribe(() => {
           this.lazyPost.disposeMap();
+          this.isPublished = true;
           this.toastService.push({
             title: 'อัปเดตโพสต์สำเร็จ',
             type: 'success',
@@ -89,6 +92,7 @@ export class EditArticlePageComponent implements OnInit {
       this.postService
         .updatePost(this.postAndAuthor.post.id, postRequest)
         .subscribe(() => {
+          this.isPublished = true;
           this.lazyPost.disposeMap();
           this.toastService.push({
             title: 'อัปเดตโพสต์สำเร็จ',
@@ -125,6 +129,9 @@ export class EditArticlePageComponent implements OnInit {
   }
 
   canDeactivate() {
+    if (this.isPublished) {
+      return true;
+    }
     return confirm('คุณกำลังจะออกจากหน้านี้ ข้อมูลที่แก้ไขจะไม่ถูกบันทึก');
   }
 }

@@ -33,6 +33,8 @@ export class AddArticlePageComponent implements OnInit {
 
   postAndAuthor!: PostAndAuthor;
 
+  isPublished = false;
+
   ngOnInit(): void {
     this.postAndAuthor = {
       post: {
@@ -73,6 +75,7 @@ export class AddArticlePageComponent implements OnInit {
           switchMap(() => this.postService.addPost(postRequest))
         )
         .subscribe(() => {
+          this.isPublished = true;
           this.lazyPost.disposeMap();
           this.toastService.push({
             title: 'เพิ่มโพสต์สำเร็จ',
@@ -87,6 +90,7 @@ export class AddArticlePageComponent implements OnInit {
         });
     } else {
       this.postService.addPost(postRequest).subscribe(() => {
+        this.isPublished = true;
         this.lazyPost.disposeMap();
         this.toastService.push({
           title: 'เพิ่มโพสต์สำเร็จ',
@@ -123,6 +127,9 @@ export class AddArticlePageComponent implements OnInit {
   }
 
   canDeactivate() {
+    if (this.isPublished) {
+      return true;
+    }
     return confirm('คุณกำลังจะออกจากหน้านี้ ข้อมูลที่แก้ไขจะไม่ถูกบันทึก');
   }
 }
