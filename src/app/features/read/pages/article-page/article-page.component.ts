@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoveButtonDirective } from '../../../../shared/directives/love-button.directive';
 import { BookmarkButtonDirective } from '../../../../shared/directives/bookmark-button.directive';
+import { UserService } from '../../../../core/auth/user.service';
 
 @Component({
   selector: 'app-article-page',
@@ -25,8 +26,13 @@ import { BookmarkButtonDirective } from '../../../../shared/directives/bookmark-
 export class ArticlePageComponent implements OnInit {
   post!: PostAndAuthor;
 
+  isNotReservePost = false;
+
+  reservePostIds = ['SupportedProgrammingLanguages', 'TermsAndPolicy']
+
   private postService = inject(PostService);
   private route = inject(ActivatedRoute);
+  user = inject(UserService)
 
   isLoadComment = false;
 
@@ -39,6 +45,8 @@ export class ArticlePageComponent implements OnInit {
           if (!postId) {
             throw new Error('Invalid post ID');
           }
+
+          this.isNotReservePost = !this.reservePostIds.includes(postId)
 
           return postId;
         }),

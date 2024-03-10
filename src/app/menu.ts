@@ -59,7 +59,7 @@ export const menu: MenuItem[] = [
   {
     to: ['/', 'me'],
     icon: 'person',
-    label: 'โปรไฟล์ของฉัน',
+    label: 'โปรไฟล์และการตั้งค่า',
     exact: false,
     requireLoggedIn: true,
   },

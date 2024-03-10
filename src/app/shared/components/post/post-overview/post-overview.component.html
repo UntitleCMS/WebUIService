@@ -2,7 +2,7 @@
   class="p-4 rounded-xl md:h-48 bg-white shadow hover:shadow-xl transition-all flex gap-4"
 >
   <div class="grow flex flex-col gap-4 md:gap-2">
-    <CoverImage
+    <CoverImage *ngIf="postOverviewAndAuthor.post.coverImage"
       [routerLink]="
         linkable ? ['/', 'articles', postOverviewAndAuthor.post.id] : []
       "
@@ -10,10 +10,19 @@
       [src]="postOverviewAndAuthor.post.coverImage"
       type="preview"
     />
-    <UserHeader
-      [userId]="postOverviewAndAuthor.author.userId"
-      [name]="postOverviewAndAuthor.author.displayName"
-    />
+    <div class="flex items-center justify-between gap-4">
+      <UserHeader
+        [userId]="postOverviewAndAuthor.author.userId"
+        [name]="postOverviewAndAuthor.author.displayName"
+      />
+      <PostOptions class="md:hidden"
+        *ngIf="
+          user.currentUser()?.userId === postOverviewAndAuthor.author.userId
+        "
+        [forId]="postOverviewAndAuthor.post.id"
+        (delete)="deleteThisPost()"
+      />
+    </div>
     <div
       role="button"
       class="grow space-y-1 group"
