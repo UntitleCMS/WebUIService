@@ -12,5 +12,11 @@
   <div>
     <h4 class="font-semibold">{{ toastData.title }}</h4>
     <p *ngIf="toastData.content">{{ toastData.content }}</p>
+    <a
+      *ngIf="toastData.click"
+      (click)="toastData.click.action()"
+      class="underline text-zinc-900 cursor-pointer"
+      >{{ toastData.click.label }}</a
+    >
   </div>
 </div>

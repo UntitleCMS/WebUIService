@@ -11,6 +11,10 @@ export interface ToastDataBase {
   type: ToastTypes;
   icon: ToastIcon;
   life: number;
+  click?: {
+    label: string;
+    action: () => void;
+  };
 }
 
 export interface ToastData extends ToastDataBase {
@@ -33,8 +37,15 @@ export class ToastService {
     this._toasts = new BehaviorSubject<ToastData[]>([]);
   }
 
-  push({ title, content, type, icon, life }: ToastDataBase) {
-    const toastData = this.attachTimeToToast({ title, content, type, icon, life });
+  push({ title, content, type, icon, life, click }: ToastDataBase) {
+    const toastData = this.attachTimeToToast({
+      title,
+      content,
+      type,
+      icon,
+      life,
+      click,
+    });
     this._toasts.next([...this._toasts.value, toastData]);
 
     setTimeout(() => {

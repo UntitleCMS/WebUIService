@@ -11,4 +11,9 @@ import { ToastData } from '../../../../core/services/toast.service';
 })
 export class ToastComponent {
   @Input({ required: true }) toastData!: ToastData;
+
+  ngOnInit() {
+    console.log(this.toastData);
+    
+  }
 }
