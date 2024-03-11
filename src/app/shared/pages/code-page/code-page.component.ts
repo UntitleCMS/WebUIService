@@ -6,6 +6,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
   signal,
 } from '@angular/core';
 import { CodeModel } from '../../../core/tools/code-model';
@@ -17,6 +18,8 @@ import { Runner } from '../../../socket/runner';
 import loader from '@monaco-editor/loader';
 import { FitAddon } from 'xterm-addon-fit';
 import { ToastService } from '../../../core/services/toast.service';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 // import { ToastService } from '../../../core/services/toast.service';
 
 enum State {
@@ -29,7 +32,7 @@ enum State {
 @Component({
   selector: 'app-code-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './code-page.component.html',
   styleUrl: './code-page.component.scss',
 })
@@ -46,6 +49,10 @@ export class CodePageComponent {
   serverStatus: State.LOADING | State.READY = State.LOADING;
   executeStatus: State.READY | State.LOADING | State.RUNNING = State.READY;
   exitStatus: State.LOADING | State.ABORTED = State.ABORTED;
+
+  isDisableCache = false;
+
+  private router = inject(Router);
 
   get state() {
     return State;
@@ -185,6 +192,16 @@ export class CodePageComponent {
   private listenError() {
     const error = this.runner.error$.subscribe({
       next: (codeErr) => {
+        let action = () => {
+          const url = this.router.serializeUrl(
+            this.router.createUrlTree([
+              '/',
+              'articles',
+              'rbGp0A7Y8EKZkx74SqtwpA',
+            ])
+          );
+          window.open(url, '_blank');
+        };
         console.error(codeErr);
         this.executeStatus = State.READY;
         this.toastService.push({
@@ -192,6 +209,10 @@ export class CodePageComponent {
           icon: 'warning',
           type: 'error',
           life: 3000,
+          click:
+            codeErr === 'Code not secure'
+              ? { label: 'ตรวจสอบข้อมูล', action }
+              : undefined,
         });
       },
     });
@@ -243,6 +264,7 @@ export class CodePageComponent {
     this.runner.run({
       language: this.mapSupportedLanguages(this.code.language),
       sourcecode: this.monacoEditor.getValue(),
+      disableCache: this.isDisableCache,
     });
   }
 

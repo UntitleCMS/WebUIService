@@ -2,7 +2,7 @@
   class="fixed h-screen w-full top-0 left-0 bg-black/25 z-[100] backdrop-blur p-4"
 >
   <div class="w-full bar-h bg-white rounded-t-xl flex justify-end">
-    <div class="gap-2 p-4 pe-1 sm:pe-4 flex justify-between flex-auto">
+    <div class="gap-1 p-4 pe-1 sm:pe-4 flex justify-between flex-auto">
       <div class="p-2 flex overflow-clip justify-start">
         <img
           [src]="'assets/images/lang-logo/' + code.language + '.svg'"
@@ -18,7 +18,11 @@
         <span class="hidden sm:inline">จำนวนครั้งที่</span>รันได้ {{ quota() }}
       </div>
     </div>
-    <div class="gap-2 p-4 ps-1 sm:ps-4 min-w-[152px]">
+    <div class="flex items-center p-4 ps-1 sm:ps-4 min-w-[152px]">
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="cache" [(ngModel)]="isDisableCache" />
+        <label for="cache" class="text-xs">รันโดยไม่ต้องแคช</label>
+      </div>
       <button
         *ngIf="
           serverStatus !== state.LOADING && executeStatus !== state.LOADING;

@@ -7,6 +7,7 @@ type SUPPORTED_LANGUAGES = 'java17' | 'python3' | 'c12' | 'unsupported';
 interface CodeDto {
   sourcecode: string;
   language: SUPPORTED_LANGUAGES;
+  disableCache: boolean;
 }
 
 interface ServerToClientEvents {
